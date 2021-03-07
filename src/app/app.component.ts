@@ -7,9 +7,4 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ProjectHub';
-
-  toggleTheme(){
-    document.body.classList.toggle('dark');
-    document.body.classList.toggle('light');
-  }
 }

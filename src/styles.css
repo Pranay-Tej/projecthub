@@ -12,6 +12,7 @@ body {
   font-family: "Poppins", "Helvetica Neue", sans-serif;
   background: var(--bg);
   color: var(--text);
+  transition: background 100ms ease-out, color 200ms ease-out;
 }
 
 /* Root Variables */
@@ -26,18 +27,61 @@ body {
   --gray-1000: hsl(0, 0%, 2%);
 
   --primary-color: hsl(180, 50%, 50%);
+
+  /* text */
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-100: 1.25rem;
+  --text-200: 2rem;
+  --text-500: 4rem;
+  --text-900: 6rem;
+
+  /* duration */
+  --duration: 250ms;
+
 }
 
 /* Themes */
 
 .light {
   --bg: var(--gray-0);
-  --text: var(--gray-1000);
+  --text: var(--gray-900);
   --border: var(--gray-750);
+  --shadow-100: var(--gray-250);
 }
 
 .dark {
   --bg: var(--gray-900);
   --text: var(--gray-100);
   --border: var(--gray-250);
+  --shadow-100: var(--gray-100);
+}
+
+/* Library */
+
+.btn{
+  height: 2.5rem;
+  width: 2.5rem;
+  cursor: pointer;
+  padding: 10px;
+}
+
+.btn-outline{
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+}
+
+.btn-circle{
+  border-radius: 50%;
+}
+
+.btn:focus{
+  outline: none;
+}
+
+.btn:hover{
+  background: var(--text);
+  color: var(--bg);
+  transition: all var(--duration) ease;
 }

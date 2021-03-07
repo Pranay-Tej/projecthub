@@ -1,28 +1,20 @@
-.home {
-  height: 100vh;
-  display: grid;
-  justify-content: center;
-  justify-items: center;
-  align-items: center;
+.hero {
+  margin-top: 20vh;
+  text-align: center;
 }
 
 .heroTitle {
-  font-size: 5vw;
+  font-size: 10vw;
   letter-spacing: 2px;
 }
 
-.themeToggleButton{
-  height: 3rem;
-  width: 3rem;
-  border-radius: 50%;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text);
-  cursor: pointer;
-  padding: 10px;
-  align-self: self-start;
-}
+@media(min-width:768px){
 
-.themeToggleButton:focus{
-  outline: none;
+  .hero {
+    margin-top: 6rem;
+  }
+
+  .heroTitle{
+    font-size: var(--text-900);
+  }
 }
