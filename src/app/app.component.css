@@ -1,0 +1,28 @@
+.home {
+  height: 100vh;
+  display: grid;
+  justify-content: center;
+  justify-items: center;
+  align-items: center;
+}
+
+.heroTitle {
+  font-size: 5vw;
+  letter-spacing: 2px;
+}
+
+.themeToggleButton{
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+  padding: 10px;
+  align-self: self-start;
+}
+
+.themeToggleButton:focus{
+  outline: none;
+}

@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'projecthub';
+  title = 'ProjectHub';
+
+  toggleTheme(){
+    document.body.classList.toggle('dark');
+    document.body.classList.toggle('light');
+  }
 }
