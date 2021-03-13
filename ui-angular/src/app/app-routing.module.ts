@@ -4,6 +4,11 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
+  {
+    path: 'projects',
+    loadChildren: () =>
+      import('./projects/projects.module').then((m) => m.ProjectsModule),
+  },
 ];
 
 @NgModule({
