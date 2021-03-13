@@ -11,7 +11,7 @@
   visibility: hidden;
   opacity: 0;
   width: 7em;
-  transform: translateX(-64px) translateY(3px);
+  transform: translateX(-64px) translateY(-6px);
   border-radius: 1px;
   box-shadow: 1px 1px 3px 2px var(--shadow-100);
   background: var(--bg);
@@ -22,6 +22,7 @@
 .themeSelector:focus-within .themeOptionList {
   opacity: 1;
   pointer-events: all;
+  transform: translateX(-64px) translateY(3px);
   visibility: visible;
 }
 
