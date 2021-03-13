@@ -10,6 +10,7 @@
 }
 
 .heroDescription{
+  font-size: 5vw;
   color: var(--gray-500);
   padding: 0 1em;
 }
@@ -21,5 +22,9 @@
 
   .heroTitle{
     font-size: var(--text-900);
+  }
+
+  .heroDescription{
+    font-size: var(--text-200);
   }
 }

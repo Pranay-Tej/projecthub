@@ -36,10 +36,14 @@ body {
 
   /* text */
   --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-100: 1.25rem;
-  --text-200: 2rem;
-  --text-500: 4rem;
+  --text-100: 1rem;
+  --text-200: 1.25rem;
+  --text-300: 1.75rem;
+  --text-400: 2rem;
+  --text-500: 2.25rem;
+  --text-600: 2.5rem;
+  --text-700: 2.75rem;
+  --text-800: 3rem;
   --text-900: 6rem;
 
   /* duration */
@@ -53,7 +57,7 @@ body {
   --bg: var(--root-gray-0);
   --text: var(--root-gray-900);
 
-  --border: var(--root-gray-500);
+  --border: var(--root-gray-250);
 
   --shadow-100: var(--root-gray-250);
 
@@ -70,7 +74,7 @@ body {
   --bg: var(--root-gray-900);
   --text: var(--root-gray-100);
 
-  --border: var(--root-gray-250);
+  --border: var(--root-gray-500);
 
   --shadow-100: var(--root-gray-1000);
 
@@ -86,8 +90,6 @@ body {
 /* Library */
 
 .btn{
-  height: 2.5rem;
-  width: 2.5rem;
   cursor: pointer;
   padding: 10px;
   display: inline-flex;
@@ -103,6 +105,8 @@ body {
 }
 
 .btn-circle{
+  height: 2.5rem;
+  width: 2.5rem;
   border-radius: 50%;
 }
 

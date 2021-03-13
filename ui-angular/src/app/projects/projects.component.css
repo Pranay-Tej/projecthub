@@ -1,0 +1,32 @@
+.projects{
+  display: grid;
+  height: 100%;
+  width: 100%;
+  grid-template-areas: "project repo";
+  grid-template-columns: 250px 1fr;
+}
+
+.projectList{
+  grid-area: project;
+  background: var(--bg);
+  border-right: 1px solid var(--border);
+}
+
+.repoList{
+  grid-area: repo;
+}
+
+@media(max-width:550px){
+  .projects{
+    grid-template-areas: "repo";
+  }
+
+  .projectList{
+    transform: translateX(-100%);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    transition: all 200ms ease-out;
+    border: none;
+  }
+}
