@@ -1,3 +1,3 @@
 # ProjectHub
 
-Organize your GitHub repos as projects
+Organize & share your GitHub repos as projects

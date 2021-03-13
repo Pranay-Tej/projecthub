@@ -34,6 +34,10 @@
   transition: all var(--duration) ease;
 }
 
+.themeOption:not(:last-child){
+  border-bottom: 1px solid var(--border);
+}
+
 .themeOption:hover {
   background: var(--text);
   color: var(--bg);

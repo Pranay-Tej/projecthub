@@ -2,6 +2,12 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html,
 body {
   height: 100%;
@@ -18,13 +24,13 @@ body {
 /* Root Variables */
 
 :root {
-  --gray-0: hsl(0, 0%, 98%);
-  --gray-100: hsl(0, 0%, 90%);
-  --gray-250: hsl(0, 0%, 75%);
-  --gray-500: hsl(0, 0%, 50%);
-  --gray-750: hsl(0, 0%, 25%);
-  --gray-900: hsl(0, 0%, 10%);
-  --gray-1000: hsl(0, 0%, 2%);
+  --root-gray-0: hsl(0, 0%, 98%);
+  --root-gray-100: hsl(0, 0%, 90%);
+  --root-gray-250: hsl(0, 0%, 75%);
+  --root-gray-500: hsl(0, 0%, 50%);
+  --root-gray-750: hsl(0, 0%, 25%);
+  --root-gray-900: hsl(0, 0%, 10%);
+  --root-gray-1000: hsl(0, 0%, 2%);
 
   --primary-color: hsl(180, 50%, 50%);
 
@@ -44,17 +50,37 @@ body {
 /* Themes */
 
 .light {
-  --bg: var(--gray-0);
-  --text: var(--gray-900);
-  --border: var(--gray-750);
-  --shadow-100: var(--gray-250);
+  --bg: var(--root-gray-0);
+  --text: var(--root-gray-900);
+
+  --border: var(--root-gray-500);
+
+  --shadow-100: var(--root-gray-250);
+
+  --gray-0: var(--root-gray-0);
+  --gray-100: var(--root-gray-100);
+  --gray-250: var(--root-gray-250);
+  --gray-500: var(--root-gray-500);
+  --gray-750: var(--root-gray-750);
+  --gray-900: var(--root-gray-900);
+  --gray-1000: var(--root-gray-1000);
 }
 
 .dark {
-  --bg: var(--gray-900);
-  --text: var(--gray-100);
-  --border: var(--gray-250);
-  --shadow-100: var(--gray-100);
+  --bg: var(--root-gray-900);
+  --text: var(--root-gray-100);
+
+  --border: var(--root-gray-250);
+
+  --shadow-100: var(--root-gray-1000);
+
+  --gray-0: var(--root-gray-1000);
+  --gray-100: var(--root-gray-900);
+  --gray-250: var(--root-gray-750);
+  --gray-500: var(--root-gray-500);
+  --gray-750: var(--root-gray-250);
+  --gray-900: var(--root-gray-100);
+  --gray-1000: var(--root-gray-1000);
 }
 
 /* Library */
@@ -64,6 +90,10 @@ body {
   width: 2.5rem;
   cursor: pointer;
   padding: 10px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  transition: all var(--duration) ease;
 }
 
 .btn-outline{
@@ -83,5 +113,4 @@ body {
 .btn:hover{
   background: var(--text);
   color: var(--bg);
-  transition: all var(--duration) ease;
 }

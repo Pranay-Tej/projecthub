@@ -1,0 +1,25 @@
+.hero {
+  margin-top: 20vh;
+  text-align: center;
+}
+
+.heroTitle {
+  font-size: 10vw;
+  letter-spacing: 2px;
+  margin-bottom: 0.3em;
+}
+
+.heroDescription{
+  color: var(--gray-500);
+  padding: 0 1em;
+}
+
+@media(min-width:768px){
+  .hero {
+    margin-top: 6rem;
+  }
+
+  .heroTitle{
+    font-size: var(--text-900);
+  }
+}
