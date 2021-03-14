@@ -1,1 +1,20 @@
-<div>project-list works!</div>
+<button>All Repos</button>
+
+<button>New Project</button>
+
+<form [formGroup]="filterForm">
+  <input
+    type="text"
+    name="projectName"
+    id="projectrtName"
+    formControlName="projectName"
+  />
+</form>
+
+<div>
+  <div *ngFor="let project of filteredProjectList">
+    <pre>
+      {{ project.name }}
+    </pre>
+  </div>
+</div>

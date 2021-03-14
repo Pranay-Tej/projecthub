@@ -1,3 +1,5 @@
+import { ProjectFacade } from './store/project.facade';
+import { ProjectService } from './services/project.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -18,6 +20,6 @@ import { ReactiveFormsModule } from '@angular/forms';
     ProjectsRoutingModule,
     ReactiveFormsModule,
   ],
-  providers: [RepoService, RepoFacade],
+  providers: [ProjectService, ProjectFacade, RepoService, RepoFacade],
 })
 export class ProjectsModule {}

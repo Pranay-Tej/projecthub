@@ -1,14 +1,9 @@
 <form [formGroup]="filterForm">
-  <input
-    type="text"
-    name="reportName"
-    id="reportName"
-    formControlName="repoName"
-  />
+  <input type="text" name="repoName" id="repoName" formControlName="repoName" />
 </form>
 
 <div>
-  <div *ngFor="let repo of filteredReportList">
+  <div *ngFor="let repo of filteredRepoList">
     <pre>
       {{ repo.name }}
     </pre>

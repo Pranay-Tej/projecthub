@@ -9,7 +9,7 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 })
 export class RepoListComponent implements OnInit {
   repoList = [];
-  filteredReportList = [];
+  filteredRepoList = [];
   filterForm: FormGroup;
 
   constructor(
@@ -22,7 +22,7 @@ export class RepoListComponent implements OnInit {
 
     this.repoFacade.repoList$.subscribe((data: any) => {
       this.repoList = data;
-      this.filteredReportList = data;
+      this.filteredRepoList = data;
     });
 
     this.filterForm = this.formBuilder.group({
@@ -42,7 +42,7 @@ export class RepoListComponent implements OnInit {
   }
 
   applyFilters(searchTerm) {
-    this.filteredReportList = this.repoList.filter((repo) =>
+    this.filteredRepoList = this.repoList.filter((repo) =>
       new RegExp(searchTerm, 'i').test(repo.name)
     );
   }
