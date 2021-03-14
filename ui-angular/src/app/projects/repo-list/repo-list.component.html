@@ -1,1 +1,16 @@
-<div>repo-list works!</div>
+<form [formGroup]="filterForm">
+  <input
+    type="text"
+    name="reportName"
+    id="reportName"
+    formControlName="repoName"
+  />
+</form>
+
+<div>
+  <div *ngFor="let repo of filteredReportList">
+    <pre>
+      {{ repo.name }}
+    </pre>
+  </div>
+</div>

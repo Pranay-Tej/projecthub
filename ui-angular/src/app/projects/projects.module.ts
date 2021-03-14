@@ -5,13 +5,19 @@ import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsComponent } from './projects.component';
 import { ProjectListComponent } from './project-list/project-list.component';
 import { RepoListComponent } from './repo-list/repo-list.component';
-
+import { HttpClientModule } from '@angular/common/http';
+import { RepoService } from './services/repo.service';
+import { RepoFacade } from './store/repo.facade';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ProjectsComponent, ProjectListComponent, RepoListComponent],
   imports: [
     CommonModule,
-    ProjectsRoutingModule
-  ]
+    HttpClientModule,
+    ProjectsRoutingModule,
+    ReactiveFormsModule,
+  ],
+  providers: [RepoService, RepoFacade],
 })
-export class ProjectsModule { }
+export class ProjectsModule {}
