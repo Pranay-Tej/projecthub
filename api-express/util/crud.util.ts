@@ -27,19 +27,24 @@ const findOne = (model: Model<any>) => async (req: Request, res: Response) => {
 };
 
 const findMany = (model: Model<any>) => async (req: Request, res: Response) => {
+  const {
+    _sort = "updatedAt",
+    _order = -1,
+    _skip = 0,
+    _limit = 20,
+    ...filters
+  } = req.query;
   try {
-    // let filters = {} as any;
-    // if (req.query.user) {
-    //   filters.user = req.query.user;
-    // }
-    // if (req.query.id) {
-    //   filters._id = req.query.id;
-    // }
-    console.log(req.query);
-    // const docs = await model.find(filters).lean().exec();
+    let sortCriteria = {} as any;
+    sortCriteria[_sort as string] = _order;
+    const limit = _limit != "-1" ? parseInt(_limit as string) : NaN;
+    // console.log(sortCriteria);
+    // console.log(limit);
     const docs = await model
-      .find({ ...req.query })
-      .sort({ updatedAt: -1 })
+      .find({ ...filters })
+      .sort({ ...sortCriteria })
+      .limit(limit)
+      .skip(parseInt(_skip as string))
       .lean()
       .exec();
 
