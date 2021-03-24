@@ -3,12 +3,13 @@ import express from "express";
 import morgan from "morgan";
 import config from "./config/config";
 import projectRouter from "./resources/project/project.router";
+import projectRepoRouter from "./resources/projectRepo/projectRepo.router";
 import mongoose from "./util/db.util";
 
 const app = express();
 
 // Middleware
-app.use(cors);
+app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
@@ -17,6 +18,8 @@ app.get("/", (req, res) => {
 });
 
 app.use("/projects", projectRouter);
+
+app.use("/project-repos", projectRepoRouter);
 
 mongoose.connect(
   config.MONGO_URI,

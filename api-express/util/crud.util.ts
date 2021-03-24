@@ -31,7 +31,7 @@ const findMany = (model: Model<any>) => async (req: Request, res: Response) => {
     _sort = "updatedAt",
     _order = -1,
     _skip = 0,
-    _limit = 20,
+    _limit = 100,
     ...filters
   } = req.query;
   try {
