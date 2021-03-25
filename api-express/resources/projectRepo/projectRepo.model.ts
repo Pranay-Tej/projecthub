@@ -1,4 +1,3 @@
-import { CallbackError } from "mongoose";
 import mongoose from "../../util/db.util";
 import { projectModelName } from "../project/project.model";
 
@@ -26,9 +25,6 @@ projectRepoSchema.index({ projectId: 1, repoId: 1 }, { unique: true });
 
 export const projectRepoModelName = "ProjectRepo";
 
-const projectRepoModel = mongoose.model(
-  projectRepoModelName,
-  projectRepoSchema
-);
+const ProjectRepo = mongoose.model(projectRepoModelName, projectRepoSchema);
 
-export default projectRepoModel;
+export default ProjectRepo;

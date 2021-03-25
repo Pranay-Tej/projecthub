@@ -97,9 +97,10 @@ const deleteOne = (model: Model<any>) => async (
   res: Response
 ) => {
   try {
-    const removed = await model.findByIdAndDelete(req.params.id);
-
-    if (!removed) {
+    // const removed = await model.findByIdAndDelete(req.params.id);
+    const { deletedCount = 0 } = await model.deleteOne({ _id: req.params.id });
+    // console.log(deletedCount);
+    if (deletedCount === 0) {
       return res.status(400).end();
     }
 
