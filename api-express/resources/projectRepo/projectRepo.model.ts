@@ -1,3 +1,4 @@
+import { repoModelName } from "./../repo/repo.model";
 import mongoose from "../../util/db.util";
 import { projectModelName } from "../project/project.model";
 
@@ -9,6 +10,11 @@ const projectRepoSchema = new mongoose.Schema(
       required: true,
     },
     repoId: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: repoModelName,
+      required: true,
+    },
+    user: {
       type: String,
       required: true,
     },
@@ -17,7 +23,7 @@ const projectRepoSchema = new mongoose.Schema(
 );
 
 projectRepoSchema.pre("find", function () {
-  this.populate("projectId");
+  this.populate("projectId").populate("repoId");
 });
 
 // for each project, repos are unique

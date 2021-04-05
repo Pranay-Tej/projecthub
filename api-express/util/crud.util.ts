@@ -3,8 +3,9 @@ import { Request, Response } from "express";
 
 const count = (model: Model<any>) => async (req: Request, res: Response) => {
   try {
-    const count = await model.countDocuments();
-    console.log(count);
+    const { ...filters } = req.query;
+    const count = await model.countDocuments({ ...filters });
+    // console.log(count);
     res.status(200).json(count);
   } catch (e) {
     console.error(e);

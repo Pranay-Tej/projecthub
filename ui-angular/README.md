@@ -1,3 +1,3 @@
 # ProjectHub
 
-Organize & share your GitHub repos as projects
+Angular UI for ProjectHub

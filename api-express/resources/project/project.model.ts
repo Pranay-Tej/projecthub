@@ -9,6 +9,12 @@ const projectSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    url: {
+      type: String,
+    },
+    website: {
+      type: String,
+    },
     user: {
       type: String,
       required: true,

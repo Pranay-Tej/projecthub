@@ -4,6 +4,7 @@ import morgan from "morgan";
 import config from "./config/config";
 import projectRouter from "./resources/project/project.router";
 import projectRepoRouter from "./resources/projectRepo/projectRepo.router";
+import repoRouter from "./resources/repo/repo.router";
 import mongoose from "./util/db.util";
 
 const app = express();
@@ -16,6 +17,8 @@ app.use(morgan("dev"));
 app.get("/", (req, res) => {
   res.send("Hello world!");
 });
+
+app.use("/repos", repoRouter);
 
 app.use("/projects", projectRouter);
 
