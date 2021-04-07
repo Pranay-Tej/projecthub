@@ -1,0 +1,28 @@
+/* styles for app-repo-list */
+:host {
+  grid-area: repo;
+}
+
+.repoList {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.repo {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  max-width: 300px;
+  min-width: 300px;
+  padding: 0.75em;
+  margin: 1em;
+  flex: 1;
+}
+
+.title {
+  font-weight: 600;
+}
+
+.link {
+  font-size: var(--text-xsm);
+  color: var(--gray-750);
+}

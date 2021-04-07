@@ -1,4 +1,4 @@
-<button>All Repos</button>
+<button (click)="fetchAllRepos()">All Repos</button>
 
 <button>New Project</button>
 
@@ -11,10 +11,22 @@
   />
 </form>
 
-<div>
-  <div *ngFor="let project of filteredProjectList">
-    <pre>
+<div *ngIf="filteredProjectList.length > 0">
+  <div
+    *ngFor="let project of filteredProjectList"
+    [ngClass]="{
+      project: true,
+      selectedProject: project._id === selectedProject
+    }"
+    (click)="fetchProjectRepos(project._id)"
+  >
+    <div class="title">
       {{ project.name }}
-    </pre>
+    </div>
+    <div>:</div>
   </div>
+</div>
+
+<div *ngIf="filteredProjectList.length === 0" class="emptyList">
+  No Projects
 </div>

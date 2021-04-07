@@ -2,7 +2,7 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -35,6 +35,7 @@ body {
   --primary-color: hsl(180, 50%, 50%);
 
   /* text */
+  --text-xsm: 0.75rem;
   --text-sm: 0.875rem;
   --text-100: 1rem;
   --text-200: 1.25rem;
@@ -48,7 +49,6 @@ body {
 
   /* duration */
   --duration: 250ms;
-
 }
 
 /* Themes */
@@ -89,7 +89,7 @@ body {
 
 /* Library */
 
-.btn{
+.btn {
   cursor: pointer;
   padding: 10px;
   display: inline-flex;
@@ -98,23 +98,30 @@ body {
   transition: all var(--duration) ease;
 }
 
-.btn-outline{
+.btn-outline {
   border: 1px solid var(--border);
   background: var(--bg);
   color: var(--text);
 }
 
-.btn-circle{
+.btn-circle {
   height: 2.5rem;
   width: 2.5rem;
   border-radius: 50%;
 }
 
-.btn:focus{
+.btn:focus {
   outline: none;
 }
 
-.btn:hover{
+.btn:hover {
   background: var(--text);
   color: var(--bg);
+}
+
+/* Empty List */
+.emptyList {
+  display: flex;
+  justify-content: center;
+  margin: 1em auto;
 }
