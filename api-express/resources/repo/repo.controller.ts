@@ -17,13 +17,13 @@ const deleteOne = (model: Model<any>) => async (
 
     const { deletedCount = 0 } = await model.deleteOne({ _id: req.params.id });
     if (deletedCount === 0) {
-      return res.status(400).end();
+      return res.status(404).json(`${model.modelName} not found`).end();
     }
 
     res.status(204).end();
   } catch (e) {
     console.error(e);
-    res.status(400).end();
+    res.status(400).json(e).end();
   }
 };
 

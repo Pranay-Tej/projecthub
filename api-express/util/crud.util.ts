@@ -6,10 +6,10 @@ const count = (model: Model<any>) => async (req: Request, res: Response) => {
     const { ...filters } = req.query;
     const count = await model.countDocuments({ ...filters });
     // console.log(count);
-    res.status(200).json(count);
+    res.status(200).json({ count });
   } catch (e) {
     console.error(e);
-    res.status(400).end();
+    res.status(400).json(e).end();
   }
 };
 
@@ -17,13 +17,13 @@ const findOne = (model: Model<any>) => async (req: Request, res: Response) => {
   try {
     const doc = await model.findOne({ _id: req.params.id }).lean().exec();
     if (!doc) {
-      return res.status(404).end();
+      return res.status(404).json(`${model.modelName} not found`).end();
     }
 
     res.status(200).json(doc);
   } catch (e) {
     console.error(e);
-    res.status(400).end();
+    res.status(400).json(e).end();
   }
 };
 
@@ -52,7 +52,7 @@ const findMany = (model: Model<any>) => async (req: Request, res: Response) => {
     res.status(200).json(docs);
   } catch (e) {
     console.error(e);
-    res.status(400).end();
+    res.status(400).json(e).end();
   }
 };
 
@@ -65,7 +65,7 @@ const createOne = (model: Model<any>) => async (
     res.status(201).json(doc);
   } catch (e) {
     console.error(e);
-    res.status(400).end();
+    res.status(400).json(e).end();
   }
 };
 
@@ -89,7 +89,7 @@ const updateOne = (model: Model<any>) => async (
     res.status(200).json(updatedDoc);
   } catch (e) {
     console.error(e);
-    res.status(400).end();
+    res.status(400).json(e).end();
   }
 };
 
@@ -102,13 +102,13 @@ const deleteOne = (model: Model<any>) => async (
     const { deletedCount = 0 } = await model.deleteOne({ _id: req.params.id });
     // console.log(deletedCount);
     if (deletedCount === 0) {
-      return res.status(400).end();
+      return res.status(404).json(`${model.modelName} not found`).end();
     }
 
     res.status(204).end();
   } catch (e) {
     console.error(e);
-    res.status(400).end();
+    res.status(400).json(e).end();
   }
 };
 
