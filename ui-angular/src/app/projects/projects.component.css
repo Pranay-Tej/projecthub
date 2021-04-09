@@ -1,6 +1,6 @@
 .projects {
   display: grid;
-  height: 100%;
+  height: calc(100% - 57px);
   width: 100%;
   grid-template-areas: "project repo";
   grid-template-columns: 250px 1fr;
@@ -15,14 +15,19 @@
 @media (max-width: 550px) {
   .projects {
     grid-template-areas: "repo";
+    grid-template-columns: 1fr;
   }
 
   .projectList {
     transform: translateX(-100%);
     position: absolute;
-    height: 100%;
+    height: calc(100% - 57px);
     width: 100%;
-    transition: all 200ms ease-out;
-    border: none;
+    transition: transform 200ms ease-out;
+    /* border: none; */
+  }
+
+  .projectList.active {
+    transform: translateX(0);
   }
 }

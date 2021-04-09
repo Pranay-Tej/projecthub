@@ -32,7 +32,7 @@ body {
   --root-gray-900: hsl(0, 0%, 10%);
   --root-gray-1000: hsl(0, 0%, 2%);
 
-  --primary-color: hsl(180, 50%, 50%);
+  --primary-color-1000: hsl(240, 40%, 60%);
 
   /* text */
   --text-xsm: 0.75rem;
@@ -114,9 +114,11 @@ body {
   outline: none;
 }
 
-.btn:hover {
-  background: var(--text);
-  color: var(--bg);
+@media (hover: hover) {
+  .btn:hover {
+    background: var(--text);
+    color: var(--bg);
+  }
 }
 
 /* Empty List */
@@ -124,4 +126,13 @@ body {
   display: flex;
   justify-content: center;
   margin: 1em auto;
+}
+
+.title {
+  font-weight: 600;
+}
+
+.link {
+  font-size: var(--text-xsm);
+  color: var(--gray-750);
 }

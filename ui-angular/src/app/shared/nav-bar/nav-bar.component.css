@@ -6,6 +6,19 @@
   border-bottom: 1px solid var(--border);
 }
 
+.toggleSideMenu {
+  position: fixed;
+  bottom: 16px;
+  left: 16px;
+  z-index: 1000;
+}
+
+@media (min-width: 550px) {
+  .toggleSideMenu {
+    display: none;
+  }
+}
+
 .themeOptionList {
   position: absolute;
   visibility: hidden;
@@ -34,11 +47,13 @@
   transition: all var(--duration) ease;
 }
 
-.themeOption:not(:last-child){
+.themeOption:not(:last-child) {
   border-bottom: 1px solid var(--border);
 }
 
-.themeOption:hover {
-  background: var(--text);
-  color: var(--bg);
+@media (hover: hover) {
+  .themeOption:hover {
+    background: var(--text);
+    color: var(--bg);
+  }
 }

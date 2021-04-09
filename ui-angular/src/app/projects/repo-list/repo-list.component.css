@@ -1,28 +1,51 @@
 /* styles for app-repo-list */
 :host {
   grid-area: repo;
+  margin: 2em auto;
+  padding: 1em 2em;
+  width: 100%;
+}
+
+/* large screens */
+@media (min-width: 768px) {
+  :host {
+    padding: 1em 1em;
+    max-width: 80%;
+  }
 }
 
 .repoList {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1em;
+  margin: 1em auto;
+}
+
+/* medium screens */
+@media (min-width: 768px) {
+  .repoList {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* large screens */
+@media (min-width: 1000px) {
+  .repoList {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 .repo {
   border: 1px solid var(--border);
-  border-radius: 6px;
-  max-width: 300px;
-  min-width: 300px;
+  border-radius: 5px;
+  /* max-width: 300px;
+  min-width: 300px; */
   padding: 0.75em;
-  margin: 1em;
-  flex: 1;
+  transition: all var(--duration) ease;
 }
 
-.title {
-  font-weight: 600;
-}
-
-.link {
-  font-size: var(--text-xsm);
-  color: var(--gray-750);
+@media (hover: hover) {
+  .repo:hover {
+    border-color: var(--primary-color-1000);
+  }
 }

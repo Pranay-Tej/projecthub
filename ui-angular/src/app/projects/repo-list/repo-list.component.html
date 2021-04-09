@@ -8,8 +8,10 @@
       {{ repo.name }}
     </div>
     <div>
-      <div class="link">
-        {{ repo.url }}
+      <div>
+        <a *ngIf="repo.url" class="link" href="{{ repo.url }}" target="_blank">
+          Open
+        </a>
       </div>
       <div class="actions">+</div>
     </div>
