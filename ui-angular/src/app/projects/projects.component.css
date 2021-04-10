@@ -1,4 +1,4 @@
-.projects {
+.app {
   display: grid;
   height: calc(100% - 57px);
   width: 100%;
@@ -13,7 +13,7 @@
 }
 
 @media (max-width: 550px) {
-  .projects {
+  .app {
     grid-template-areas: "repo";
     grid-template-columns: 1fr;
   }
@@ -24,6 +24,7 @@
     height: calc(100% - 57px);
     width: 100%;
     transition: transform 200ms ease-out;
+    z-index: 900;
     /* border: none; */
   }
 

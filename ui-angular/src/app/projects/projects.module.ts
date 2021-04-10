@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from '../material.module';
 import { ProjectListComponent } from './project-list/project-list.component';
 import { ProjectsRoutingModule } from './projects-routing.module';
 import { ProjectsComponent } from './projects.component';
@@ -17,6 +18,7 @@ import { RepoFacade } from './store/repo.facade';
   imports: [
     CommonModule,
     HttpClientModule,
+    MaterialModule,
     ProjectsRoutingModule,
     ReactiveFormsModule,
   ],

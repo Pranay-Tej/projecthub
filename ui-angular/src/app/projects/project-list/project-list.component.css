@@ -1,3 +1,11 @@
+.projectsMenu {
+  display: grid;
+  justify-content: center;
+  padding: 1em;
+  margin: 0 auto;
+  gap: 1em;
+}
+
 .project,
 .all {
   /* display: flex; */

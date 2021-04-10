@@ -15,7 +15,7 @@ body {
 
 body {
   margin: 0;
-  font-family: "Poppins", "Helvetica Neue", sans-serif;
+  font-family: "Poppins", Roboto, "Helvetica Neue", sans-serif;
   background: var(--bg);
   color: var(--text);
   transition: background 100ms ease-out, color 200ms ease-out;
@@ -88,6 +88,10 @@ body {
 }
 
 /* Library */
+
+.fullWidth {
+  width: 100%;
+}
 
 .btn {
   cursor: pointer;
