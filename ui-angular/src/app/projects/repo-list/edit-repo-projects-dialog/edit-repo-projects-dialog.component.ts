@@ -5,6 +5,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ProjectDialogComponent } from '../../project-list/project-dialog/project-dialog.component';
 import { ProjectFacade } from '../../store/project.facade';
 import { ProjectRepoFacade } from '../../store/project-repo.facade';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
 
 @Component({
   templateUrl: './edit-repo-projects-dialog.component.html',
@@ -12,10 +13,13 @@ import { ProjectRepoFacade } from '../../store/project-repo.facade';
 })
 export class EditRepoProjectsDialogComponent implements OnInit, OnDestroy {
   projectList = [];
+  filteredProjectList = [];
+  filterForm: FormGroup;
   projectListOfRepo: Set<string> = new Set<string>();
   subscriptions: Subscription;
 
   constructor(
+    private formBuilder: FormBuilder,
     private projectFacade: ProjectFacade,
     private projectRepoFacade: ProjectRepoFacade,
     public dialogRef: MatDialogRef<ProjectDialogComponent>,
@@ -28,8 +32,21 @@ export class EditRepoProjectsDialogComponent implements OnInit, OnDestroy {
     const projectListSubscription$ = this.projectFacade.projectList$.subscribe(
       (data: any) => {
         this.projectList = data;
+        this.filteredProjectList = data;
       }
     );
+
+    this.filterForm = this.formBuilder.group({
+      projectName: this.formBuilder.control(''),
+    });
+
+    this.filterForm
+      .get('projectName')
+      .valueChanges.pipe(
+        distinctUntilChanged(),
+        tap((val) => this.applyFilters(val))
+      )
+      .subscribe();
 
     const projectListOfRepoSubscription$ = this.projectRepoFacade.projectListOfRepo$.subscribe(
       (data: any) => {
@@ -47,6 +64,12 @@ export class EditRepoProjectsDialogComponent implements OnInit, OnDestroy {
     // subscriptions
     this.subscriptions.add(projectListSubscription$);
     this.subscriptions.add(projectListOfRepoSubscription$);
+  }
+
+  applyFilters(searchTerm) {
+    this.filteredProjectList = this.projectList.filter((project) =>
+      new RegExp(searchTerm, 'i').test(project.name)
+    );
   }
 
   toggleProjectForRepo(event: any, projectId: string, projectRepoId: string) {

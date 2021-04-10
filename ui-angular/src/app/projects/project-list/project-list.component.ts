@@ -33,7 +33,8 @@ export class ProjectListComponent implements OnInit {
     );
 
     this.projectFacade.projectList$.subscribe((data: any) => {
-      (this.projectList = data), (this.filteredProjectList = data);
+      this.projectList = data;
+      this.filteredProjectList = data;
     });
 
     this.filterForm = this.formBuilder.group({

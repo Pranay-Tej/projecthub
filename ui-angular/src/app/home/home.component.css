@@ -9,22 +9,23 @@
   margin-bottom: 0.3em;
 }
 
-.heroDescription{
+.heroDescription {
   font-size: 5vw;
   color: var(--gray-500);
   padding: 0 1em;
+  margin-bottom: 2em;
 }
 
-@media(min-width:768px){
+@media (min-width: 768px) {
   .hero {
     margin-top: 6rem;
   }
 
-  .heroTitle{
+  .heroTitle {
     font-size: var(--text-900);
   }
 
-  .heroDescription{
+  .heroDescription {
     font-size: var(--text-200);
   }
 }

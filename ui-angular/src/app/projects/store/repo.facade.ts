@@ -17,7 +17,7 @@ export class RepoFacade {
   repoList$ = this.repoList.asObservable();
 
   getAllRepos() {
-    this.projectFacade.setSelectedProject('all');
+    this.projectFacade.setSelectedProject('ALL');
     this.repoService
       .getAllRepos()
       .subscribe((data) => this.repoList.next(data));

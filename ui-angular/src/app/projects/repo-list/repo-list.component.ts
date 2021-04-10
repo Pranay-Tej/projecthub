@@ -14,6 +14,7 @@ export class RepoListComponent implements OnInit {
   repoList = [];
   filteredRepoList = [];
   filterForm: FormGroup;
+  selectedProjectId: string;
 
   constructor(
     private repoFacade: RepoFacade,
@@ -27,6 +28,10 @@ export class RepoListComponent implements OnInit {
       this.repoList = data;
       this.filteredRepoList = data;
     });
+
+    this.projectFacade.selectedProject$.subscribe(
+      (data: any) => (this.selectedProjectId = data)
+    );
 
     this.filterForm = this.formBuilder.group({
       repoName: this.formBuilder.control(''),
@@ -51,11 +56,17 @@ export class RepoListComponent implements OnInit {
   }
 
   editProjects(repoId: string) {
-    this.dialog.open(EditRepoProjectsDialogComponent, {
+    const dialogRef = this.dialog.open(EditRepoProjectsDialogComponent, {
       width: '300px',
       data: {
         repoId,
       },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (this.selectedProjectId !== 'ALL') {
+        this.repoFacade.getRepoListOfProject(this.selectedProjectId);
+      }
     });
   }
 }
