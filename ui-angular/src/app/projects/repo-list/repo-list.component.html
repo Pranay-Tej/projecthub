@@ -17,16 +17,42 @@
 
 <div *ngIf="filteredRepoList.length > 0" class="repoList">
   <div *ngFor="let repo of filteredRepoList" class="repo">
-    <div class="title">
-      {{ repo.name }}
+    <div class="flex justify-between">
+      <div class="title">
+        {{ repo.name }}
+      </div>
+      <button
+        mat-icon-button
+        aria-label="repo actions"
+        matTooltip="Actions"
+        [matMenuTriggerFor]="repoActionsMenu"
+        (click)="$event.stopPropagation()"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #repoActionsMenu>
+        <button mat-menu-item matTooltip="Edit">
+          <span>Edit</span>
+        </button>
+        <button mat-menu-item matTooltip="Delete">
+          <span class="textWarn">Delete</span>
+        </button>
+      </mat-menu>
     </div>
     <div>
-      <div>
-        <a *ngIf="repo.url" class="link" href="{{ repo.url }}" target="_blank">
-          Open
-        </a>
-      </div>
-      <div class="actions">+</div>
+      <a *ngIf="repo.url" class="link" href="{{ repo.url }}" target="_blank">
+        Open
+      </a>
+    </div>
+    <div class="flex justify-end">
+      <button
+        mat-icon-button
+        aria-label="add to projects"
+        matTooltip="Add to projects"
+        (click)="editProjects(repo._id)"
+      >
+        <mat-icon>library_add</mat-icon>
+      </button>
     </div>
   </div>
 </div>

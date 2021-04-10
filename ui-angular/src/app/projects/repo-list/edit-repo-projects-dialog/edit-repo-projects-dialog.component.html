@@ -1,0 +1,11 @@
+<div *ngIf="projectList.length > 0">
+  <div *ngFor="let project of projectList">
+    <mat-checkbox
+      [color]="primary"
+      [checked]="checkProject(project._id, project.name)"
+      (change)="toggleProjectForRepo($event, project._id)"
+    >
+      {{ project.name }}
+    </mat-checkbox>
+  </div>
+</div>

@@ -1,18 +1,24 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { ProjectRepoService } from '../services/project-repo.service';
 import { ProjectService } from '../services/project.service';
 
 @Injectable()
 export class ProjectFacade {
-  constructor(private projectService: ProjectService) {}
+  constructor(
+    private projectService: ProjectService,
+    private projectRepoService: ProjectRepoService
+  ) {}
 
   private projectList = new Subject();
+  private projectListOfRepo = new Subject();
   private project = new Subject();
   private selectedProject = new Subject();
   private saveOperation = new Subject();
   private deleteOperation = new Subject();
 
   projectList$ = this.projectList.asObservable();
+  projectListOfRepo$ = this.projectListOfRepo.asObservable();
   project$ = this.project.asObservable();
   selectedProject$ = this.selectedProject.asObservable();
   saveOperation$ = this.saveOperation.asObservable();

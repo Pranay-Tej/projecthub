@@ -23,13 +23,13 @@ export class RepoFacade {
       .subscribe((data) => this.repoList.next(data));
   }
 
-  getProjectRepos(projectId: string) {
+  getRepoListOfProject(projectId: string) {
     this.projectFacade.setSelectedProject(projectId);
     this.projectRepoService
-      .getProjectRepos(projectId)
+      .getRepoListOfProject(projectId)
       .subscribe((data: any) => {
-        let projectRepos = data.map((projectRepo) => projectRepo.repoId);
-        this.repoList.next(projectRepos);
+        let repoListOfProject = data.map((projectRepo) => projectRepo.repoId);
+        this.repoList.next(repoListOfProject);
       });
   }
 }

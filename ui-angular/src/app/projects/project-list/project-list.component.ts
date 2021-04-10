@@ -59,8 +59,8 @@ export class ProjectListComponent implements OnInit {
     this.repoFacade.getAllRepos();
   }
 
-  fetchProjectRepos(projectId: string) {
-    this.repoFacade.getProjectRepos(projectId);
+  fetchRepoListOfProject(projectId: string) {
+    this.repoFacade.getRepoListOfProject(projectId);
   }
 
   openProjectDialog(projectId: string) {

@@ -24,7 +24,7 @@ export class ProjectDialogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions = new Subscription();
 
-    const projectSubscription = this.projectFacade.project$.subscribe(
+    const projectSubscription$ = this.projectFacade.project$.subscribe(
       (data: any) => {
         const { name, url, website, user } = data;
         this.projectId = data.projectId;
@@ -32,7 +32,7 @@ export class ProjectDialogComponent implements OnInit, OnDestroy {
       }
     );
 
-    const saveOperationSubscription = this.projectFacade.saveOperation$.subscribe(
+    const saveOperationSubscription$ = this.projectFacade.saveOperation$.subscribe(
       (status: any) => {
         console.log(status);
         if (status === 'OK') {
@@ -57,8 +57,8 @@ export class ProjectDialogComponent implements OnInit, OnDestroy {
     }
 
     // all subscriptions
-    this.subscriptions.add(projectSubscription);
-    this.subscriptions.add(saveOperationSubscription);
+    this.subscriptions.add(projectSubscription$);
+    this.subscriptions.add(saveOperationSubscription$);
   }
 
   saveProject() {

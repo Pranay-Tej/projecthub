@@ -1,7 +1,10 @@
+import { ProjectFacade } from './../store/project.facade';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { RepoFacade } from '../store/repo.facade';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { EditRepoProjectsDialogComponent } from './edit-repo-projects-dialog/edit-repo-projects-dialog.component';
 @Component({
   selector: 'app-repo-list',
   templateUrl: './repo-list.component.html',
@@ -14,7 +17,9 @@ export class RepoListComponent implements OnInit {
 
   constructor(
     private repoFacade: RepoFacade,
-    private formBuilder: FormBuilder
+    private projectFacade: ProjectFacade,
+    private formBuilder: FormBuilder,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -43,5 +48,14 @@ export class RepoListComponent implements OnInit {
     this.filteredRepoList = this.repoList.filter((repo) =>
       new RegExp(searchTerm, 'i').test(repo.name)
     );
+  }
+
+  editProjects(repoId: string) {
+    this.dialog.open(EditRepoProjectsDialogComponent, {
+      width: '300px',
+      data: {
+        repoId,
+      },
+    });
   }
 }

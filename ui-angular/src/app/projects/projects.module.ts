@@ -1,3 +1,4 @@
+import { ProjectRepoFacade } from './store/project-repo.facade';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -14,6 +15,7 @@ import { ProjectService } from './services/project.service';
 import { RepoService } from './services/repo.service';
 import { ProjectFacade } from './store/project.facade';
 import { RepoFacade } from './store/repo.facade';
+import { EditRepoProjectsDialogComponent } from './repo-list/edit-repo-projects-dialog/edit-repo-projects-dialog.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { RepoFacade } from './store/repo.facade';
     RepoListComponent,
     ProjectDialogComponent,
     DeleteProjectDialogComponent,
+    EditRepoProjectsDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -36,6 +39,7 @@ import { RepoFacade } from './store/repo.facade';
     RepoService,
     RepoFacade,
     ProjectRepoService,
+    ProjectRepoFacade,
   ],
 })
 export class ProjectsModule {}

@@ -43,7 +43,7 @@
       project: true,
       selectedProject: selectedProject === project._id
     }"
-    (click)="fetchProjectRepos(project._id)"
+    (click)="fetchRepoListOfProject(project._id)"
   >
     <div class="flex justify-between">
       <div class="projectTitle" matTooltip="{{ project.name }}">
@@ -69,7 +69,6 @@
         <button
           mat-menu-item
           matTooltip="Delete"
-          class="flex justify-between"
           (click)="confirmDeleteProject(project._id, project.name)"
         >
           <span class="textWarn">Delete</span>
