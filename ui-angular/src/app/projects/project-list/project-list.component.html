@@ -1,20 +1,60 @@
-<button>All Repos</button>
+<div class="projectsMenu">
+  <button mat-flat-button color="primary">New Project</button>
 
-<button>New Project</button>
+  <form [formGroup]="filterForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Search by project name</mat-label>
+      <input
+        matInput
+        type="text"
+        name="projectName"
+        id="projectName"
+        formControlName="projectName"
+        placeholder="Search..."
+      />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </form>
+</div>
 
-<form [formGroup]="filterForm">
-  <input
-    type="text"
-    name="projectName"
-    id="projectrtName"
-    formControlName="projectName"
-  />
-</form>
+<div
+  (click)="fetchAllRepos()"
+  [ngClass]="{
+    all: true,
+    selectedProject: selectedProject === 'all'
+  }"
+>
+  All Repos
+</div>
 
-<div>
-  <div *ngFor="let project of filteredProjectList">
-    <pre>
-      {{ project.name }}
-    </pre>
+<div *ngIf="filteredProjectList.length > 0">
+  <div
+    *ngFor="let project of filteredProjectList"
+    [ngClass]="{
+      project: true,
+      selectedProject: selectedProject === project._id
+    }"
+    (click)="fetchProjectRepos(project._id)"
+  >
+    <div>
+      <div class="title">
+        {{ project.name }}
+      </div>
+      <div>:</div>
+    </div>
+    <div>
+      <a
+        *ngIf="project.url"
+        class="link"
+        href="{{ project.url }}"
+        target="_blank"
+      >
+        Open
+      </a>
+    </div>
   </div>
+</div>
+
+<div *ngIf="filteredProjectList.length === 0" class="emptyList">
+  No Projects
 </div>

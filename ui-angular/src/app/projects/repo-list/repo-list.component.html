@@ -1,11 +1,34 @@
-<form [formGroup]="filterForm">
-  <input type="text" name="repoName" id="repoName" formControlName="repoName" />
-</form>
-
 <div>
-  <div *ngFor="let repo of filteredRepoList">
-    <pre>
+  <form [formGroup]="filterForm">
+    <mat-form-field appearance="outline" class="fullWidth">
+      <mat-label>Search by repo name</mat-label>
+      <input
+        matInput
+        type="text"
+        name="repoName"
+        id="repoName"
+        formControlName="repoName"
+        placeholder="Search..."
+      />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </form>
+</div>
+
+<div *ngIf="filteredRepoList.length > 0" class="repoList">
+  <div *ngFor="let repo of filteredRepoList" class="repo">
+    <div class="title">
       {{ repo.name }}
-    </pre>
+    </div>
+    <div>
+      <div>
+        <a *ngIf="repo.url" class="link" href="{{ repo.url }}" target="_blank">
+          Open
+        </a>
+      </div>
+      <div class="actions">+</div>
+    </div>
   </div>
 </div>
+
+<div *ngIf="filteredRepoList.length === 0" class="emptyList">No Repos</div>

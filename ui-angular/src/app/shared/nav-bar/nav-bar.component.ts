@@ -18,14 +18,20 @@ export class NavBarComponent implements OnInit {
   }
 
   setLightTheme() {
-    localStorage.setItem('projecthub-theme', 'light')
+    localStorage.setItem('projecthub-theme', 'light');
     document.body.classList.remove('dark');
     document.body.classList.add('light');
   }
 
-  setDarkTheme(){
+  setDarkTheme() {
     localStorage.setItem('projecthub-theme', 'dark');
     document.body.classList.remove('light');
     document.body.classList.add('dark');
+  }
+
+  toggleSideBar() {
+    console.log('toggle');
+
+    document.querySelector('.projectList').classList.toggle('active');
   }
 }

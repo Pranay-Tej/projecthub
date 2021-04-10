@@ -1,32 +1,34 @@
-.projects{
+.app {
   display: grid;
-  height: 100%;
+  height: calc(100% - 57px);
   width: 100%;
   grid-template-areas: "project repo";
   grid-template-columns: 250px 1fr;
 }
 
-.projectList{
+.projectList {
   grid-area: project;
   background: var(--bg);
   border-right: 1px solid var(--border);
 }
 
-.repoList{
-  grid-area: repo;
-}
-
-@media(max-width:550px){
-  .projects{
+@media (max-width: 550px) {
+  .app {
     grid-template-areas: "repo";
+    grid-template-columns: 1fr;
   }
 
-  .projectList{
+  .projectList {
     transform: translateX(-100%);
     position: absolute;
-    height: 100%;
+    height: calc(100% - 57px);
     width: 100%;
-    transition: all 200ms ease-out;
-    border: none;
+    transition: transform 200ms ease-out;
+    z-index: 900;
+    /* border: none; */
+  }
+
+  .projectList.active {
+    transform: translateX(0);
   }
 }

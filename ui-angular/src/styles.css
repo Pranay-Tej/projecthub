@@ -2,7 +2,7 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -15,7 +15,7 @@ body {
 
 body {
   margin: 0;
-  font-family: "Poppins", "Helvetica Neue", sans-serif;
+  font-family: "Poppins", Roboto, "Helvetica Neue", sans-serif;
   background: var(--bg);
   color: var(--text);
   transition: background 100ms ease-out, color 200ms ease-out;
@@ -32,9 +32,10 @@ body {
   --root-gray-900: hsl(0, 0%, 10%);
   --root-gray-1000: hsl(0, 0%, 2%);
 
-  --primary-color: hsl(180, 50%, 50%);
+  --primary-color-1000: hsl(240, 40%, 60%);
 
   /* text */
+  --text-xsm: 0.75rem;
   --text-sm: 0.875rem;
   --text-100: 1rem;
   --text-200: 1.25rem;
@@ -48,7 +49,6 @@ body {
 
   /* duration */
   --duration: 250ms;
-
 }
 
 /* Themes */
@@ -89,7 +89,11 @@ body {
 
 /* Library */
 
-.btn{
+.fullWidth {
+  width: 100%;
+}
+
+.btn {
   cursor: pointer;
   padding: 10px;
   display: inline-flex;
@@ -98,23 +102,41 @@ body {
   transition: all var(--duration) ease;
 }
 
-.btn-outline{
+.btn-outline {
   border: 1px solid var(--border);
   background: var(--bg);
   color: var(--text);
 }
 
-.btn-circle{
+.btn-circle {
   height: 2.5rem;
   width: 2.5rem;
   border-radius: 50%;
 }
 
-.btn:focus{
+.btn:focus {
   outline: none;
 }
 
-.btn:hover{
-  background: var(--text);
-  color: var(--bg);
+@media (hover: hover) {
+  .btn:hover {
+    background: var(--text);
+    color: var(--bg);
+  }
+}
+
+/* Empty List */
+.emptyList {
+  display: flex;
+  justify-content: center;
+  margin: 1em auto;
+}
+
+.title {
+  font-weight: 600;
+}
+
+.link {
+  font-size: var(--text-xsm);
+  color: var(--gray-750);
 }

@@ -18,8 +18,6 @@ export class RepoListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.repoFacade.getAllRepos();
-
     this.repoFacade.repoList$.subscribe((data: any) => {
       this.repoList = data;
       this.filteredRepoList = data;
