@@ -38,11 +38,31 @@
     }"
     (click)="fetchProjectRepos(project._id)"
   >
-    <div>
+    <div class="flex justify-between">
       <div class="title">
         {{ project.name }}
       </div>
-      <div>:</div>
+      <button
+        mat-icon-button
+        aria-label="project actions"
+        matTooltip="Actions"
+        [matMenuTriggerFor]="projectActionsMenu"
+        (click)="$event.stopPropagation()"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #projectActionsMenu>
+        <button
+          mat-menu-item
+          matTooltip="Edit"
+          (click)="openProjectDialog(project._id)"
+        >
+          <span>Edit</span>
+        </button>
+        <button mat-menu-item matTooltip="Delete" class="flex justify-between">
+          <span class="textWarn">Delete</span>
+        </button>
+      </mat-menu>
     </div>
     <div>
       <a

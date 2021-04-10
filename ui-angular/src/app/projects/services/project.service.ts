@@ -15,9 +15,17 @@ export class ProjectService {
     return this.httpClient.get(`${this.getUrl()}?user=Pranay-Tej`);
   }
 
+  getProject(id: string) {
+    return this.httpClient.get(`${this.getUrlWithId(id)}`);
+  }
+
   create(project) {
     return this.httpClient.post(this.getUrl(), project, {
       observe: 'response',
     });
+  }
+
+  update(project, id) {
+    return this.httpClient.put(this.getUrlWithId(id), project);
   }
 }
