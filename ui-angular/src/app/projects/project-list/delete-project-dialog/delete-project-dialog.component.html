@@ -1,0 +1,27 @@
+<div class="grid">
+  <p>
+    Delete project <b>{{ data.projectName }}</b> ?
+  </p>
+  <p class="info">Repos in project will not be deleted</p>
+  <span *ngIf="deleteOperation === 'ERROR'" class="textWarn"
+    >There was some error</span
+  >
+  <mat-dialog-actions align="end">
+    <button
+      mat-button
+      mat-dialog-close
+      [disabled]="deleteOperation === 'LOADING'"
+    >
+      {{ deleteOperation === "LOADING" ? "..." : "Cancel" }}
+    </button>
+    <button
+      mat-flat-button
+      color="warn"
+      [disabled]="deleteOperation === 'LOADING'"
+      (click)="deleteProject()"
+      cdkFocusInitial
+    >
+      {{ deleteOperation === "LOADING" ? "..." : "DELETE" }}
+    </button>
+  </mat-dialog-actions>
+</div>

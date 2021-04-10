@@ -116,6 +116,10 @@ body {
   align-items: end;
 }
 
+.grid {
+  display: grid;
+}
+
 /* End Layout */
 
 /* text */
@@ -168,6 +172,7 @@ body {
 
 .title {
   font-weight: 600;
+  font-size: 0.9rem;
 }
 
 .link {

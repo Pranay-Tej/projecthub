@@ -1,6 +1,12 @@
 <div class="projectsMenu">
-  <button mat-flat-button color="primary" (click)="openProjectDialog('')">
-    New Project
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="openProjectDialog('')"
+    matTooltip="New Project"
+  >
+    <mat-icon> add </mat-icon>
+    <span>PROJECT</span>
   </button>
 
   <form [formGroup]="filterForm">
@@ -25,6 +31,7 @@
     all: true,
     selectedProject: selectedProject === 'all'
   }"
+  matTooltip="View All Repos"
 >
   All Repos
 </div>
@@ -39,7 +46,7 @@
     (click)="fetchProjectRepos(project._id)"
   >
     <div class="flex justify-between">
-      <div class="title">
+      <div class="projectTitle" matTooltip="{{ project.name }}">
         {{ project.name }}
       </div>
       <button
@@ -59,7 +66,12 @@
         >
           <span>Edit</span>
         </button>
-        <button mat-menu-item matTooltip="Delete" class="flex justify-between">
+        <button
+          mat-menu-item
+          matTooltip="Delete"
+          class="flex justify-between"
+          (click)="confirmDeleteProject(project._id, project.name)"
+        >
           <span class="textWarn">Delete</span>
         </button>
       </mat-menu>

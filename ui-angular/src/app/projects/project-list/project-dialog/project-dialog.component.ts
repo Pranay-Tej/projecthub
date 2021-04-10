@@ -10,7 +10,7 @@ import { ProjectFacade } from './../../store/project.facade';
 })
 export class ProjectDialogComponent implements OnInit, OnDestroy {
   projectForm: FormGroup;
-  repoId: string;
+  projectId: string;
   saveOperation: string;
   subscriptions: Subscription;
 
@@ -27,6 +27,7 @@ export class ProjectDialogComponent implements OnInit, OnDestroy {
     const projectSubscription = this.projectFacade.project$.subscribe(
       (data: any) => {
         const { name, url, website, user } = data;
+        this.projectId = data.projectId;
         this.projectForm.setValue({ name, url, website, user });
       }
     );
@@ -36,23 +37,23 @@ export class ProjectDialogComponent implements OnInit, OnDestroy {
         console.log(status);
         if (status === 'OK') {
           this.dialogRef.close();
-        } else {
-          this.saveOperation = status;
         }
+        this.saveOperation = status;
       }
     );
 
     this.projectForm = this.formBuilder.group({
-      name: this.formBuilder.control('', Validators.required),
+      name: this.formBuilder.control('', [
+        Validators.required,
+        Validators.maxLength(35),
+      ]),
       url: this.formBuilder.control(''),
       website: this.formBuilder.control(''),
       user: this.formBuilder.control(''),
     });
 
-    this.repoId = this.data.repoId;
-
-    if (this.data.repoId !== '') {
-      this.projectFacade.getProject(this.repoId);
+    if (this.data.projectId !== '') {
+      this.projectFacade.getProject(this.data.projectId);
     }
 
     // all subscriptions
@@ -62,10 +63,10 @@ export class ProjectDialogComponent implements OnInit, OnDestroy {
 
   saveProject() {
     console.log(this.projectForm.getRawValue());
-    if (this.data.repoId === '') {
+    if (this.data.projectId === '') {
       this.createProject();
     } else {
-      this.updateProject(this.data.repoId);
+      this.updateProject(this.data.projectId);
     }
   }
 
@@ -78,8 +79,8 @@ export class ProjectDialogComponent implements OnInit, OnDestroy {
     // }
   }
 
-  updateProject(repoId: string) {
-    this.projectFacade.updateProject(this.projectForm.value, repoId);
+  updateProject(projectId: string) {
+    this.projectFacade.updateProject(this.projectForm.value, projectId);
   }
 
   ngOnDestroy(): void {

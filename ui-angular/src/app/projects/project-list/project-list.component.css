@@ -1,3 +1,10 @@
+.projectTitle {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 0.9rem;
+}
+
 .projectsMenu {
   display: grid;
   justify-content: center;
@@ -18,7 +25,7 @@
 
 .all {
   border-top: 1px solid var(--border);
-  margin-top: 1em;
+  font-weight: 600;
 }
 
 @media (hover: hover) {

@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { ProjectFacade } from '../store/project.facade';
 import { RepoFacade } from './../store/repo.facade';
+import { DeleteProjectDialogComponent } from './delete-project-dialog/delete-project-dialog.component';
 import { ProjectDialogComponent } from './project-dialog/project-dialog.component';
 
 @Component({
@@ -62,11 +63,21 @@ export class ProjectListComponent implements OnInit {
     this.repoFacade.getProjectRepos(projectId);
   }
 
-  openProjectDialog(repoId: string) {
+  openProjectDialog(projectId: string) {
     this.dialog.open(ProjectDialogComponent, {
       width: '300px',
       data: {
-        repoId,
+        projectId,
+      },
+    });
+  }
+
+  confirmDeleteProject(projectId: string, projectName: string) {
+    this.dialog.open(DeleteProjectDialogComponent, {
+      width: '300px',
+      data: {
+        projectId,
+        projectName,
       },
     });
   }

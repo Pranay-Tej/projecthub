@@ -1,4 +1,4 @@
-<form [formGroup]="projectForm" (ngSubmit)="saveProject()" class="projectForm">
+<form [formGroup]="projectForm" (ngSubmit)="saveProject()" class="grid">
   <mat-form-field appearance="standard">
     <mat-label>Project Name</mat-label>
     <input
@@ -10,6 +10,11 @@
     />
     <mat-error *ngIf="projectForm.get('name').errors?.required"
       >This field is required</mat-error
+    >
+    <mat-error *ngIf="projectForm.get('name').errors?.maxlength"
+      >Maximum
+      {{ projectForm.get("name").errors?.maxlength?.requiredLength }} characters
+      allowed</mat-error
     >
   </mat-form-field>
   <mat-form-field appearance="standard">
@@ -45,7 +50,7 @@
       mat-button
       color="primary"
       type="submit"
-      [disabled]="projectForm.invalid"
+      [disabled]="projectForm.invalid || saveOperation === 'LOADING'"
     >
       {{ saveOperation === "LOADING" ? "..." : "Save" }}
     </button>

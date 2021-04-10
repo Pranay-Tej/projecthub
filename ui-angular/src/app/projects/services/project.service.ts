@@ -28,4 +28,8 @@ export class ProjectService {
   update(project, id) {
     return this.httpClient.put(this.getUrlWithId(id), project);
   }
+
+  delete(id) {
+    return this.httpClient.delete(this.getUrlWithId(id));
+  }
 }

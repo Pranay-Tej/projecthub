@@ -10,11 +10,13 @@ export class ProjectFacade {
   private project = new Subject();
   private selectedProject = new Subject();
   private saveOperation = new Subject();
+  private deleteOperation = new Subject();
 
   projectList$ = this.projectList.asObservable();
   project$ = this.project.asObservable();
   selectedProject$ = this.selectedProject.asObservable();
   saveOperation$ = this.saveOperation.asObservable();
+  deleteOperation$ = this.deleteOperation.asObservable();
 
   getAllProjects() {
     this.projectService
@@ -68,6 +70,20 @@ export class ProjectFacade {
       (error) => {
         this.saveOperation.next('ERROR');
         console.error(error.error);
+      }
+    );
+  }
+
+  deleteProject(id) {
+    this.deleteOperation.next('LOADING');
+    this.projectService.delete(id).subscribe(
+      (data) => {
+        this.getAllProjects();
+        this.deleteOperation.next('OK');
+      },
+      (error) => {
+        console.error(error.error);
+        this.deleteOperation.next('ERROR');
       }
     );
   }
