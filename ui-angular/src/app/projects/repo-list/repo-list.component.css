@@ -4,6 +4,8 @@
   margin: 2em auto;
   padding: 1em 2em;
   width: 100%;
+  max-height: 100vh;
+  overflow-x: scroll;
 }
 
 /* large screens */

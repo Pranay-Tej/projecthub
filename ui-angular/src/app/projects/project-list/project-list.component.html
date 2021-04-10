@@ -1,5 +1,7 @@
 <div class="projectsMenu">
-  <button mat-flat-button color="primary">New Project</button>
+  <button mat-flat-button color="primary" (click)="openProjectDialog('')">
+    New Project
+  </button>
 
   <form [formGroup]="filterForm">
     <mat-form-field appearance="outline">

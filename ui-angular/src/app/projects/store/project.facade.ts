@@ -21,4 +21,27 @@ export class ProjectFacade {
   setSelectedProject(projectId: string) {
     this.selectedProject.next(projectId);
   }
+
+  createProject(project) {
+    this.projectService.create(project).subscribe(
+      (res) => {
+        // if (res.status === 201) {
+        //   console.log('success');
+        this.getAllProjects();
+        // return 'success';
+        // } else {
+        //   // return res.body
+        //   console.log('error', res);
+        // }
+      },
+      (error) => {
+        //Error callback
+        console.error(error.error);
+        // this.errorMessage = error;
+        // this.loading = false;
+
+        //throw error;   //You can also throw the error to a global error handler
+      }
+    );
+  }
 }

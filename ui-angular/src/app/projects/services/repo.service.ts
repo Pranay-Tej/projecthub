@@ -12,6 +12,6 @@ export class RepoService {
   getUrlWithId = (id) => `${environment.baseURL}/repos/${id}`;
 
   getAllRepos() {
-    return this.httpClient.get(this.getUrl());
+    return this.httpClient.get(`${this.getUrl()}?user=Pranay-Tej`);
   }
 }

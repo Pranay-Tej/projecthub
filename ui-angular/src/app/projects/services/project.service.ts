@@ -12,6 +12,12 @@ export class ProjectService {
   getUrlWithId = (id) => `${environment.baseURL}/projects/${id}`;
 
   getAllProjects() {
-    return this.httpClient.get(this.getUrl());
+    return this.httpClient.get(`${this.getUrl()}?user=Pranay-Tej`);
+  }
+
+  create(project) {
+    return this.httpClient.post(this.getUrl(), project, {
+      observe: 'response',
+    });
   }
 }

@@ -12,9 +12,10 @@ import { ProjectService } from './services/project.service';
 import { RepoService } from './services/repo.service';
 import { ProjectFacade } from './store/project.facade';
 import { RepoFacade } from './store/repo.facade';
+import { ProjectDialogComponent } from './project-list/project-dialog/project-dialog.component';
 
 @NgModule({
-  declarations: [ProjectsComponent, ProjectListComponent, RepoListComponent],
+  declarations: [ProjectsComponent, ProjectListComponent, RepoListComponent, ProjectDialogComponent],
   imports: [
     CommonModule,
     HttpClientModule,

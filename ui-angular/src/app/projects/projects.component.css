@@ -10,6 +10,8 @@
   grid-area: project;
   background: var(--bg);
   border-right: 1px solid var(--border);
+  max-height: 100vh;
+  overflow-x: scroll;
 }
 
 @media (max-width: 550px) {

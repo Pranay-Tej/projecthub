@@ -1,9 +1,10 @@
-import { RepoFacade } from './../store/repo.facade';
-import { distinctUntilChanged, tap } from 'rxjs/operators';
-import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { ProjectFacade } from '../store/project.facade';
-import { Observable } from 'rxjs';
+import { RepoFacade } from './../store/repo.facade';
+import { ProjectDialogComponent } from './project-dialog/project-dialog.component';
 
 @Component({
   selector: 'app-project-list',
@@ -19,7 +20,8 @@ export class ProjectListComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private projectFacade: ProjectFacade,
-    private repoFacade: RepoFacade
+    private repoFacade: RepoFacade,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -58,5 +60,14 @@ export class ProjectListComponent implements OnInit {
 
   fetchProjectRepos(projectId: string) {
     this.repoFacade.getProjectRepos(projectId);
+  }
+
+  openProjectDialog(repoId: string) {
+    this.dialog.open(ProjectDialogComponent, {
+      width: '300px',
+      data: {
+        repoId,
+      },
+    });
   }
 }
