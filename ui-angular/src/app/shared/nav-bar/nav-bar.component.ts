@@ -30,8 +30,6 @@ export class NavBarComponent implements OnInit {
   }
 
   toggleSideBar() {
-    console.log('toggle');
-
     document.querySelector('.projectList').classList.toggle('active');
   }
 }

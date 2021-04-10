@@ -28,8 +28,6 @@ export class ProjectRepoService {
   }
 
   remove(projectId: string, repoId: string) {
-    return this.httpClient.delete(
-      `${this.getUrl()}?projectId=${projectId}&repoId=${repoId}`
-    );
+    return this.httpClient.delete(`${this.getUrl()}/${projectId}/${repoId}`);
   }
 }

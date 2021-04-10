@@ -12,7 +12,7 @@ import { ProjectRepoFacade } from '../../store/project-repo.facade';
 })
 export class EditRepoProjectsDialogComponent implements OnInit, OnDestroy {
   projectList = [];
-  projectListOfRepo: Set<string>;
+  projectListOfRepo: Set<string> = new Set<string>();
   subscriptions: Subscription;
 
   constructor(
@@ -47,11 +47,6 @@ export class EditRepoProjectsDialogComponent implements OnInit, OnDestroy {
     // subscriptions
     this.subscriptions.add(projectListSubscription$);
     this.subscriptions.add(projectListOfRepoSubscription$);
-  }
-
-  checkProject(projectId: string, projectName: string) {
-    console.log(projectName);
-    return this.projectListOfRepo.has(projectId);
   }
 
   toggleProjectForRepo(event: any, projectId: string, projectRepoId: string) {
