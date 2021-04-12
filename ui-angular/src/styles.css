@@ -21,6 +21,11 @@ body {
   transition: background 100ms ease-out, color 200ms ease-out;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 /* Root Variables */
 
 :root {
@@ -89,6 +94,44 @@ body {
 
 /* Library */
 
+/* Layout */
+.flex {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.align-start {
+  align-items: start;
+}
+
+.align-end {
+  align-items: end;
+}
+
+.grid {
+  display: grid;
+}
+
+/* End Layout */
+
+/* text */
+.textWarn {
+  color: hsl(0, 50%, 60%);
+}
+
 .fullWidth {
   width: 100%;
 }
@@ -134,9 +177,29 @@ body {
 
 .title {
   font-weight: 600;
+  font-size: 0.9rem;
 }
 
 .link {
   font-size: var(--text-xsm);
   color: var(--gray-750);
+}
+
+/* scrollbars */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--gray-250);
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--gray-500);
 }

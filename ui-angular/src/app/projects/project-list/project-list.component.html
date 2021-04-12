@@ -1,5 +1,13 @@
 <div class="projectsMenu">
-  <button mat-flat-button color="primary">New Project</button>
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="openProjectDialog('')"
+    matTooltip="New Project"
+  >
+    <mat-icon> add </mat-icon>
+    <span>PROJECT</span>
+  </button>
 
   <form [formGroup]="filterForm">
     <mat-form-field appearance="outline">
@@ -21,8 +29,9 @@
   (click)="fetchAllRepos()"
   [ngClass]="{
     all: true,
-    selectedProject: selectedProject === 'all'
+    selectedProject: selectedProject === 'ALL'
   }"
+  matTooltip="View All Repos"
 >
   All Repos
 </div>
@@ -34,13 +43,37 @@
       project: true,
       selectedProject: selectedProject === project._id
     }"
-    (click)="fetchProjectRepos(project._id)"
+    (click)="fetchRepoListOfProject(project._id)"
   >
-    <div>
-      <div class="title">
+    <div class="flex justify-between">
+      <div class="projectTitle" matTooltip="{{ project.name }}">
         {{ project.name }}
       </div>
-      <div>:</div>
+      <button
+        mat-icon-button
+        aria-label="project actions"
+        matTooltip="Actions"
+        [matMenuTriggerFor]="projectActionsMenu"
+        (click)="$event.stopPropagation()"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #projectActionsMenu>
+        <button
+          mat-menu-item
+          matTooltip="Edit"
+          (click)="openProjectDialog(project._id)"
+        >
+          <span>Edit</span>
+        </button>
+        <button
+          mat-menu-item
+          matTooltip="Delete"
+          (click)="confirmDeleteProject(project._id, project.name)"
+        >
+          <span class="textWarn">Delete</span>
+        </button>
+      </mat-menu>
     </div>
     <div>
       <a

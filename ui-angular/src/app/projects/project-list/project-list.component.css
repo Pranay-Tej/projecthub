@@ -1,3 +1,10 @@
+.projectTitle {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  font-size: 0.9rem;
+}
+
 .projectsMenu {
   display: grid;
   justify-content: center;
@@ -12,13 +19,13 @@
   padding: 0.5em 0.75em;
   /* justify-content: space-between; */
   border-bottom: 1px solid var(--border);
-  border-radius: 8px solid transparent;
+  border-left: 8px solid transparent;
   transition: all var(--duration);
 }
 
 .all {
   border-top: 1px solid var(--border);
-  margin-top: 1em;
+  font-weight: 600;
 }
 
 @media (hover: hover) {
@@ -35,5 +42,5 @@
 }
 
 .selectedProject {
-  border-right: 8px solid var(--primary-color-1000);
+  border-left: 8px solid var(--primary-color-1000);
 }

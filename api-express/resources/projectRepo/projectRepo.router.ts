@@ -19,4 +19,8 @@ projectRepoRouter
   .put(controller.updateOne)
   .delete(controller.deleteOne);
 
+projectRepoRouter
+  .route("/:projectId/:repoId")
+  .delete(controller.deleteProjectRepo);
+
 export default projectRepoRouter;

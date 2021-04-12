@@ -12,6 +12,22 @@ export class RepoService {
   getUrlWithId = (id) => `${environment.baseURL}/repos/${id}`;
 
   getAllRepos() {
-    return this.httpClient.get(this.getUrl());
+    return this.httpClient.get(`${this.getUrl()}?user=Pranay-Tej`);
+  }
+
+  getRepo(id: string) {
+    return this.httpClient.get(`${this.getUrlWithId(id)}`);
+  }
+
+  create(repo: any) {
+    return this.httpClient.post(`${this.getUrl()}`, repo);
+  }
+
+  update(repo: any, id: string) {
+    return this.httpClient.put(`${this.getUrlWithId(id)}`, repo);
+  }
+
+  delete(id: string) {
+    return this.httpClient.delete(`${this.getUrlWithId(id)}`);
   }
 }

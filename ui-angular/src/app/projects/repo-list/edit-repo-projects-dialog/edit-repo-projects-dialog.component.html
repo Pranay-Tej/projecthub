@@ -1,0 +1,36 @@
+<mat-dialog-content>
+  <div>
+    <form [formGroup]="filterForm">
+      <mat-form-field appearance="outline">
+        <mat-label>Search by project name</mat-label>
+        <input
+          matInput
+          type="text"
+          name="projectName"
+          id="projectName"
+          formControlName="projectName"
+          placeholder="Search..."
+        />
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </form>
+  </div>
+  <div *ngIf="filteredProjectList.length > 0" class="grid projectList">
+    <div *ngFor="let project of filteredProjectList">
+      <mat-checkbox
+        [color]="primary"
+        [checked]="projectListOfRepo.has(project._id)"
+        (change)="toggleProjectForRepo($event, project._id)"
+      >
+        {{ project.name }}
+      </mat-checkbox>
+    </div>
+  </div>
+
+  <div *ngIf="filteredProjectList.length === 0" class="emptyList">
+    No Projects
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close cdkFocusInitial>DONE</button>
+</mat-dialog-actions>

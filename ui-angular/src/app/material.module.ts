@@ -10,9 +10,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [],
@@ -22,30 +24,34 @@ import { MatSliderModule } from '@angular/material/slider';
     MatCardModule,
     MatCheckboxModule,
     MatDatepickerModule,
-    MatNativeDateModule,
     MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatMenuModule,
+    MatNativeDateModule,
     MatSelectModule,
-    MatSlideToggleModule,
     MatSliderModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
   ],
   exports: [
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
     MatDatepickerModule,
-    MatNativeDateModule,
     MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatMenuModule,
+    MatNativeDateModule,
     MatSelectModule,
-    MatSlideToggleModule,
     MatSliderModule,
+    MatSlideToggleModule,
+    MatTooltipModule,
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
 })
