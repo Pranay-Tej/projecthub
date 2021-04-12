@@ -1,7 +1,7 @@
 /* styles for app-repo-list */
 :host {
   grid-area: repo;
-  margin: 2em auto;
+  margin: 1em auto;
   padding: 1em 2em;
   width: 100%;
   max-height: 100vh;

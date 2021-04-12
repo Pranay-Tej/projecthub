@@ -1,0 +1,42 @@
+<form [formGroup]="repoForm" (ngSubmit)="saveRepo()" class="grid">
+  <mat-form-field appearance="standard">
+    <mat-label>Repo Name</mat-label>
+    <input
+      name="name"
+      type="name"
+      matInput
+      placeholder="Super Cool Repo"
+      formControlName="name"
+    />
+    <mat-error *ngIf="repoForm.get('name').errors?.required"
+      >This field is required</mat-error
+    >
+  </mat-form-field>
+  <mat-form-field appearance="standard">
+    <mat-label>Repo Link</mat-label>
+    <input
+      name="url"
+      type="url"
+      matInput
+      placeholder="https://github.com/user/repo"
+      formControlName="url"
+    />
+    <mat-hint>Link for repo source code</mat-hint>
+  </mat-form-field>
+  <span *ngIf="saveOperation === 'ERROR'" class="textWarn"
+    >There was some error</span
+  >
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>
+      {{ saveOperation === "LOADING" ? "..." : "Cancel" }}
+    </button>
+    <button
+      mat-button
+      color="primary"
+      type="submit"
+      [disabled]="repoForm.invalid || saveOperation === 'LOADING'"
+    >
+      {{ saveOperation === "LOADING" ? "..." : "Save" }}
+    </button>
+  </mat-dialog-actions>
+</form>

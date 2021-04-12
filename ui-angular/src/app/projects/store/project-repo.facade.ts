@@ -1,10 +1,14 @@
+import { RepoFacade } from './repo.facade';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { ProjectRepoService } from './../services/project-repo.service';
 
 @Injectable()
 export class ProjectRepoFacade {
-  constructor(private projectRepoService: ProjectRepoService) {}
+  constructor(
+    private projectRepoService: ProjectRepoService,
+    private repoFacade: RepoFacade
+  ) {}
 
   private projectListOfRepo = new Subject();
 
@@ -25,12 +29,16 @@ export class ProjectRepoFacade {
   }
 
   add(projectId: string, repoId: string) {
-    this.projectRepoService
-      .create(projectId, repoId)
-      .subscribe((data) => console.log(data));
+    this.projectRepoService.create(projectId, repoId).subscribe((data) => {
+      this.repoFacade.reloadRepoList();
+      console.log(data);
+    });
   }
 
   remove(projectId: string, repoId: string) {
-    this.projectRepoService.remove(projectId, repoId).subscribe((data) => data);
+    this.projectRepoService.remove(projectId, repoId).subscribe((data) => {
+      this.repoFacade.reloadRepoList();
+      console.log(data);
+    });
   }
 }
