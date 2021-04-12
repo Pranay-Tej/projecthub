@@ -51,7 +51,11 @@
           <span>Edit</span>
         </button>
         <button mat-menu-item matTooltip="Delete">
-          <span class="textWarn" (click)="deleteRepo(repo._id)">Delete</span>
+          <span
+            class="textWarn"
+            (click)="confirmDeleteRepo(repo._id, repo.name)"
+            >Delete</span
+          >
         </button>
       </mat-menu>
     </div>

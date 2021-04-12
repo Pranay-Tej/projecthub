@@ -21,6 +21,11 @@ body {
   transition: background 100ms ease-out, color 200ms ease-out;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 /* Root Variables */
 
 :root {

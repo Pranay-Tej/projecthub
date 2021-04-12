@@ -9,7 +9,7 @@ export class NavBarComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    let theme: string = localStorage.getItem('projecthub-theme') || 'dark';
+    let theme: string = localStorage.getItem('projecthub-theme') || 'light';
     if (theme) {
       document.body.classList.remove('dark');
       document.body.classList.remove('light');

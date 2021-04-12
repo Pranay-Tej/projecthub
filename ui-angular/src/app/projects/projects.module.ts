@@ -17,6 +17,7 @@ import { ProjectFacade } from './store/project.facade';
 import { RepoFacade } from './store/repo.facade';
 import { EditRepoProjectsDialogComponent } from './repo-list/edit-repo-projects-dialog/edit-repo-projects-dialog.component';
 import { RepoDialogComponent } from './repo-list/repo-dialog/repo-dialog.component';
+import { DeleteRepoDialogComponent } from './repo-list/delete-repo-dialog/delete-repo-dialog.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { RepoDialogComponent } from './repo-list/repo-dialog/repo-dialog.compone
     DeleteProjectDialogComponent,
     EditRepoProjectsDialogComponent,
     RepoDialogComponent,
+    DeleteRepoDialogComponent,
   ],
   imports: [
     CommonModule,

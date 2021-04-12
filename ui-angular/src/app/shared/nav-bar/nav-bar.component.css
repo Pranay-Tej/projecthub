@@ -6,6 +6,12 @@
   border-bottom: 1px solid var(--border);
 }
 
+.logo {
+  margin-right: 0.5em;
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+
 .toggleSideMenu {
   position: fixed;
   bottom: 16px;

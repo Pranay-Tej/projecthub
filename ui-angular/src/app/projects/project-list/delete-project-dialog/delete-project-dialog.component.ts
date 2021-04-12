@@ -11,7 +11,7 @@ export class DeleteProjectDialogComponent implements OnInit {
   deleteOperation: string;
   constructor(
     private projectFacade: ProjectFacade,
-    public dialogRef: MatDialogRef<ProjectDialogComponent>,
+    public dialogRef: MatDialogRef<DeleteProjectDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data
   ) {}
 

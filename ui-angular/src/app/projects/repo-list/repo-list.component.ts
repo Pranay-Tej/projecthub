@@ -7,6 +7,7 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { EditRepoProjectsDialogComponent } from './edit-repo-projects-dialog/edit-repo-projects-dialog.component';
 import { RepoDialogComponent } from './repo-dialog/repo-dialog.component';
+import { DeleteRepoDialogComponent } from './delete-repo-dialog/delete-repo-dialog.component';
 @Component({
   selector: 'app-repo-list',
   templateUrl: './repo-list.component.html',
@@ -95,7 +96,13 @@ export class RepoListComponent implements OnInit {
     });
   }
 
-  deleteRepo(id: string) {
-    this.repoFacade.deleteRepo(id);
+  confirmDeleteRepo(repoId: string, repoName: string) {
+    this.dialog.open(DeleteRepoDialogComponent, {
+      width: '300px',
+      data: {
+        repoId,
+        repoName,
+      },
+    });
   }
 }

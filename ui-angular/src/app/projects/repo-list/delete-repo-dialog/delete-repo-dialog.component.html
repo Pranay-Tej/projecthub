@@ -1,0 +1,30 @@
+<div class="grid">
+  <p>
+    Delete repo <b>{{ data.repoName }}</b> ?
+  </p>
+  <p class="info">
+    This repo will be <b>permanently</b> deleted and removed from <b>all</b> of
+    your projects
+  </p>
+  <span *ngIf="deleteOperation === 'ERROR'" class="textWarn"
+    >There was some error</span
+  >
+  <mat-dialog-actions align="end">
+    <button
+      mat-button
+      mat-dialog-close
+      [disabled]="deleteOperation === 'LOADING'"
+    >
+      {{ deleteOperation === "LOADING" ? "..." : "Cancel" }}
+    </button>
+    <button
+      mat-flat-button
+      color="warn"
+      [disabled]="deleteOperation === 'LOADING'"
+      (click)="deleteRepo()"
+      cdkFocusInitial
+    >
+      {{ deleteOperation === "LOADING" ? "..." : "DELETE" }}
+    </button>
+  </mat-dialog-actions>
+</div>
