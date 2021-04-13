@@ -1,5 +1,5 @@
 import { repoModelName } from "./../repo/repo.model";
-import mongoose from "../../util/db.util";
+import mongoose from "mongoose";
 import { projectModelName } from "../project/project.model";
 
 const projectRepoSchema = new mongoose.Schema(

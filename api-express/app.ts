@@ -7,7 +7,7 @@ import projectRouter from "./resources/project/project.router";
 import projectRepoRouter from "./resources/projectRepo/projectRepo.router";
 import repoRouter from "./resources/repo/repo.router";
 import authRouter from "./resources/user/auth.router";
-import mongoose from "./util/db.util";
+import mongoose from "mongoose";
 
 const app = express();
 
@@ -34,18 +34,19 @@ app.use("/projects", projectRouter);
 
 app.use("/project-repos", projectRepoRouter);
 
-mongoose.connect(
-  config.MONGO_URI,
-  {
+mongoose
+  .connect(config.MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: true,
-  },
-  () => {
-    console.log("Connected to DB");
-  }
-);
-
-app.listen(config.PORT, () => {
-  console.log(`server started at http://localhost:${config.PORT}`);
-});
+  })
+  .then(() => {
+    console.log("connected to db");
+    app.listen(config.PORT, () => {
+      console.log(`server started at http://localhost:${config.PORT}`);
+    });
+  })
+  .catch((e) => {
+    console.error("mongodb connection failure");
+    console.error(e);
+  });

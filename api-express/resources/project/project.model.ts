@@ -1,4 +1,4 @@
-import mongoose from "../../util/db.util";
+import mongoose from "mongoose";
 import ProjectRepo, {
   projectRepoModelName,
 } from "../projectRepo/projectRepo.model";
