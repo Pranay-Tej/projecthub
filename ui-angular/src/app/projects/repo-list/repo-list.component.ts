@@ -80,7 +80,7 @@ export class RepoListComponent implements OnInit {
         this.repoFacade.getAllRepos();
       } else {
         console.log(result);
-        if (repoId === '') {
+        if (repoId === '' && result) {
           this.projectRepoFacade.add(this.selectedProjectId, result);
         }
       }

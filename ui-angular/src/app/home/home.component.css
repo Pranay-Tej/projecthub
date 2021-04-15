@@ -16,6 +16,10 @@
   margin-bottom: 2em;
 }
 
+.heroActions {
+  gap: 1rem;
+}
+
 @media (min-width: 768px) {
   .hero {
     margin-top: 6rem;

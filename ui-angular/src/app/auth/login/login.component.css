@@ -1,0 +1,22 @@
+.loginBackground {
+  background-color: var(--gray-100);
+  height: calc(100% - 57px);
+  width: 100vw;
+  /* display: grid;
+  place-content: center; */
+  overflow: hidden;
+}
+
+.loginContainer {
+  background-color: var(--gray-0);
+  border: 1px solid var(--gray-100);
+  border-radius: 3px;
+  max-width: 330px;
+  margin: 5em auto;
+  padding: 1em 2em;
+  padding-bottom: 2em;
+}
+
+.login {
+  margin: 1em auto;
+}

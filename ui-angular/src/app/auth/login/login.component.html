@@ -1,0 +1,41 @@
+<div class="loginBackground">
+  <div class="loginContainer">
+    <form [formGroup]="loginForm" (ngSubmit)="login()" class="grid">
+      <mat-form-field appearance="standard">
+        <mat-label>Email</mat-label>
+        <input
+          name="email"
+          type="email"
+          matInput
+          placeholder="Your email"
+          formControlName="email"
+        />
+        <mat-error *ngIf="loginForm.get('email').errors?.required"
+          >This field is required</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Password</mat-label>
+        <input
+          name="password"
+          type="password"
+          matInput
+          placeholder="Password"
+          formControlName="password"
+        />
+        <mat-error *ngIf="loginForm.get('password').errors?.required"
+          >This field is required</mat-error
+        >
+      </mat-form-field>
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        [disabled]="loginForm.invalid || loginStatus === 'LOADING'"
+      >
+        {{ loginStatus === "LOADING" ? "..." : "Login" }}
+      </button>
+    </form>
+  </div>
+</div>
