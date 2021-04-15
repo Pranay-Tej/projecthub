@@ -1,3 +1,4 @@
+import { AuthFacade } from './../../auth/store/auth.facade';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav-bar.component.css'],
 })
 export class NavBarComponent implements OnInit {
-  constructor() {}
+  isLoggedIn = true;
+  constructor(private authFacade: AuthFacade) {}
 
   ngOnInit(): void {
     let theme: string = localStorage.getItem('projecthub-theme') || 'light';
@@ -15,6 +17,10 @@ export class NavBarComponent implements OnInit {
       document.body.classList.remove('light');
       document.body.classList.add(theme);
     }
+  }
+
+  logout() {
+    this.authFacade.logout();
   }
 
   setLightTheme() {
