@@ -15,7 +15,7 @@ const app = express();
 app.use(
   cors({
     credentials: true /* enables cookie exchange */,
-    //origin: ["http://localhost:4200"],
+    origin: ["http://localhost:4200"],
   })
 );
 app.use(express.json());
