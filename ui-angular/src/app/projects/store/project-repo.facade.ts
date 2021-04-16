@@ -15,7 +15,6 @@ export class ProjectRepoFacade {
   projectListOfRepo$ = this.projectListOfRepo.asObservable();
 
   getProjectListOfRepo(repoId: string) {
-    // this.projectFacade.setSelectedProject(projectId);
     this.projectRepoService
       .getProjectListOfRepo(repoId)
       .subscribe((data: any) => {

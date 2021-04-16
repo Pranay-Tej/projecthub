@@ -27,7 +27,14 @@
     </div>
   </div>
 
-  <div *ngIf="filteredProjectList.length === 0" class="emptyList">
+  <div *ngIf="projectList$.length === 0" class="emptyList">
+    You have not created any projects yet
+  </div>
+
+  <div
+    *ngIf="projectList$.length !== 0 && filteredProjectList.length === 0"
+    class="emptyList"
+  >
     No Projects
   </div>
 </mat-dialog-content>

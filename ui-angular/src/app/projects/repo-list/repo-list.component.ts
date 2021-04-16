@@ -1,13 +1,14 @@
-import { ProjectRepoFacade } from './../store/project-repo.facade';
-import { ProjectFacade } from './../store/project.facade';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { RepoFacade } from '../store/repo.facade';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
+import projectSelectors from '../store/project.selectors';
+import { RepoFacade } from '../store/repo.facade';
+import { ProjectRepoFacade } from './../store/project-repo.facade';
+import { DeleteRepoDialogComponent } from './delete-repo-dialog/delete-repo-dialog.component';
 import { EditRepoProjectsDialogComponent } from './edit-repo-projects-dialog/edit-repo-projects-dialog.component';
 import { RepoDialogComponent } from './repo-dialog/repo-dialog.component';
-import { DeleteRepoDialogComponent } from './delete-repo-dialog/delete-repo-dialog.component';
 @Component({
   selector: 'app-repo-list',
   templateUrl: './repo-list.component.html',
@@ -17,22 +18,22 @@ export class RepoListComponent implements OnInit {
   repoList = [];
   filteredRepoList = [];
   filterForm: FormGroup;
-  selectedProjectId: string;
+  selectedProjectId$: string;
 
   constructor(
     private repoFacade: RepoFacade,
     private projectRepoFacade: ProjectRepoFacade,
-    private projectFacade: ProjectFacade,
+    private store: Store,
     private formBuilder: FormBuilder,
     private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.repoFacade.reloadRepoListTrigger$.subscribe((_) => {
-      if (this.selectedProjectId === 'ALL') {
+      if (this.selectedProjectId$ === 'ALL') {
         this.repoFacade.getAllRepos();
       } else {
-        this.repoFacade.getRepoListOfProject(this.selectedProjectId);
+        this.repoFacade.getRepoListOfProject(this.selectedProjectId$);
       }
     });
 
@@ -41,9 +42,9 @@ export class RepoListComponent implements OnInit {
       this.filteredRepoList = data;
     });
 
-    this.projectFacade.selectedProject$.subscribe(
-      (data: any) => (this.selectedProjectId = data)
-    );
+    this.store
+      .select(projectSelectors.selectedProjectId)
+      .subscribe((data: any) => (this.selectedProjectId$ = data));
 
     this.filterForm = this.formBuilder.group({
       repoName: this.formBuilder.control(''),
@@ -76,12 +77,12 @@ export class RepoListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (this.selectedProjectId === 'ALL') {
+      if (this.selectedProjectId$ === 'ALL') {
         this.repoFacade.getAllRepos();
       } else {
         console.log(result);
         if (repoId === '' && result) {
-          this.projectRepoFacade.add(this.selectedProjectId, result);
+          this.projectRepoFacade.add(this.selectedProjectId$, result);
         }
       }
     });

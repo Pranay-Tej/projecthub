@@ -20,9 +20,7 @@ export class ProjectService {
   }
 
   create(project) {
-    return this.httpClient.post(this.getUrl(), project, {
-      observe: 'response',
-    });
+    return this.httpClient.post(this.getUrl(), project);
   }
 
   update(project, id) {

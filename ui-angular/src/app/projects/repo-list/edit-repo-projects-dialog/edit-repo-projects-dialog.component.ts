@@ -1,44 +1,42 @@
-import { Subscription } from 'rxjs';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ProjectDialogComponent } from '../../project-list/project-dialog/project-dialog.component';
-import { ProjectFacade } from '../../store/project.facade';
-import { ProjectRepoFacade } from '../../store/project-repo.facade';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
+import { ProjectDialogComponent } from '../../project-list/project-dialog/project-dialog.component';
+import { ProjectRepoFacade } from '../../store/project-repo.facade';
+import projectActions from '../../store/project.actions';
+import projectSelectors from '../../store/project.selectors';
 
 @Component({
   templateUrl: './edit-repo-projects-dialog.component.html',
   styleUrls: ['./edit-repo-projects-dialog.component.css'],
 })
 export class EditRepoProjectsDialogComponent implements OnInit, OnDestroy {
-  projectList = [];
+  projectList$ = [];
   filteredProjectList = [];
-  filterForm: FormGroup;
+  filterForm: FormGroup = this.formBuilder.group({
+    projectName: this.formBuilder.control(''),
+  });
   projectListOfRepo: Set<string> = new Set<string>();
-  subscriptions: Subscription;
+  subscriptions: Subscription = new Subscription();
 
   constructor(
     private formBuilder: FormBuilder,
-    private projectFacade: ProjectFacade,
+    private store: Store,
     private projectRepoFacade: ProjectRepoFacade,
     public dialogRef: MatDialogRef<ProjectDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data
   ) {}
 
   ngOnInit(): void {
-    this.subscriptions = new Subscription();
-
-    const projectListSubscription$ = this.projectFacade.projectList$.subscribe(
-      (data: any) => {
-        this.projectList = data;
+    this.subscriptions.add(
+      this.store.select(projectSelectors.projectList).subscribe((data: any) => {
+        this.projectList$ = data;
         this.filteredProjectList = data;
-      }
+      })
     );
-
-    this.filterForm = this.formBuilder.group({
-      projectName: this.formBuilder.control(''),
-    });
 
     this.filterForm
       .get('projectName')
@@ -59,15 +57,12 @@ export class EditRepoProjectsDialogComponent implements OnInit, OnDestroy {
       this.projectRepoFacade.getProjectListOfRepo(this.data.repoId);
     }
 
-    this.projectFacade.getAllProjects();
-
     // subscriptions
-    this.subscriptions.add(projectListSubscription$);
     this.subscriptions.add(projectListOfRepoSubscription$);
   }
 
   applyFilters(searchTerm) {
-    this.filteredProjectList = this.projectList.filter((project) =>
+    this.filteredProjectList = this.projectList$.filter((project) =>
       new RegExp(searchTerm, 'i').test(project.name)
     );
   }
