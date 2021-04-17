@@ -15,10 +15,7 @@ const app = express();
 app.use(
   cors({
     credentials: true /* enables cookie exchange */,
-    origin: [
-      "http://localhost:4200",
-      "https://projecthub-express.herokuapp.com",
-    ],
+    origin: ["http://localhost:4200", "https://projecthub.vercel.app"],
   })
 );
 app.use(express.json());
