@@ -31,7 +31,7 @@ const protect = async (req: Request, res: Response, next: NextFunction) => {
     }
 
     const { id } = verify(token, config.JWT_SECRET) as any;
-    const user = await User.findOne({ _id: id }, { password: 0 });
+    const user = await User.findOne({ _id: id }, { password: 0, email: 0 });
 
     if (!user) {
       throw "unauthenticated!";
