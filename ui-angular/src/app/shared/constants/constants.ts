@@ -3,3 +3,7 @@ export enum httpCallStatus {
   LOADING = 'LOADING',
   ERROR = 'ERROR',
 }
+
+export const LOCAL_KEYS = {
+  USER: 'USER',
+};

@@ -15,6 +15,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './store/app.effects';
+import { AuthEffects } from './auth/store/auth.effects';
 
 @NgModule({
   declarations: [AppComponent, NavBarComponent, HomeComponent],
@@ -35,7 +36,7 @@ import { AppEffects } from './store/app.effects';
       maxAge: 25,
       logOnly: environment.production,
     }),
-    EffectsModule.forRoot([AppEffects]),
+    EffectsModule.forRoot([AppEffects, AuthEffects]),
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

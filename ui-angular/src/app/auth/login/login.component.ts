@@ -1,6 +1,10 @@
-import { AuthFacade } from './../store/auth.facade';
+import { authActions } from './../store/auth.actions';
+import { authSelectors } from './../store/auth.selectors';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { httpCallStatus } from 'src/app/shared/constants/constants';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,40 +12,46 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent implements OnInit {
-  loginForm: FormGroup;
-  loginStatus: string;
+export class LoginComponent implements OnInit, OnDestroy {
+  loginStatus$: string;
+  loginForm: FormGroup = this.formBuilder.group({
+    email: this.formBuilder.control('', Validators.required),
+    password: this.formBuilder.control('', Validators.required),
+  });
+  httpCallStatus = httpCallStatus;
+  subscriptions: Subscription = new Subscription();
 
   constructor(
     private formBuilder: FormBuilder,
-    private authFacade: AuthFacade,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {}
 
   ngOnInit(): void {
-    this.loginForm = this.formBuilder.group({
-      email: this.formBuilder.control('', Validators.required),
-      password: this.formBuilder.control('', Validators.required),
-    });
+    // this.store.dispatch(authActions.loadUserInfo());
 
-    this.authFacade.loginStatus$.subscribe(
-      (data: any) => (this.loginStatus = data.status)
+    this.subscriptions.add(
+      this.store
+        .select(authSelectors.loginStatus)
+        .subscribe((data: any) => (this.loginStatus$ = data))
     );
 
-    this.authFacade.user$.subscribe((data) => {
-      // console.log(data);
-      this.router.navigate(['/app']);
-    });
-
-    this.authFacade.getUser();
+    this.subscriptions.add(
+      this.store.select(authSelectors.user).subscribe((data) => {
+        this.router.navigate(['/app']);
+      })
+    );
   }
 
   login() {
-    // console.log(this.loginForm.getRawValue());
-    this.authFacade.login(this.loginForm.getRawValue());
+    this.store.dispatch(authActions.login({ ...this.loginForm.getRawValue() }));
   }
 
   logout() {
-    this.authFacade.logout();
+    this.store.dispatch(authActions.logout());
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }

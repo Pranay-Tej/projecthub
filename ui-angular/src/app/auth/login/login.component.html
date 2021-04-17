@@ -32,10 +32,16 @@
         mat-flat-button
         color="primary"
         type="submit"
-        [disabled]="loginForm.invalid || loginStatus === 'LOADING'"
+        [disabled]="
+          loginForm.invalid || loginStatus$ === httpCallStatus.LOADING
+        "
       >
-        {{ loginStatus === "LOADING" ? "..." : "Login" }}
+        {{ loginStatus$ === httpCallStatus.LOADING ? "..." : "Login" }}
       </button>
     </form>
+
+    <span *ngIf="loginStatus$ === httpCallStatus.ERROR" class="textWarn"
+      >Invalid Credentials</span
+    >
   </div>
 </div>

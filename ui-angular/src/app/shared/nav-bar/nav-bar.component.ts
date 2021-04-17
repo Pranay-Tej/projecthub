@@ -1,5 +1,7 @@
-import { AuthFacade } from './../../auth/store/auth.facade';
+import { authSelectors } from './../../auth/store/auth.selectors';
+import { authActions } from './../../auth/store/auth.actions';
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,8 +9,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./nav-bar.component.css'],
 })
 export class NavBarComponent implements OnInit {
-  isLoggedIn = true;
-  constructor(private authFacade: AuthFacade) {}
+  userId$ = this.store.select(authSelectors.user);
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     let theme: string = localStorage.getItem('projecthub-theme') || 'light';
@@ -20,7 +22,7 @@ export class NavBarComponent implements OnInit {
   }
 
   logout() {
-    this.authFacade.logout();
+    this.store.dispatch(authActions.logout());
   }
 
   setLightTheme() {
