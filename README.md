@@ -4,9 +4,16 @@ Place where developers manage and share their projects
 
 ## Tech stack
 
-- Database
-  - MongoDB
-- Backend
-  - Express (NodeJS)
 - Frontend
   - Angular
+    - NgRx (Redux) State Management
+- Backend
+  - Express (NodeJS)
+- Database
+  - MongoDB (Mongoose)
+
+## Hosting
+
+- Vercel (Frontend)
+- Heroku (Backend)
+- MongoDB Atlas (DBaaS)

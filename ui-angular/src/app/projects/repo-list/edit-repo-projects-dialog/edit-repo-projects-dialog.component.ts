@@ -1,44 +1,56 @@
-import { Subscription } from 'rxjs';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ProjectDialogComponent } from '../../project-list/project-dialog/project-dialog.component';
-import { ProjectFacade } from '../../store/project.facade';
-import { ProjectRepoFacade } from '../../store/project-repo.facade';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
+import { ProjectDialogComponent } from '../../project-list/project-dialog/project-dialog.component';
+import projectRepoActions from '../../store/project-repo.actions';
+import projectRepoSelectors from '../../store/project-repo.selectors';
+import projectSelectors from '../../store/project.selectors';
 
 @Component({
   templateUrl: './edit-repo-projects-dialog.component.html',
   styleUrls: ['./edit-repo-projects-dialog.component.css'],
 })
 export class EditRepoProjectsDialogComponent implements OnInit, OnDestroy {
-  projectList = [];
+  projectList$ = [];
   filteredProjectList = [];
-  filterForm: FormGroup;
-  projectListOfRepo: Set<string> = new Set<string>();
-  subscriptions: Subscription;
+  filterForm: FormGroup = this.formBuilder.group({
+    projectName: this.formBuilder.control(''),
+  });
+  projectListOfRepo$: Set<string> = new Set<string>();
+  subscriptions: Subscription = new Subscription();
 
   constructor(
     private formBuilder: FormBuilder,
-    private projectFacade: ProjectFacade,
-    private projectRepoFacade: ProjectRepoFacade,
+    private store: Store,
     public dialogRef: MatDialogRef<ProjectDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data
   ) {}
 
   ngOnInit(): void {
-    this.subscriptions = new Subscription();
+    if (this.data.repoId !== '') {
+      this.store.dispatch(
+        projectRepoActions.loadProjectListOfRepo({ repoId: this.data.repoId })
+      );
+    }
 
-    const projectListSubscription$ = this.projectFacade.projectList$.subscribe(
-      (data: any) => {
-        this.projectList = data;
+    this.subscriptions.add(
+      this.store.select(projectSelectors.projectList).subscribe((data: any) => {
+        this.projectList$ = data;
         this.filteredProjectList = data;
-      }
+      })
     );
 
-    this.filterForm = this.formBuilder.group({
-      projectName: this.formBuilder.control(''),
-    });
+    this.subscriptions.add(
+      this.store
+        .select(projectRepoSelectors.projectListOfRepo)
+        .subscribe((data: any) => {
+          const projectListofRepo = data.map((project) => project._id);
+          this.projectListOfRepo$ = new Set<string>(projectListofRepo);
+        })
+    );
 
     this.filterForm
       .get('projectName')
@@ -47,38 +59,25 @@ export class EditRepoProjectsDialogComponent implements OnInit, OnDestroy {
         tap((val) => this.applyFilters(val))
       )
       .subscribe();
-
-    const projectListOfRepoSubscription$ = this.projectRepoFacade.projectListOfRepo$.subscribe(
-      (data: any) => {
-        const projectListofRepo = data.map((project) => project._id);
-        this.projectListOfRepo = new Set<string>(projectListofRepo);
-      }
-    );
-
-    if (this.data.repoId !== '') {
-      this.projectRepoFacade.getProjectListOfRepo(this.data.repoId);
-    }
-
-    this.projectFacade.getAllProjects();
-
-    // subscriptions
-    this.subscriptions.add(projectListSubscription$);
-    this.subscriptions.add(projectListOfRepoSubscription$);
   }
 
   applyFilters(searchTerm) {
-    this.filteredProjectList = this.projectList.filter((project) =>
+    this.filteredProjectList = this.projectList$.filter((project) =>
       new RegExp(searchTerm, 'i').test(project.name)
     );
   }
 
   toggleProjectForRepo(event: any, projectId: string, projectRepoId: string) {
     if (event.checked === true) {
-      console.log('add', projectId, this.data.repoId);
-      this.projectRepoFacade.add(projectId, this.data.repoId);
+      // console.log('add', projectId, this.data.repoId);
+      this.store.dispatch(
+        projectRepoActions.add({ projectId, repoId: this.data.repoId })
+      );
     } else {
-      console.log('remove', projectId, this.data.repoId);
-      this.projectRepoFacade.remove(projectId, this.data.repoId);
+      // console.log('remove', projectId, this.data.repoId);
+      this.store.dispatch(
+        projectRepoActions.remove({ projectId, repoId: this.data.repoId })
+      );
     }
   }
 

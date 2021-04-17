@@ -1,4 +1,4 @@
-import { AuthFacade } from './store/auth.facade';
+import { authActions } from './store/auth.actions';
 import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
 import {
@@ -10,13 +10,14 @@ import {
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
 @Injectable({ providedIn: 'root' })
 export class AuthGuard implements CanActivate {
   constructor(
     private authService: AuthService,
-    // private authFacade: AuthFacade,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {}
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -27,16 +28,17 @@ export class AuthGuard implements CanActivate {
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
     return this.authService.getUser().pipe(
-      switchMap((data) => {
-        // console.log(data);
+      switchMap((data: any) => {
+        this.authService.setLocalUser(data._id);
+        this.store.dispatch(authActions.setUser({ user: data._id }));
         return of(true);
       }),
       catchError((e) => {
-        // console.error(e);
+        this.authService.clearLocalUser();
+        this.store.dispatch(authActions.setUser(null));
         this.router.navigate(['/accounts/login']);
         return of(false);
       })
     );
-    // return this.authFacade.getLocalUser() !== undefined;
   }
 }

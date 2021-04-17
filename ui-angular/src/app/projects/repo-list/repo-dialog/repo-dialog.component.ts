@@ -1,44 +1,58 @@
+import { httpCallStatus } from 'src/app/shared/constants/constants';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { RepoFacade } from '../../store/repo.facade';
+import repoActions from '../../store/repo.actions';
+import repoSelectors from '../../store/repo.selectors';
 
 @Component({
   templateUrl: './repo-dialog.component.html',
   styleUrls: ['./repo-dialog.component.css'],
 })
-export class RepoDialogComponent implements OnInit {
-  repoForm: FormGroup;
-  repoId: string;
-  saveOperation: string;
-  subscriptions: Subscription;
+export class RepoDialogComponent implements OnInit, OnDestroy {
+  saveOperation$: string;
+  repoForm: FormGroup = this.formBuilder.group({
+    name: this.formBuilder.control('', Validators.required),
+    url: this.formBuilder.control(''),
+    user: this.formBuilder.control(''),
+  });
+  httpCallStatus = httpCallStatus;
+  subscriptions: Subscription = new Subscription();
 
   constructor(
     private formBuilder: FormBuilder,
-    private repoFacade: RepoFacade,
+    private store: Store,
     public dialogRef: MatDialogRef<RepoDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data
   ) {}
 
   ngOnInit(): void {
-    this.subscriptions = new Subscription();
+    if (this.data.repoId !== '') {
+      this.store.dispatch(repoActions.loadRepo({ id: this.data.repoId }));
+    }
 
-    const repoSubscription$ = this.repoFacade.repo$.subscribe((data: any) => {
-      const { name, url, user } = data;
-      this.repoId = data.repoId;
-      this.repoForm.setValue({ name, url, user });
-    });
-
-    const saveOperationSubscription$ = this.repoFacade.saveOperation$.subscribe(
-      (data: any) => {
-        console.log(data);
-
-        if (data?.status === 'OK') {
-          this.dialogRef.close(data.id);
+    this.subscriptions.add(
+      this.store.select(repoSelectors.repo).subscribe((data: any) => {
+        if (!data) {
+          return;
         }
-        this.saveOperation = data?.status;
-      }
+        const { name, url, user } = data;
+        this.repoForm.setValue({ name, url, user });
+      })
+    );
+
+    this.subscriptions.add(
+      this.store
+        .select(repoSelectors.saveOperationStatus)
+        .subscribe((data: any) => {
+          // console.log(data);
+          if (data?.status === httpCallStatus.OK) {
+            this.dialogRef.close(data?.id);
+          }
+          this.saveOperation$ = data?.status;
+        })
     );
 
     this.repoForm = this.formBuilder.group({
@@ -46,13 +60,6 @@ export class RepoDialogComponent implements OnInit {
       url: this.formBuilder.control(''),
       user: this.formBuilder.control(''),
     });
-
-    if (this.data.repoId !== '') {
-      this.repoFacade.getRepo(this.data.repoId);
-    }
-
-    this.subscriptions.add(repoSubscription$);
-    this.subscriptions.add(saveOperationSubscription$);
   }
 
   saveRepo() {
@@ -65,10 +72,16 @@ export class RepoDialogComponent implements OnInit {
 
   createRepo() {
     const repo = { ...this.repoForm.getRawValue(), user: 'Pranay-Tej' };
-    this.repoFacade.createRepo(repo);
+    this.store.dispatch(repoActions.createRepo({ repo }));
   }
 
   updateRepo(repoId: string) {
-    this.repoFacade.updateRepo(this.repoForm.value, repoId);
+    this.store.dispatch(
+      repoActions.updateRepo({ repo: this.repoForm.value, id: repoId })
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }

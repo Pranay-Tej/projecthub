@@ -27,7 +27,16 @@
   </button>
 </div>
 
-<div *ngIf="filteredRepoList.length > 0" class="repoList">
+<div *ngIf="loadOperationStatus$ === httpCallStatus.LOADING" class="emptyList">
+  ...
+</div>
+
+<div
+  *ngIf="
+    loadOperationStatus$ === httpCallStatus.OK && filteredRepoList.length > 0
+  "
+  class="repoList"
+>
   <div *ngFor="let repo of filteredRepoList" class="repo">
     <div class="flex justify-between">
       <div class="title">
@@ -50,12 +59,12 @@
         >
           <span>Edit</span>
         </button>
-        <button mat-menu-item matTooltip="Delete">
-          <span
-            class="textWarn"
-            (click)="confirmDeleteRepo(repo._id, repo.name)"
-            >Delete</span
-          >
+        <button
+          mat-menu-item
+          matTooltip="Delete"
+          (click)="confirmDeleteRepo(repo._id, repo.name)"
+        >
+          <span class="textWarn">Delete</span>
         </button>
       </mat-menu>
     </div>
@@ -77,4 +86,16 @@
   </div>
 </div>
 
-<div *ngIf="filteredRepoList.length === 0" class="emptyList">No Repos</div>
+<div
+  *ngIf="loadOperationStatus$ === httpCallStatus.OK && repoList$.length === 0"
+  class="emptyList"
+>
+  You have not created any repos yet
+</div>
+
+<div
+  *ngIf="repoList$.length !== 0 && filteredRepoList.length === 0"
+  class="emptyList"
+>
+  No Repos
+</div>

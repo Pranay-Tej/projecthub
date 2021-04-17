@@ -3,25 +3,25 @@
     Delete project <b>{{ data.projectName }}</b> ?
   </p>
   <p class="info">Repos in project will not be deleted</p>
-  <span *ngIf="deleteOperation === 'ERROR'" class="textWarn"
+  <span *ngIf="deleteOperation$ === httpCallStatus.ERROR" class="textWarn"
     >There was some error</span
   >
   <mat-dialog-actions align="end">
     <button
       mat-button
       mat-dialog-close
-      [disabled]="deleteOperation === 'LOADING'"
+      [disabled]="deleteOperation$ === httpCallStatus.LOADING"
     >
-      {{ deleteOperation === "LOADING" ? "..." : "Cancel" }}
+      {{ deleteOperation$ === httpCallStatus.LOADING ? "..." : "Cancel" }}
     </button>
     <button
       mat-flat-button
       color="warn"
-      [disabled]="deleteOperation === 'LOADING'"
+      [disabled]="deleteOperation$ === 'LOADING'"
       (click)="deleteProject()"
       cdkFocusInitial
     >
-      {{ deleteOperation === "LOADING" ? "..." : "DELETE" }}
+      {{ deleteOperation$ === httpCallStatus.LOADING ? "..." : "DELETE" }}
     </button>
   </mat-dialog-actions>
 </div>

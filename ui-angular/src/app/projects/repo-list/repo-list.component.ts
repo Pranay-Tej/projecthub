@@ -1,53 +1,68 @@
-import { ProjectRepoFacade } from './../store/project-repo.facade';
-import { ProjectFacade } from './../store/project.facade';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { RepoFacade } from '../store/repo.facade';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
+import projectRepoActions from '../store/project-repo.actions';
+import projectActions from '../store/project.actions';
+import projectSelectors from '../store/project.selectors';
+import repoActions from '../store/repo.actions';
+import repoSelectors from '../store/repo.selectors';
+import { httpCallStatus } from './../../shared/constants/constants';
+import { DeleteRepoDialogComponent } from './delete-repo-dialog/delete-repo-dialog.component';
 import { EditRepoProjectsDialogComponent } from './edit-repo-projects-dialog/edit-repo-projects-dialog.component';
 import { RepoDialogComponent } from './repo-dialog/repo-dialog.component';
-import { DeleteRepoDialogComponent } from './delete-repo-dialog/delete-repo-dialog.component';
+
 @Component({
   selector: 'app-repo-list',
   templateUrl: './repo-list.component.html',
   styleUrls: ['./repo-list.component.css'],
 })
-export class RepoListComponent implements OnInit {
-  repoList = [];
+export class RepoListComponent implements OnInit, OnDestroy {
+  repoList$ = [];
   filteredRepoList = [];
-  filterForm: FormGroup;
-  selectedProjectId: string;
+  selectedProjectId$: string;
+  loadOperationStatus$: string;
+  filterForm: FormGroup = this.formBuilder.group({
+    repoName: this.formBuilder.control(''),
+  });
+  httpCallStatus = httpCallStatus;
+  subscriptions: Subscription = new Subscription();
 
   constructor(
-    private repoFacade: RepoFacade,
-    private projectRepoFacade: ProjectRepoFacade,
-    private projectFacade: ProjectFacade,
+    private store: Store,
     private formBuilder: FormBuilder,
     private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
-    this.repoFacade.reloadRepoListTrigger$.subscribe((_) => {
-      if (this.selectedProjectId === 'ALL') {
-        this.repoFacade.getAllRepos();
-      } else {
-        this.repoFacade.getRepoListOfProject(this.selectedProjectId);
-      }
-    });
-
-    this.repoFacade.repoList$.subscribe((data: any) => {
-      this.repoList = data;
-      this.filteredRepoList = data;
-    });
-
-    this.projectFacade.selectedProject$.subscribe(
-      (data: any) => (this.selectedProjectId = data)
+    this.subscriptions.add(
+      this.store.select(repoSelectors.repoList).subscribe((data: any) => {
+        this.repoList$ = data;
+        this.filteredRepoList = data;
+      })
     );
 
-    this.filterForm = this.formBuilder.group({
-      repoName: this.formBuilder.control(''),
-    });
+    this.store
+      .select(projectSelectors.selectedProjectId)
+      .subscribe((data: any) => {
+        if (!data) {
+          this.store.dispatch(
+            projectActions.setSelectedProjectId({ id: 'ALL' })
+          );
+        }
+        this.store.dispatch(repoActions.reloadRepoList());
+        this.selectedProjectId$ = data;
+      });
+
+    this.subscriptions.add(
+      this.store
+        .select(repoSelectors.loadOperationStatus)
+        .subscribe((data: any) => {
+          this.loadOperationStatus$ = data;
+        })
+    );
 
     this.filterForm
       .get('repoName')
@@ -62,7 +77,7 @@ export class RepoListComponent implements OnInit {
   }
 
   applyFilters(searchTerm) {
-    this.filteredRepoList = this.repoList.filter((repo) =>
+    this.filteredRepoList = this.repoList$.filter((repo) =>
       new RegExp(searchTerm, 'i').test(repo.name)
     );
   }
@@ -76,13 +91,14 @@ export class RepoListComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (this.selectedProjectId === 'ALL') {
-        this.repoFacade.getAllRepos();
-      } else {
-        console.log(result);
-        if (repoId === '' && result) {
-          this.projectRepoFacade.add(this.selectedProjectId, result);
-        }
+      this.store.dispatch(repoActions.resetDialogData());
+      if (this.selectedProjectId$ !== 'ALL' && repoId === '' && result) {
+        this.store.dispatch(
+          projectRepoActions.add({
+            projectId: this.selectedProjectId$,
+            repoId: result,
+          })
+        );
       }
     });
   }
@@ -97,12 +113,22 @@ export class RepoListComponent implements OnInit {
   }
 
   confirmDeleteRepo(repoId: string, repoName: string) {
-    this.dialog.open(DeleteRepoDialogComponent, {
+    const dialogRef = this.dialog.open(DeleteRepoDialogComponent, {
       width: '300px',
       data: {
         repoId,
         repoName,
       },
     });
+
+    dialogRef
+      .afterClosed()
+      .subscribe(() =>
+        this.store.dispatch(repoActions.setDeleteOperationStatus(null))
+      );
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }

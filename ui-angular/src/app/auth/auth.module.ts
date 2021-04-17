@@ -1,16 +1,14 @@
-import { AuthService } from './auth.service';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from './../material.module';
+import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
+import { ReactiveFormsModule } from '@angular/forms';
+import { MaterialModule } from './../material.module';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
-import { LoginComponent } from './login/login.component';
-import { AuthFacade } from './store/auth.facade';
+// import { AuthFacade } from './store/auth.facade';
 import { AuthInterceptor } from './auth.interceptor';
-import { AuthGuard } from './auth.guard';
+import { AuthService } from './auth.service';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [AuthComponent, LoginComponent],
@@ -22,7 +20,7 @@ import { AuthGuard } from './auth.guard';
     ReactiveFormsModule,
   ],
   providers: [
-    AuthFacade,
+    // AuthFacade,
     AuthService,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
