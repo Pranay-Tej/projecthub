@@ -1,18 +1,19 @@
-import { httpCallStatus } from './../../shared/constants/constants';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
+import projectRepoActions from '../store/project-repo.actions';
 import projectActions from '../store/project.actions';
 import projectSelectors from '../store/project.selectors';
 import repoActions from '../store/repo.actions';
 import repoSelectors from '../store/repo.selectors';
-import { ProjectRepoFacade } from './../store/project-repo.facade';
+import { httpCallStatus } from './../../shared/constants/constants';
 import { DeleteRepoDialogComponent } from './delete-repo-dialog/delete-repo-dialog.component';
 import { EditRepoProjectsDialogComponent } from './edit-repo-projects-dialog/edit-repo-projects-dialog.component';
 import { RepoDialogComponent } from './repo-dialog/repo-dialog.component';
+
 @Component({
   selector: 'app-repo-list',
   templateUrl: './repo-list.component.html',
@@ -30,7 +31,6 @@ export class RepoListComponent implements OnInit, OnDestroy {
   subscriptions: Subscription = new Subscription();
 
   constructor(
-    private projectRepoFacade: ProjectRepoFacade,
     private store: Store,
     private formBuilder: FormBuilder,
     private dialog: MatDialog
@@ -92,13 +92,13 @@ export class RepoListComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       this.store.dispatch(repoActions.resetDialogData());
-      if (this.selectedProjectId$ === 'ALL') {
-        // this.store.dispatch(repoActions.loadRepoList());
-      } else {
-        // console.log(result);
-        if (repoId === '' && result) {
-          this.projectRepoFacade.add(this.selectedProjectId$, result);
-        }
+      if (this.selectedProjectId$ !== 'ALL' && repoId === '' && result) {
+        this.store.dispatch(
+          projectRepoActions.add({
+            projectId: this.selectedProjectId$,
+            repoId: result,
+          })
+        );
       }
     });
   }

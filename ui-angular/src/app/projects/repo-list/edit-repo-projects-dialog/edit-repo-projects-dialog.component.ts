@@ -5,8 +5,8 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { ProjectDialogComponent } from '../../project-list/project-dialog/project-dialog.component';
-import { ProjectRepoFacade } from '../../store/project-repo.facade';
-import projectActions from '../../store/project.actions';
+import projectRepoActions from '../../store/project-repo.actions';
+import projectRepoSelectors from '../../store/project-repo.selectors';
 import projectSelectors from '../../store/project.selectors';
 
 @Component({
@@ -19,23 +19,37 @@ export class EditRepoProjectsDialogComponent implements OnInit, OnDestroy {
   filterForm: FormGroup = this.formBuilder.group({
     projectName: this.formBuilder.control(''),
   });
-  projectListOfRepo: Set<string> = new Set<string>();
+  projectListOfRepo$: Set<string> = new Set<string>();
   subscriptions: Subscription = new Subscription();
 
   constructor(
     private formBuilder: FormBuilder,
     private store: Store,
-    private projectRepoFacade: ProjectRepoFacade,
     public dialogRef: MatDialogRef<ProjectDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data
   ) {}
 
   ngOnInit(): void {
+    if (this.data.repoId !== '') {
+      this.store.dispatch(
+        projectRepoActions.loadProjectListOfRepo({ repoId: this.data.repoId })
+      );
+    }
+
     this.subscriptions.add(
       this.store.select(projectSelectors.projectList).subscribe((data: any) => {
         this.projectList$ = data;
         this.filteredProjectList = data;
       })
+    );
+
+    this.subscriptions.add(
+      this.store
+        .select(projectRepoSelectors.projectListOfRepo)
+        .subscribe((data: any) => {
+          const projectListofRepo = data.map((project) => project._id);
+          this.projectListOfRepo$ = new Set<string>(projectListofRepo);
+        })
     );
 
     this.filterForm
@@ -45,20 +59,6 @@ export class EditRepoProjectsDialogComponent implements OnInit, OnDestroy {
         tap((val) => this.applyFilters(val))
       )
       .subscribe();
-
-    const projectListOfRepoSubscription$ = this.projectRepoFacade.projectListOfRepo$.subscribe(
-      (data: any) => {
-        const projectListofRepo = data.map((project) => project._id);
-        this.projectListOfRepo = new Set<string>(projectListofRepo);
-      }
-    );
-
-    if (this.data.repoId !== '') {
-      this.projectRepoFacade.getProjectListOfRepo(this.data.repoId);
-    }
-
-    // subscriptions
-    this.subscriptions.add(projectListOfRepoSubscription$);
   }
 
   applyFilters(searchTerm) {
@@ -69,11 +69,15 @@ export class EditRepoProjectsDialogComponent implements OnInit, OnDestroy {
 
   toggleProjectForRepo(event: any, projectId: string, projectRepoId: string) {
     if (event.checked === true) {
-      console.log('add', projectId, this.data.repoId);
-      this.projectRepoFacade.add(projectId, this.data.repoId);
+      // console.log('add', projectId, this.data.repoId);
+      this.store.dispatch(
+        projectRepoActions.add({ projectId, repoId: this.data.repoId })
+      );
     } else {
-      console.log('remove', projectId, this.data.repoId);
-      this.projectRepoFacade.remove(projectId, this.data.repoId);
+      // console.log('remove', projectId, this.data.repoId);
+      this.store.dispatch(
+        projectRepoActions.remove({ projectId, repoId: this.data.repoId })
+      );
     }
   }
 

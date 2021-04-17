@@ -1,9 +1,7 @@
-import { ProjectRepoService } from './../services/project-repo.service';
-import { RepoService } from './../services/repo.service';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
-import { of } from 'rxjs';
+import { EMPTY } from 'rxjs';
 import {
   catchError,
   map,
@@ -13,8 +11,10 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 import { httpCallStatus } from 'src/app/shared/constants/constants';
-import repoActions from './repo.actions';
+import { ProjectRepoService } from './../services/project-repo.service';
+import { RepoService } from './../services/repo.service';
 import projectSelectors from './project.selectors';
+import repoActions from './repo.actions';
 
 @Injectable()
 export class RepoEffects {
@@ -178,7 +178,7 @@ export class RepoEffects {
           switchMap((data: any) => [repoActions.repoLoaded({ repo: data })]),
           catchError((error) => {
             console.error(error);
-            return of(error);
+            return EMPTY;
           })
         )
       )

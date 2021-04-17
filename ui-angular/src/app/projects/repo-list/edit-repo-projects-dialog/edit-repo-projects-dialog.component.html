@@ -19,7 +19,7 @@
     <div *ngFor="let project of filteredProjectList">
       <mat-checkbox
         [color]="primary"
-        [checked]="projectListOfRepo.has(project._id)"
+        [checked]="projectListOfRepo$.has(project._id)"
         (change)="toggleProjectForRepo($event, project._id)"
       >
         {{ project.name }}

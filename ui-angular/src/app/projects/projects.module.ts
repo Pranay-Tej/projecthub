@@ -1,6 +1,7 @@
+import { ProjectRepoEffects } from './store/project-repo.effects';
 import { ProjectEffects } from './store/project.effects';
 import { StoreModule } from '@ngrx/store';
-import { ProjectRepoFacade } from './store/project-repo.facade';
+// import { ProjectRepoFacade } from './store/project-repo.facade';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -24,6 +25,10 @@ import { projectFeatureKey, projectReducer } from './store/project.reducer';
 import { repoFeatureKey, repoReducer } from './store/repo.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { RepoEffects } from './store/repo.effects';
+import {
+  projectRepoFeatureKey,
+  projectRepoReducer,
+} from './store/project-repo.reducer';
 
 @NgModule({
   declarations: [
@@ -44,7 +49,8 @@ import { RepoEffects } from './store/repo.effects';
     ReactiveFormsModule,
     StoreModule.forFeature(projectFeatureKey, projectReducer),
     StoreModule.forFeature(repoFeatureKey, repoReducer),
-    EffectsModule.forFeature([ProjectEffects, RepoEffects]),
+    StoreModule.forFeature(projectRepoFeatureKey, projectRepoReducer),
+    EffectsModule.forFeature([ProjectEffects, RepoEffects, ProjectRepoEffects]),
   ],
   providers: [
     ProjectService,
@@ -52,7 +58,7 @@ import { RepoEffects } from './store/repo.effects';
     RepoService,
     // RepoFacade,
     ProjectRepoService,
-    ProjectRepoFacade,
+    // ProjectRepoFacade,
   ],
 })
 export class ProjectsModule {}
