@@ -23,20 +23,24 @@
     />
     <mat-hint>Link for repo source code</mat-hint>
   </mat-form-field>
-  <span *ngIf="saveOperation === 'ERROR'" class="textWarn"
+  <span *ngIf="saveOperation$ === httpCallStatus.ERROR" class="textWarn"
     >There was some error</span
   >
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>
-      {{ saveOperation === "LOADING" ? "..." : "Cancel" }}
+    <button
+      mat-button
+      mat-dialog-close
+      [disabled]="saveOperation$ === httpCallStatus.LOADING"
+    >
+      {{ saveOperation$ === httpCallStatus.LOADING ? "..." : "Cancel" }}
     </button>
     <button
       mat-button
       color="primary"
       type="submit"
-      [disabled]="repoForm.invalid || saveOperation === 'LOADING'"
+      [disabled]="repoForm.invalid || saveOperation$ === httpCallStatus.LOADING"
     >
-      {{ saveOperation === "LOADING" ? "..." : "Save" }}
+      {{ saveOperation$ === httpCallStatus.LOADING ? "..." : "Save" }}
     </button>
   </mat-dialog-actions>
 </form>

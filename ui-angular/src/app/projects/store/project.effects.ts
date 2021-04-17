@@ -117,7 +117,7 @@ export class ProjectEffects {
             projectActions.projectLoaded({ project: data }),
           ]),
           catchError((error) => {
-            console.log(error);
+            console.error(error);
             return of(error);
           })
         )

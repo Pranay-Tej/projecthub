@@ -1,29 +1,44 @@
+import { Store } from '@ngrx/store';
+import { httpCallStatus } from 'src/app/shared/constants/constants';
+import { Subscription } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Component, OnInit, Inject } from '@angular/core';
-import { RepoFacade } from '../../store/repo.facade';
+import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import repoActions from '../../store/repo.actions';
+import repoSelectors from '../../store/repo.selectors';
 
 @Component({
   templateUrl: './delete-repo-dialog.component.html',
   styleUrls: ['./delete-repo-dialog.component.css'],
 })
-export class DeleteRepoDialogComponent implements OnInit {
-  deleteOperation: string;
+export class DeleteRepoDialogComponent implements OnInit, OnDestroy {
+  deleteOperation$: string;
+  httpCallStatus = httpCallStatus;
+  subscriptions: Subscription = new Subscription();
+
   constructor(
-    private repoFacade: RepoFacade,
+    private store: Store,
     public dialogRef: MatDialogRef<DeleteRepoDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data
   ) {}
 
   ngOnInit(): void {
-    this.repoFacade.deleteOperation$.subscribe((data: any) => {
-      if (data?.status === 'OK') {
-        this.dialogRef.close();
-      }
-      this.deleteOperation = data?.status;
-    });
+    this.subscriptions.add(
+      this.store
+        .select(repoSelectors.deleteOperationStatus)
+        .subscribe((data: any) => {
+          if (data === httpCallStatus.OK) {
+            this.dialogRef.close();
+          }
+          this.deleteOperation$ = data;
+        })
+    );
   }
 
   deleteRepo() {
-    this.repoFacade.deleteRepo(this.data.repoId);
+    this.store.dispatch(repoActions.deleteRepo({ id: this.data.repoId }));
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }

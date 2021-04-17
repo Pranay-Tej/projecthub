@@ -7,7 +7,6 @@ import { distinctUntilChanged, tap } from 'rxjs/operators';
 import projectSelectors from '../store/project.selectors';
 import { httpCallStatus } from './../../shared/constants/constants';
 import projectActions from './../store/project.actions';
-import { RepoFacade } from './../store/repo.facade';
 import { DeleteProjectDialogComponent } from './delete-project-dialog/delete-project-dialog.component';
 import { ProjectDialogComponent } from './project-dialog/project-dialog.component';
 
@@ -29,7 +28,6 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
   constructor(
     private formBuilder: FormBuilder,
-    private repoFacade: RepoFacade,
     private dialog: MatDialog,
     private store: Store
   ) {}
@@ -75,12 +73,10 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
   fetchAllRepos() {
     this.store.dispatch(projectActions.setSelectedProjectId({ id: 'ALL' }));
-    this.repoFacade.getAllRepos();
   }
 
   fetchRepoListOfProject(projectId: string) {
     this.store.dispatch(projectActions.setSelectedProjectId({ id: projectId }));
-    this.repoFacade.getRepoListOfProject(projectId);
   }
 
   openProjectDialog(projectId: string) {

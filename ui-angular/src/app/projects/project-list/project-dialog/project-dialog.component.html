@@ -43,7 +43,11 @@
     >There was some error</span
   >
   <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close>
+    <button
+      mat-button
+      mat-dialog-close
+      [disabled]="saveOperation$ === httpCallStatus.LOADING"
+    >
       {{ saveOperation$ === httpCallStatus.LOADING ? "..." : "Cancel" }}
     </button>
     <button

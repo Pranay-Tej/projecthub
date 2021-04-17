@@ -16,13 +16,14 @@ import { ProjectRepoService } from './services/project-repo.service';
 import { ProjectService } from './services/project.service';
 import { RepoService } from './services/repo.service';
 // import { ProjectFacade } from './store/project.facade';
-import { RepoFacade } from './store/repo.facade';
+// import { RepoFacade } from './store/repo.facade';
 import { EditRepoProjectsDialogComponent } from './repo-list/edit-repo-projects-dialog/edit-repo-projects-dialog.component';
 import { RepoDialogComponent } from './repo-list/repo-dialog/repo-dialog.component';
 import { DeleteRepoDialogComponent } from './repo-list/delete-repo-dialog/delete-repo-dialog.component';
 import { projectFeatureKey, projectReducer } from './store/project.reducer';
 import { repoFeatureKey, repoReducer } from './store/repo.reducer';
 import { EffectsModule } from '@ngrx/effects';
+import { RepoEffects } from './store/repo.effects';
 
 @NgModule({
   declarations: [
@@ -43,13 +44,13 @@ import { EffectsModule } from '@ngrx/effects';
     ReactiveFormsModule,
     StoreModule.forFeature(projectFeatureKey, projectReducer),
     StoreModule.forFeature(repoFeatureKey, repoReducer),
-    EffectsModule.forFeature([ProjectEffects]),
+    EffectsModule.forFeature([ProjectEffects, RepoEffects]),
   ],
   providers: [
     ProjectService,
     // ProjectFacade,
     RepoService,
-    RepoFacade,
+    // RepoFacade,
     ProjectRepoService,
     ProjectRepoFacade,
   ],

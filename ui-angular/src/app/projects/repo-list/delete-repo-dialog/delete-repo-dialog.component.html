@@ -6,25 +6,25 @@
     This repo will be <b>permanently</b> deleted and removed from <b>all</b> of
     your projects
   </p>
-  <span *ngIf="deleteOperation === 'ERROR'" class="textWarn"
+  <span *ngIf="deleteOperation$ === httpCallStatus.ERROR" class="textWarn"
     >There was some error</span
   >
   <mat-dialog-actions align="end">
     <button
       mat-button
       mat-dialog-close
-      [disabled]="deleteOperation === 'LOADING'"
+      [disabled]="deleteOperation$ === httpCallStatus.LOADING"
     >
-      {{ deleteOperation === "LOADING" ? "..." : "Cancel" }}
+      {{ deleteOperation$ === httpCallStatus.LOADING ? "..." : "Cancel" }}
     </button>
     <button
       mat-flat-button
       color="warn"
-      [disabled]="deleteOperation === 'LOADING'"
+      [disabled]="deleteOperation$ === httpCallStatus.LOADING"
       (click)="deleteRepo()"
       cdkFocusInitial
     >
-      {{ deleteOperation === "LOADING" ? "..." : "DELETE" }}
+      {{ deleteOperation$ === httpCallStatus.LOADING ? "..." : "DELETE" }}
     </button>
   </mat-dialog-actions>
 </div>
