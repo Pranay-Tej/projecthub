@@ -26,6 +26,8 @@ authRouter.post("/register", async (req: Request, res: Response) => {
     res.cookie("jwt", newToken(user.toJSON()), {
       httpOnly: true /* frontend cannot access this cookie, hence secure */,
       maxAge: 24 * 60 * 60 * 1000 /* 1 day */,
+      // maxAge: 60 * 1000 /* 1 day */,
+      sameSite: "strict",
     });
 
     res.status(201).json("success");
@@ -59,6 +61,7 @@ authRouter.post("/login", async (req: Request, res: Response) => {
       httpOnly: true /* frontend cannot access this cookie, hence secure */,
       maxAge: 24 * 60 * 60 * 1000 /* 1 day */,
       // maxAge: 60 * 1000 /* 1 day */,
+      sameSite: "strict",
     });
 
     res.status(200).json("success");
@@ -95,7 +98,7 @@ authRouter.get("/", async (req: Request, res: Response) => {
 // user/logout
 authRouter.post("/logout", (req: Request, res: Response) => {
   try {
-    res.cookie("jwt", "", { httpOnly: true, maxAge: 0 });
+    res.cookie("jwt", "", { httpOnly: true, maxAge: 0, sameSite: "strict" });
     res.status(200).json("success");
   } catch (e) {
     res.status(400).json(e).end();
