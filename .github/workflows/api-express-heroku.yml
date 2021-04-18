@@ -3,7 +3,7 @@ name: Deploy API Express to Heroku
 on:
   push:
     branches:
-      - deploy-api
+      - main
 
 jobs:
   build:
