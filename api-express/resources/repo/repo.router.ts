@@ -1,9 +1,13 @@
 import { Router } from "express";
+import { protect } from "../../util/auth.util";
 import controller from "./repo.controller";
 const repoRouter = Router();
 
 // /repos
-repoRouter.route("/").get(controller.findMany).post(controller.createOne);
+repoRouter
+  .route("/")
+  .get(controller.findMany)
+  .post(protect, controller.createOne);
 
 // /repos/count
 repoRouter.route("/count").get(controller.count);
@@ -12,7 +16,7 @@ repoRouter.route("/count").get(controller.count);
 repoRouter
   .route("/:id")
   .get(controller.findOne)
-  .put(controller.updateOne)
-  .delete(controller.deleteOne);
+  .put(protect, controller.updateOne)
+  .delete(protect, controller.deleteOne);
 
 export default repoRouter;

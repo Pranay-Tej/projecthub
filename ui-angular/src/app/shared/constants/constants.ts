@@ -6,4 +6,5 @@ export enum httpCallStatus {
 
 export const LOCAL_KEYS = {
   USER: 'USER',
+  JWT: 'JWT',
 };

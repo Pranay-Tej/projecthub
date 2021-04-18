@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { protect } from "../../util/auth.util";
 import controller from "./projectRepo.controller";
 
 const projectRepoRouter = Router();
@@ -7,7 +8,7 @@ const projectRepoRouter = Router();
 projectRepoRouter
   .route("/")
   .get(controller.findMany)
-  .post(controller.createOne);
+  .post(protect, controller.createOne);
 
 // /project-repos/count
 projectRepoRouter.route("/count").get(controller.count);
@@ -16,11 +17,11 @@ projectRepoRouter.route("/count").get(controller.count);
 projectRepoRouter
   .route("/:id")
   .get(controller.findOne)
-  .put(controller.updateOne)
-  .delete(controller.deleteOne);
+  .put(protect, controller.updateOne)
+  .delete(protect, controller.deleteOne);
 
 projectRepoRouter
   .route("/:projectId/:repoId")
-  .delete(controller.deleteProjectRepo);
+  .delete(protect, controller.deleteProjectRepo);
 
 export default projectRepoRouter;

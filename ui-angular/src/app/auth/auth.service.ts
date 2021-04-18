@@ -7,12 +7,25 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
   constructor(private httpClient: HttpClient) {}
 
+  getJWT() {
+    localStorage.getItem(LOCAL_KEYS.JWT);
+  }
+
+  setJWT(JWT) {
+    localStorage.setItem(LOCAL_KEYS.JWT, JWT);
+  }
+
+  getLocalUser(user: string) {
+    localStorage.getItem(LOCAL_KEYS.USER);
+  }
+
   setLocalUser(user: string) {
     localStorage.setItem(LOCAL_KEYS.USER, user);
   }
 
-  clearLocalUser() {
+  clearLocalCredentials() {
     localStorage.removeItem(LOCAL_KEYS.USER);
+    localStorage.removeItem(LOCAL_KEYS.JWT);
   }
 
   // utils

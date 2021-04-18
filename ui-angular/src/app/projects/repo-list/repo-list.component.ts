@@ -92,7 +92,14 @@ export class RepoListComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       this.store.dispatch(repoActions.resetDialogData());
-      if (this.selectedProjectId$ !== 'ALL' && repoId === '' && result) {
+      if (
+        this.selectedProjectId$ &&
+        this.selectedProjectId$ !== 'ALL' &&
+        repoId === '' &&
+        result
+      ) {
+        console.log('projectId', this.selectedProjectId$);
+
         this.store.dispatch(
           projectRepoActions.add({
             projectId: this.selectedProjectId$,

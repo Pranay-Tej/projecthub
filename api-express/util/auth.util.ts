@@ -1,47 +1,67 @@
-import { verify } from "jsonwebtoken";
+import { verify, sign } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import User from "../resources/user/user.model";
 import config from "../config/config";
 
-const protect = async (req: Request, res: Response, next: NextFunction) => {
+export const newToken = (user: any) => {
+  return sign({ id: user._id }, config.JWT_SECRET, {
+    // expiresIn: 24 * 60 * 60 /* 1 day */,
+    expiresIn: "1d" /* 1 day */,
+    // expiresIn: "60s" /* 10 seconds */,
+  });
+};
+
+export const protect = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
-    // manual set token in client localStorage
-    // const bearerToken: string = req.header("Authorization") as string;
-    // if (!bearerToken) {
-    //   throw "Unauthorized!";
-    // }
+    console.log("checking user authentication...");
 
-    // if (typeof bearerToken !== undefined) {
-    //   const token = bearerToken.split("Bearer ")[1];
-    //   const id = jwt.verify(token, config.JWT_SECRET);
-    //   const user = User.findById(id);
-    //   if (!user) {
-    //     throw "Unauthorized!";
-    //   }
-    //   req.body.AUTH_ID = id;
-    //   next();
-    // } else {
-    //   throw "Unauthorized!";
-    // }
-
-    // cookie method
-    const token = req.cookies?.jwt;
-    if (!token) {
+    // token method
+    const bearerToken: string = req.header("Authorization") as string;
+    if (!bearerToken) {
       throw "unauthenticated!";
     }
 
-    const { id } = verify(token, config.JWT_SECRET) as any;
-    const user = await User.findOne({ _id: id }, { password: 0 });
+    if (typeof bearerToken === undefined) {
+      throw "unauthenticated!";
+    }
+
+    const token = bearerToken.split("Bearer ")[1];
+    const decoded: any = verify(token, config.JWT_SECRET);
+
+    const user = await User.findOne(
+      { _id: decoded.id },
+      { password: 0, email: 0 }
+    )
+      .lean()
+      .exec();
 
     if (!user) {
       throw "unauthenticated!";
     }
     // pass data to next middleware
-    res.locals.user = id;
+    res.locals.USER = user;
     next();
+
+    // // cookie method
+    // const token = req.cookies?.jwt;
+    // if (!token) {
+    //   throw "unauthenticated!";
+    // }
+
+    // const { id } = verify(token, config.JWT_SECRET) as any;
+    // const user = await User.findOne({ _id: id }, { password: 0, email: 0 }).lean().exec();
+
+    // if (!user) {
+    //   throw "unauthenticated!";
+    // }
+    // // pass data to next middleware
+    // res.locals.user = id;
+    // next();
   } catch (e) {
     res.status(401).send(e).end();
   }
 };
-
-export default protect;

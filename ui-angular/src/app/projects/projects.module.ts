@@ -1,9 +1,10 @@
+import { AuthInterceptor } from './../auth/auth.interceptor';
 import { ProjectRepoEffects } from './store/project-repo.effects';
 import { ProjectEffects } from './store/project.effects';
 import { StoreModule } from '@ngrx/store';
 // import { ProjectRepoFacade } from './store/project-repo.facade';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../material.module';
@@ -59,6 +60,7 @@ import {
     // RepoFacade,
     ProjectRepoService,
     // ProjectRepoFacade,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
 })
 export class ProjectsModule {}

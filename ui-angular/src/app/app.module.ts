@@ -16,6 +16,7 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './store/app.effects';
 import { AuthEffects } from './auth/store/auth.effects';
+import { AuthModule } from './auth/auth.module';
 
 @NgModule({
   declarations: [AppComponent, NavBarComponent, HomeComponent],
@@ -37,6 +38,7 @@ import { AuthEffects } from './auth/store/auth.effects';
       logOnly: environment.production,
     }),
     EffectsModule.forRoot([AppEffects, AuthEffects]),
+    AuthModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
