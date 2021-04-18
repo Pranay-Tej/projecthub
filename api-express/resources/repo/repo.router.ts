@@ -1,5 +1,5 @@
 import { Router } from "express";
-import protect from "../../util/auth.util";
+import { protect } from "../../util/auth.util";
 import controller from "./repo.controller";
 const repoRouter = Router();
 

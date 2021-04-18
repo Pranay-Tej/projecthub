@@ -1,5 +1,5 @@
 import { Router } from "express";
-import protect from "../../util/auth.util";
+import { protect } from "../../util/auth.util";
 import controller from "./project.controller";
 
 const projectRouter = Router();

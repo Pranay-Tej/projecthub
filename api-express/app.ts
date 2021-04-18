@@ -14,8 +14,10 @@ const app = express();
 // Middleware
 app.use(
   cors({
-    credentials: true /* enables cookie exchange */,
-    origin: ["http://localhost:4200", "https://projecthub.vercel.app"],
+    // // cookie method
+    // credentials: true /* enables cookie exchange */,
+    // // origin mandatory for cookie method
+    // origin: ["http://localhost:4200", "https://projecthub.vercel.app"],
   })
 );
 app.use(express.json());
