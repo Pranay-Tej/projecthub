@@ -28,7 +28,10 @@ export class AuthEffects {
         this.authService
           .login({ email: action.email, password: action.password })
           .pipe(
-            switchMap((data) => [authActions.loadUserInfo()]),
+            switchMap((data: any) => {
+              this.authService.setJWT(data.jwt);
+              return [authActions.loadUserInfo()];
+            }),
             catchError((error) => {
               console.error(error);
               return [
@@ -75,7 +78,7 @@ export class AuthEffects {
             ];
           }),
           tap(() => {
-            this.authService.clearLocalUser();
+            this.authService.clearLocalCredentials();
             this.router.navigate(['/']);
           })
         )

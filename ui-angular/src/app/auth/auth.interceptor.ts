@@ -1,3 +1,4 @@
+import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
 import {
   HttpErrorResponse,
@@ -12,12 +13,17 @@ import { catchError } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class AuthInterceptor implements HttpInterceptor {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private authService: AuthService) {}
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    req = req.clone({ withCredentials: true });
+    req = req.clone({
+      // withCredentials: true /* For cookie based method */
+      setHeaders: {
+        Authorization: `Bearer ${localStorage.getItem('JWT')}`,
+      },
+    });
     return next.handle(req).pipe(
       catchError((error) => {
         if (error instanceof HttpErrorResponse && error.status === 401) {
