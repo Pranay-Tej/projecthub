@@ -1,64 +1,72 @@
-<form [formGroup]="projectForm" (ngSubmit)="saveProject()" class="grid">
-  <mat-form-field appearance="standard">
-    <mat-label>Project Name</mat-label>
-    <input
-      name="name"
-      type="name"
-      matInput
-      placeholder="Super Cool Project"
-      formControlName="name"
-    />
-    <mat-error *ngIf="projectForm.get('name').errors?.required"
-      >This field is required</mat-error
+<!-- <pre>{{ projectLoadOperation$ }}</pre> -->
+
+<div *ngIf="projectLoadOperation$ === httpCallStatus.LOADING" class="emptyList">
+  ...
+</div>
+
+<div *ngIf="projectLoadOperation$ === httpCallStatus.OK">
+  <form [formGroup]="projectForm" (ngSubmit)="saveProject()" class="grid">
+    <mat-form-field appearance="standard">
+      <mat-label>Project Name</mat-label>
+      <input
+        name="name"
+        type="name"
+        matInput
+        placeholder="Super Cool Project"
+        formControlName="name"
+      />
+      <mat-error *ngIf="projectForm.get('name').errors?.required"
+        >This field is required</mat-error
+      >
+      <mat-error *ngIf="projectForm.get('name').errors?.maxlength"
+        >Maximum
+        {{ projectForm.get("name").errors?.maxlength?.requiredLength }}
+        characters allowed</mat-error
+      >
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>Project Link</mat-label>
+      <input
+        name="url"
+        type="url"
+        matInput
+        placeholder="https://github.com/user/repo"
+        formControlName="url"
+      />
+      <mat-hint>Link for project source code</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="standard">
+      <mat-label>Website</mat-label>
+      <input
+        name="website"
+        type="website"
+        matInput
+        placeholder="https://coolproject.com"
+        formControlName="website"
+      />
+      <mat-hint>Website if project is hosted</mat-hint>
+    </mat-form-field>
+    <span *ngIf="saveOperation$ === httpCallStatus.ERROR" class="textWarn"
+      >There was some error</span
     >
-    <mat-error *ngIf="projectForm.get('name').errors?.maxlength"
-      >Maximum
-      {{ projectForm.get("name").errors?.maxlength?.requiredLength }} characters
-      allowed</mat-error
-    >
-  </mat-form-field>
-  <mat-form-field appearance="standard">
-    <mat-label>Project Link</mat-label>
-    <input
-      name="url"
-      type="url"
-      matInput
-      placeholder="https://github.com/user/repo"
-      formControlName="url"
-    />
-    <mat-hint>Link for project source code</mat-hint>
-  </mat-form-field>
-  <mat-form-field appearance="standard">
-    <mat-label>Website</mat-label>
-    <input
-      name="website"
-      type="website"
-      matInput
-      placeholder="https://coolproject.com"
-      formControlName="website"
-    />
-    <mat-hint>Website if project is hosted</mat-hint>
-  </mat-form-field>
-  <span *ngIf="saveOperation$ === httpCallStatus.ERROR" class="textWarn"
-    >There was some error</span
-  >
-  <mat-dialog-actions align="end">
-    <button
-      mat-button
-      mat-dialog-close
-      [disabled]="saveOperation$ === httpCallStatus.LOADING"
-    >
-      {{ saveOperation$ === httpCallStatus.LOADING ? "..." : "Cancel" }}
-    </button>
-    <button
-      mat-button
-      color="primary"
-      type="submit"
-      [disabled]="
-        projectForm.invalid || saveOperation$ === httpCallStatus.LOADING
-      "
-    >
-      {{ saveOperation$ === httpCallStatus.LOADING ? "..." : "Save" }}
-    </button>
-  </mat-dialog-actions>
-</form>
+    <mat-dialog-actions align="end">
+      <button
+        mat-button
+        mat-dialog-close
+        [disabled]="saveOperation$ === httpCallStatus.LOADING"
+      >
+        {{ saveOperation$ === httpCallStatus.LOADING ? "..." : "Cancel" }}
+      </button>
+      <button
+        mat-button
+        color="primary"
+        type="submit"
+        [disabled]="
+          projectForm.invalid || saveOperation$ === httpCallStatus.LOADING
+        "
+      >
+        {{ saveOperation$ === httpCallStatus.LOADING ? "..." : "Save" }}
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>

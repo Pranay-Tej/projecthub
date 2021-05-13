@@ -1,9 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
+import { ProjectFacade } from '../store/project.facade';
 import projectSelectors from '../store/project.selectors';
 import { httpCallStatus } from './../../shared/constants/constants';
 import projectActions from './../store/project.actions';
@@ -29,7 +30,8 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private dialog: MatDialog,
-    private store: Store
+    private store: Store,
+    private projectFacade: ProjectFacade
   ) {}
 
   ngOnInit(): void {
@@ -49,11 +51,17 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.add(
-      this.store
-        .select(projectSelectors.loadOperationStatus)
-        .subscribe((data: any) => {
-          this.loadOperationStatus$ = data;
-        })
+      // this.store
+      //   .select(projectSelectors.loadOperationStatus)
+      //   .subscribe((data: any) => {
+      //     this.loadOperationStatus$ = data;
+      //   })
+      this.projectFacade.projectListLoadOperation$.subscribe(
+        (status: string) => {
+          console.log({ projectListLoadOperation: status });
+          this.loadOperationStatus$ = status;
+        }
+      )
     );
 
     this.filterForm
@@ -88,6 +96,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     });
     dialogRef.afterClosed().subscribe(() => {
       this.store.dispatch(projectActions.resetDialogData());
+      this.projectFacade.setProjectLoadOperation(httpCallStatus.OK);
     });
   }
 
@@ -100,7 +109,8 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       },
     });
     dialogRef.afterClosed().subscribe(() => {
-      this.store.dispatch(projectActions.setDeleteOperationStatus(null));
+      // this.store.dispatch(projectActions.setDeleteOperationStatus(null));
+      this.projectFacade.setDeleteOperation(httpCallStatus.OK);
     });
   }
 

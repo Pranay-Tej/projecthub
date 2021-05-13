@@ -30,6 +30,7 @@ import {
   projectRepoFeatureKey,
   projectRepoReducer,
 } from './store/project-repo.reducer';
+import { ProjectFacade } from './store/project.facade';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,7 @@ import {
   ],
   providers: [
     ProjectService,
-    // ProjectFacade,
+    ProjectFacade,
     RepoService,
     // RepoFacade,
     ProjectRepoService,

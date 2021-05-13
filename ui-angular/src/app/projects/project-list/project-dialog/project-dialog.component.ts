@@ -6,12 +6,14 @@ import { Subscription } from 'rxjs';
 import projectActions from '../../store/project.actions';
 import projectSelectors from '../../store/project.selectors';
 import { httpCallStatus } from 'src/app/shared/constants/constants';
+import { ProjectFacade } from '../../store/project.facade';
 
 @Component({
   templateUrl: './project-dialog.component.html',
   styleUrls: ['./project-dialog.component.css'],
 })
 export class ProjectDialogComponent implements OnInit, OnDestroy {
+  projectLoadOperation$: string;
   saveOperation$: string;
   projectForm: FormGroup = this.formBuilder.group({
     name: this.formBuilder.control('', [
@@ -28,6 +30,7 @@ export class ProjectDialogComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private store: Store,
+    private projectFacade: ProjectFacade,
     public dialogRef: MatDialogRef<ProjectDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data
   ) {}
@@ -40,6 +43,13 @@ export class ProjectDialogComponent implements OnInit, OnDestroy {
     }
 
     this.subscriptions.add(
+      this.projectFacade.projectLoadOperation$.subscribe((status: string) => {
+        console.log({ projectLoadOperation: status });
+        this.projectLoadOperation$ = status;
+      })
+    );
+
+    this.subscriptions.add(
       this.store.select(projectSelectors.project).subscribe((data) => {
         if (!data) {
           return;
@@ -50,14 +60,21 @@ export class ProjectDialogComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.add(
-      this.store
-        .select(projectSelectors.saveOperationStatus)
-        .subscribe((status) => {
-          if (status === httpCallStatus.OK) {
-            this.dialogRef.close();
-          }
-          this.saveOperation$ = status;
-        })
+      // this.store
+      //   .select(projectSelectors.saveOperationStatus)
+      //   .subscribe((status) => {
+      //     if (status === httpCallStatus.OK) {
+      //       this.dialogRef.close();
+      //     }
+      //     this.saveOperation$ = status;
+      //   })
+      this.projectFacade.saveOperation$.subscribe((status: string) => {
+        console.log({ saveOperation: status });
+        this.saveOperation$ = status;
+        if (status === httpCallStatus.OK) {
+          this.dialogRef.close();
+        }
+      })
     );
   }
 

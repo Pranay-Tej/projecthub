@@ -8,10 +8,10 @@ const projectListLoaded = createAction(
   props<{ projectList: any }>()
 );
 
-const setLoadOperationStatus = createAction(
-  '[Project] Load ProjectList Status',
-  props<{ status: httpCallStatus }>()
-);
+// const setLoadOperationStatus = createAction(
+//   '[Project] Load ProjectList Status',
+//   props<{ status: httpCallStatus }>()
+// );
 
 const setSelectedProjectId = createAction(
   '[Project] Set SelectedProjectId',
@@ -38,36 +38,36 @@ const updateProject = createAction(
   props<{ project: any; id: string }>()
 );
 
-const setSaveOperationStatus = createAction(
-  '[Project] Save Project Status',
-  props<{ status: httpCallStatus }>()
-);
+// const setSaveOperationStatus = createAction(
+//   '[Project] Save Project Status',
+//   props<{ status: httpCallStatus }>()
+// );
 
 const deleteProject = createAction(
   '[Project] Delete Project',
   props<{ id: string }>()
 );
 
-const setDeleteOperationStatus = createAction(
-  '[Project] Delete Project Status',
-  props<{ status: httpCallStatus }>()
-);
+// const setDeleteOperationStatus = createAction(
+//   '[Project] Delete Project Status',
+//   props<{ status: httpCallStatus }>()
+// );
 
 const resetDialogData = createAction('[Project] Reset Dialog Data');
 
 const projectActions = {
   loadProjectList,
   projectListLoaded,
-  setLoadOperationStatus,
+  // setLoadOperationStatus,
   setSelectedProjectId,
   loadProject,
   projectLoaded,
   createProject,
   updateProject,
-  setSaveOperationStatus,
+  // setSaveOperationStatus,
   resetDialogData,
   deleteProject,
-  setDeleteOperationStatus,
+  // setDeleteOperationStatus,
 };
 
 export default projectActions;
