@@ -69,7 +69,7 @@ export class ProjectDialogComponent implements OnInit, OnDestroy {
       //     this.saveOperation$ = status;
       //   })
       this.projectFacade.saveOperation$.subscribe((status: string) => {
-        console.log({ saveOperation: status });
+        console.log({ projectSaveOperation: status });
         this.saveOperation$ = status;
         if (status === httpCallStatus.OK) {
           this.dialogRef.close();

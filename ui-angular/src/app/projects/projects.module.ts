@@ -17,8 +17,8 @@ import { RepoListComponent } from './repo-list/repo-list.component';
 import { ProjectRepoService } from './services/project-repo.service';
 import { ProjectService } from './services/project.service';
 import { RepoService } from './services/repo.service';
-// import { ProjectFacade } from './store/project.facade';
-// import { RepoFacade } from './store/repo.facade';
+import { ProjectFacade } from './store/project.facade';
+import { RepoFacade } from './store/repo.facade';
 import { EditRepoProjectsDialogComponent } from './repo-list/edit-repo-projects-dialog/edit-repo-projects-dialog.component';
 import { RepoDialogComponent } from './repo-list/repo-dialog/repo-dialog.component';
 import { DeleteRepoDialogComponent } from './repo-list/delete-repo-dialog/delete-repo-dialog.component';
@@ -30,7 +30,6 @@ import {
   projectRepoFeatureKey,
   projectRepoReducer,
 } from './store/project-repo.reducer';
-import { ProjectFacade } from './store/project.facade';
 
 @NgModule({
   declarations: [
@@ -58,7 +57,7 @@ import { ProjectFacade } from './store/project.facade';
     ProjectService,
     ProjectFacade,
     RepoService,
-    // RepoFacade,
+    RepoFacade,
     ProjectRepoService,
     // ProjectRepoFacade,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },

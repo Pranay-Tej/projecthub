@@ -4,7 +4,7 @@ import { createAction, props } from '@ngrx/store';
 const loadProjectList = createAction('[Project] Load ProjectList');
 
 const projectListLoaded = createAction(
-  '[Project] ProjectList Load',
+  '[Project] ProjectList Loaded',
   props<{ projectList: any }>()
 );
 

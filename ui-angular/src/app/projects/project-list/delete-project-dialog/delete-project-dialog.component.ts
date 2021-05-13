@@ -33,7 +33,7 @@ export class DeleteProjectDialogComponent implements OnInit, OnDestroy {
       //     this.deleteOperation$ = data;
       //   })
       this.projectFacade.deleteOperation$.subscribe((status: string) => {
-        console.log({ deleteOperation: status });
+        console.log({ projectDeleteOperation: status });
         this.deleteOperation$ = status;
         if (status === httpCallStatus.OK) {
           this.dialogRef.close();

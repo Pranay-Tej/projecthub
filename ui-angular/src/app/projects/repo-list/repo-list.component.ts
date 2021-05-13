@@ -8,6 +8,7 @@ import projectRepoActions from '../store/project-repo.actions';
 import projectActions from '../store/project.actions';
 import projectSelectors from '../store/project.selectors';
 import repoActions from '../store/repo.actions';
+import { RepoFacade } from '../store/repo.facade';
 import repoSelectors from '../store/repo.selectors';
 import { httpCallStatus } from './../../shared/constants/constants';
 import { DeleteRepoDialogComponent } from './delete-repo-dialog/delete-repo-dialog.component';
@@ -32,6 +33,7 @@ export class RepoListComponent implements OnInit, OnDestroy {
 
   constructor(
     private store: Store,
+    private repoFacade: RepoFacade,
     private formBuilder: FormBuilder,
     private dialog: MatDialog
   ) {}
@@ -57,11 +59,14 @@ export class RepoListComponent implements OnInit, OnDestroy {
       });
 
     this.subscriptions.add(
-      this.store
-        .select(repoSelectors.loadOperationStatus)
-        .subscribe((data: any) => {
-          this.loadOperationStatus$ = data;
-        })
+      // this.store
+      //   .select(repoSelectors.loadOperationStatus)
+      //   .subscribe((data: any) => {
+      //     this.loadOperationStatus$ = data;
+      //   })
+      this.repoFacade.repoListLoadOperation$.subscribe(
+        (status: string) => (this.loadOperationStatus$ = status)
+      )
     );
 
     this.filterForm
@@ -92,6 +97,8 @@ export class RepoListComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       this.store.dispatch(repoActions.resetDialogData());
+      this.repoFacade.setRepoLoadOperation(httpCallStatus.OK);
+
       if (
         this.selectedProjectId$ &&
         this.selectedProjectId$ !== 'ALL' &&
@@ -128,11 +135,10 @@ export class RepoListComponent implements OnInit, OnDestroy {
       },
     });
 
-    dialogRef
-      .afterClosed()
-      .subscribe(() =>
-        this.store.dispatch(repoActions.setDeleteOperationStatus(null))
-      );
+    dialogRef.afterClosed().subscribe(() =>
+      // this.store.dispatch(repoActions.setDeleteOperationStatus(null))
+      this.repoFacade.setDeleteOperation(httpCallStatus.OK)
+    );
   }
 
   ngOnDestroy() {

@@ -15,6 +15,7 @@ import { ProjectRepoService } from './../services/project-repo.service';
 import { RepoService } from './../services/repo.service';
 import projectSelectors from './project.selectors';
 import repoActions from './repo.actions';
+import { RepoFacade } from './repo.facade';
 
 @Injectable()
 export class RepoEffects {
@@ -22,7 +23,8 @@ export class RepoEffects {
     private actions$: Actions,
     private projectRepoService: ProjectRepoService,
     private repoService: RepoService,
-    private store: Store
+    private store: Store,
+    private repoFacade: RepoFacade
   ) {}
 
   reloadRepoList$ = createEffect(() =>
@@ -44,26 +46,26 @@ export class RepoEffects {
     this.actions$.pipe(
       ofType(repoActions.loadRepoList),
       tap(() =>
-        this.store.dispatch(
-          repoActions.setLoadOperationStatus({
-            status: httpCallStatus.LOADING,
-          })
-        )
+        this.repoFacade.setRepoListLoadOperation(httpCallStatus.LOADING)
       ),
       mergeMap(() =>
         this.repoService.getAllRepos().pipe(
-          switchMap((data) => [
-            repoActions.repoListLoaded({ repoList: data }),
-            repoActions.setLoadOperationStatus({
-              status: httpCallStatus.OK,
-            }),
-          ]),
+          switchMap((data) => {
+            this.repoFacade.setRepoListLoadOperation(httpCallStatus.OK);
+            return [
+              repoActions.repoListLoaded({ repoList: data }),
+              // repoActions.setLoadOperationStatus({
+              //   status: httpCallStatus.OK,
+              // }),
+            ];
+          }),
           catchError((error) => {
             console.error(error);
+            this.repoFacade.setRepoListLoadOperation(httpCallStatus.ERROR);
             return [
-              repoActions.setLoadOperationStatus({
-                status: httpCallStatus.ERROR,
-              }),
+              // repoActions.setLoadOperationStatus({
+              //   status: httpCallStatus.ERROR,
+              // }),
             ];
           })
         )
@@ -75,11 +77,7 @@ export class RepoEffects {
     this.actions$.pipe(
       ofType(repoActions.loadRepoListOfProject),
       tap(() =>
-        this.store.dispatch(
-          repoActions.setLoadOperationStatus({
-            status: httpCallStatus.LOADING,
-          })
-        )
+        this.repoFacade.setRepoListLoadOperation(httpCallStatus.LOADING)
       ),
       withLatestFrom(this.store.select(projectSelectors.selectedProjectId)),
       mergeMap(([action, selectedProjectId]) =>
@@ -87,19 +85,21 @@ export class RepoEffects {
           map((data: any) => data.map((projectRepo) => projectRepo.repoId)),
           switchMap((data: any) => {
             // console.log(data);
+            this.repoFacade.setRepoListLoadOperation(httpCallStatus.OK);
             return [
               repoActions.repoListLoaded({ repoList: data }),
-              repoActions.setLoadOperationStatus({
-                status: httpCallStatus.OK,
-              }),
+              // repoActions.setLoadOperationStatus({
+              //   status: httpCallStatus.OK,
+              // }),
             ];
           }),
           catchError((error) => {
             console.error(error);
+            this.repoFacade.setRepoListLoadOperation(httpCallStatus.ERROR);
             return [
-              repoActions.setLoadOperationStatus({
-                status: httpCallStatus.ERROR,
-              }),
+              // repoActions.setLoadOperationStatus({
+              //   status: httpCallStatus.ERROR,
+              // }),
             ];
           })
         )
@@ -111,27 +111,30 @@ export class RepoEffects {
     this.actions$.pipe(
       ofType(repoActions.createRepo),
       tap(() =>
-        this.store.dispatch(
-          repoActions.setSaveOperationStatus({
-            status: httpCallStatus.LOADING,
-          })
-        )
+        this.repoFacade.setSaveOperation({ status: httpCallStatus.LOADING })
       ),
       mergeMap((action: any) =>
         this.repoService.create(action.repo).pipe(
-          switchMap((data: any) => [
-            repoActions.setSaveOperationStatus({
+          switchMap((data: any) => {
+            this.repoFacade.setSaveOperation({
               status: httpCallStatus.OK,
               id: data._id,
-            }),
-            repoActions.reloadRepoList(),
-          ]),
+            });
+            return [
+              // repoActions.setSaveOperationStatus({
+              //   status: httpCallStatus.OK,
+              //   id: data._id,
+              // }),
+              repoActions.reloadRepoList(),
+            ];
+          }),
           catchError((error) => {
             console.error(error);
+            this.repoFacade.setSaveOperation({ status: httpCallStatus.ERROR });
             return [
-              repoActions.setSaveOperationStatus({
-                status: httpCallStatus.ERROR,
-              }),
+              // repoActions.setSaveOperationStatus({
+              //   status: httpCallStatus.ERROR,
+              // }),
             ];
           })
         )
@@ -143,26 +146,26 @@ export class RepoEffects {
     this.actions$.pipe(
       ofType(repoActions.updateRepo),
       tap(() =>
-        this.store.dispatch(
-          repoActions.setSaveOperationStatus({
-            status: httpCallStatus.LOADING,
-          })
-        )
+        this.repoFacade.setSaveOperation({ status: httpCallStatus.LOADING })
       ),
       mergeMap((action: any) =>
         this.repoService.update(action.repo, action.id).pipe(
-          switchMap((data: any) => [
-            repoActions.setSaveOperationStatus({
-              status: httpCallStatus.OK,
-            }),
-            repoActions.reloadRepoList(),
-          ]),
+          switchMap((data: any) => {
+            this.repoFacade.setSaveOperation({ status: httpCallStatus.OK });
+            return [
+              // repoActions.setSaveOperationStatus({
+              //   status: httpCallStatus.OK,
+              // }),
+              repoActions.reloadRepoList(),
+            ];
+          }),
           catchError((error) => {
             console.error(error);
+            this.repoFacade.setSaveOperation({ status: httpCallStatus.ERROR });
             return [
-              repoActions.setSaveOperationStatus({
-                status: httpCallStatus.ERROR,
-              }),
+              // repoActions.setSaveOperationStatus({
+              //   status: httpCallStatus.ERROR,
+              // }),
             ];
           })
         )
@@ -173,11 +176,16 @@ export class RepoEffects {
   loadRepo$ = createEffect(() =>
     this.actions$.pipe(
       ofType(repoActions.loadRepo),
+      tap(() => this.repoFacade.setRepoLoadOperation(httpCallStatus.LOADING)),
       mergeMap((action: any) =>
         this.repoService.getRepo(action.id).pipe(
-          switchMap((data: any) => [repoActions.repoLoaded({ repo: data })]),
+          switchMap((data: any) => {
+            this.repoFacade.setRepoLoadOperation(httpCallStatus.OK);
+            return [repoActions.repoLoaded({ repo: data })];
+          }),
           catchError((error) => {
             console.error(error);
+            this.repoFacade.setRepoLoadOperation(httpCallStatus.ERROR);
             return EMPTY;
           })
         )
@@ -188,27 +196,25 @@ export class RepoEffects {
   deleteRepo$ = createEffect(() =>
     this.actions$.pipe(
       ofType(repoActions.deleteRepo),
-      tap(() =>
-        this.store.dispatch(
-          repoActions.setDeleteOperationStatus({
-            status: httpCallStatus.LOADING,
-          })
-        )
-      ),
+      tap(() => this.repoFacade.setDeleteOperation(httpCallStatus.LOADING)),
       mergeMap((action: any) =>
         this.repoService.delete(action.id).pipe(
-          switchMap((data) => [
-            repoActions.setDeleteOperationStatus({
-              status: httpCallStatus.OK,
-            }),
-            repoActions.reloadRepoList(),
-          ]),
+          switchMap((data) => {
+            this.repoFacade.setDeleteOperation(httpCallStatus.OK);
+            return [
+              // repoActions.setDeleteOperationStatus({
+              //   status: httpCallStatus.OK,
+              // }),
+              repoActions.reloadRepoList(),
+            ];
+          }),
           catchError((error) => {
             console.error(error);
+            this.repoFacade.setDeleteOperation(httpCallStatus.ERROR);
             return [
-              repoActions.setDeleteOperationStatus({
-                status: httpCallStatus.ERROR,
-              }),
+              // repoActions.setDeleteOperationStatus({
+              //   status: httpCallStatus.ERROR,
+              // }),
             ];
           })
         )
