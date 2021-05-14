@@ -24,14 +24,6 @@ export class DeleteProjectDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.add(
-      // this.store
-      //   .select(projectSelectors.deleteOperationStatus)
-      //   .subscribe((data: any) => {
-      //     if (data === httpCallStatus.OK) {
-      //       this.dialogRef.close();
-      //     }
-      //     this.deleteOperation$ = data;
-      //   })
       this.projectFacade.deleteOperation$.subscribe((status: string) => {
         console.log({ projectDeleteOperation: status });
         this.deleteOperation$ = status;

@@ -42,11 +42,7 @@ export class ProjectRepoEffects {
             this.projectRepoFacade.setProjectListLoadOperation(
               httpCallStatus.OK
             );
-            return [
-              // projectActions.setDeleteOperationStatus({
-              //   status: httpCallStatus.ERROR,
-              // }),
-            ];
+            return EMPTY;
           })
         )
       )

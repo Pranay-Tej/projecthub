@@ -54,16 +54,6 @@ export class RepoDialogComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.add(
-      // this.store
-      //   .select(repoSelectors.saveOperationStatus)
-      //   .subscribe((data: any) => {
-      //     // console.log(data);
-      //     if (data?.status === httpCallStatus.OK) {
-      //       this.dialogRef.close(data?.id);
-      //     }
-      //     this.saveOperation$ = data?.status;
-      //   })
-
       this.repoFacade.saveOperation$.subscribe((status: any) => {
         console.log({ repoSaveOperation: status });
         this.saveOperation$ = status?.status;

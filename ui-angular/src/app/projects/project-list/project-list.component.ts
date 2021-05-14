@@ -51,11 +51,6 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.add(
-      // this.store
-      //   .select(projectSelectors.loadOperationStatus)
-      //   .subscribe((data: any) => {
-      //     this.loadOperationStatus$ = data;
-      //   })
       this.projectFacade.projectListLoadOperation$.subscribe(
         (status: string) => {
           console.log({ projectListLoadOperation: status });
@@ -109,8 +104,9 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       },
     });
     dialogRef.afterClosed().subscribe(() => {
-      // this.store.dispatch(projectActions.setDeleteOperationStatus(null));
       this.projectFacade.setDeleteOperation(httpCallStatus.OK);
+      // selecting ALL projects
+      this.store.dispatch(projectActions.setSelectedProjectId({ id: 'ALL' }));
     });
   }
 

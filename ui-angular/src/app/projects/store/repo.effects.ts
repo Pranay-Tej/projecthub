@@ -52,21 +52,12 @@ export class RepoEffects {
         this.repoService.getAllRepos().pipe(
           switchMap((data) => {
             this.repoFacade.setRepoListLoadOperation(httpCallStatus.OK);
-            return [
-              repoActions.repoListLoaded({ repoList: data }),
-              // repoActions.setLoadOperationStatus({
-              //   status: httpCallStatus.OK,
-              // }),
-            ];
+            return [repoActions.repoListLoaded({ repoList: data })];
           }),
           catchError((error) => {
             console.error(error);
             this.repoFacade.setRepoListLoadOperation(httpCallStatus.ERROR);
-            return [
-              // repoActions.setLoadOperationStatus({
-              //   status: httpCallStatus.ERROR,
-              // }),
-            ];
+            return EMPTY;
           })
         )
       )
@@ -86,21 +77,12 @@ export class RepoEffects {
           switchMap((data: any) => {
             // console.log(data);
             this.repoFacade.setRepoListLoadOperation(httpCallStatus.OK);
-            return [
-              repoActions.repoListLoaded({ repoList: data }),
-              // repoActions.setLoadOperationStatus({
-              //   status: httpCallStatus.OK,
-              // }),
-            ];
+            return [repoActions.repoListLoaded({ repoList: data })];
           }),
           catchError((error) => {
             console.error(error);
             this.repoFacade.setRepoListLoadOperation(httpCallStatus.ERROR);
-            return [
-              // repoActions.setLoadOperationStatus({
-              //   status: httpCallStatus.ERROR,
-              // }),
-            ];
+            return EMPTY;
           })
         )
       )
@@ -120,22 +102,12 @@ export class RepoEffects {
               status: httpCallStatus.OK,
               id: data._id,
             });
-            return [
-              // repoActions.setSaveOperationStatus({
-              //   status: httpCallStatus.OK,
-              //   id: data._id,
-              // }),
-              repoActions.reloadRepoList(),
-            ];
+            return [repoActions.reloadRepoList()];
           }),
           catchError((error) => {
             console.error(error);
             this.repoFacade.setSaveOperation({ status: httpCallStatus.ERROR });
-            return [
-              // repoActions.setSaveOperationStatus({
-              //   status: httpCallStatus.ERROR,
-              // }),
-            ];
+            return EMPTY;
           })
         )
       )
@@ -152,21 +124,12 @@ export class RepoEffects {
         this.repoService.update(action.repo, action.id).pipe(
           switchMap((data: any) => {
             this.repoFacade.setSaveOperation({ status: httpCallStatus.OK });
-            return [
-              // repoActions.setSaveOperationStatus({
-              //   status: httpCallStatus.OK,
-              // }),
-              repoActions.reloadRepoList(),
-            ];
+            return [repoActions.reloadRepoList()];
           }),
           catchError((error) => {
             console.error(error);
             this.repoFacade.setSaveOperation({ status: httpCallStatus.ERROR });
-            return [
-              // repoActions.setSaveOperationStatus({
-              //   status: httpCallStatus.ERROR,
-              // }),
-            ];
+            return EMPTY;
           })
         )
       )
@@ -201,21 +164,12 @@ export class RepoEffects {
         this.repoService.delete(action.id).pipe(
           switchMap((data) => {
             this.repoFacade.setDeleteOperation(httpCallStatus.OK);
-            return [
-              // repoActions.setDeleteOperationStatus({
-              //   status: httpCallStatus.OK,
-              // }),
-              repoActions.reloadRepoList(),
-            ];
+            return [repoActions.reloadRepoList()];
           }),
           catchError((error) => {
             console.error(error);
             this.repoFacade.setDeleteOperation(httpCallStatus.ERROR);
-            return [
-              // repoActions.setDeleteOperationStatus({
-              //   status: httpCallStatus.ERROR,
-              // }),
-            ];
+            return EMPTY;
           })
         )
       )

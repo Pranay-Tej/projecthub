@@ -59,11 +59,6 @@ export class RepoListComponent implements OnInit, OnDestroy {
       });
 
     this.subscriptions.add(
-      // this.store
-      //   .select(repoSelectors.loadOperationStatus)
-      //   .subscribe((data: any) => {
-      //     this.loadOperationStatus$ = data;
-      //   })
       this.repoFacade.repoListLoadOperation$.subscribe(
         (status: string) => (this.loadOperationStatus$ = status)
       )
@@ -141,10 +136,9 @@ export class RepoListComponent implements OnInit, OnDestroy {
       },
     });
 
-    dialogRef.afterClosed().subscribe(() =>
-      // this.store.dispatch(repoActions.setDeleteOperationStatus(null))
-      this.repoFacade.setDeleteOperation(httpCallStatus.OK)
-    );
+    dialogRef
+      .afterClosed()
+      .subscribe(() => this.repoFacade.setDeleteOperation(httpCallStatus.OK));
   }
 
   ngOnDestroy() {

@@ -1,11 +1,10 @@
-import { RepoFacade } from './../../store/repo.facade';
-import { Store } from '@ngrx/store';
-import { httpCallStatus } from 'src/app/shared/constants/constants';
-import { Subscription } from 'rxjs';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Component, OnInit, Inject, OnDestroy } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
+import { httpCallStatus } from 'src/app/shared/constants/constants';
 import repoActions from '../../store/repo.actions';
-import repoSelectors from '../../store/repo.selectors';
+import { RepoFacade } from './../../store/repo.facade';
 
 @Component({
   templateUrl: './delete-repo-dialog.component.html',
@@ -25,14 +24,6 @@ export class DeleteRepoDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.add(
-      // this.store
-      //   .select(repoSelectors.deleteOperationStatus)
-      //   .subscribe((data: any) => {
-      //     if (data === httpCallStatus.OK) {
-      //       this.dialogRef.close();
-      //     }
-      //     this.deleteOperation$ = data;
-      //   })
       this.repoFacade.deleteOperation$.subscribe((status: string) => {
         console.log({ repoDeleteOperation: status });
         this.deleteOperation$ = status;

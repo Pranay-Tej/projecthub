@@ -9,11 +9,6 @@ const projectList = createSelector(
   (state) => state.projectList
 );
 
-// const loadOperationStatus = createSelector(
-//   projectFeatureSelector,
-//   (state) => state.loadOperationStatus
-// );
-
 const selectedProjectId = createSelector(
   projectFeatureSelector,
   (state) => state.selectedProjectId
@@ -23,23 +18,10 @@ const project = createSelector(
   (state) => state.project
 );
 
-// const saveOperationStatus = createSelector(
-//   projectFeatureSelector,
-//   (state) => state.saveOperationStatus
-// );
-
-// const deleteOperationStatus = createSelector(
-//   projectFeatureSelector,
-//   (state) => state.deleteOperationStatus
-// );
-
 const projectSelectors = {
   projectList,
-  // loadOperationStatus,
   selectedProjectId,
   project,
-  // saveOperationStatus,
-  // deleteOperationStatus,
 };
 
 export default projectSelectors;
