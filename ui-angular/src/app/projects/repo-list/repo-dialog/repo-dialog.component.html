@@ -1,5 +1,5 @@
 <div *ngIf="repoLoadOperation$ === httpCallStatus.LOADING" class="emptyList">
-  ...
+  <mat-spinner></mat-spinner>
 </div>
 
 <div *ngIf="repoLoadOperation$ === httpCallStatus.OK">
