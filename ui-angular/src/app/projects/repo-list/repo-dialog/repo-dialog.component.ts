@@ -1,3 +1,4 @@
+import { RepoFacade } from './../../store/repo.facade';
 import { httpCallStatus } from 'src/app/shared/constants/constants';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
@@ -12,6 +13,7 @@ import repoSelectors from '../../store/repo.selectors';
   styleUrls: ['./repo-dialog.component.css'],
 })
 export class RepoDialogComponent implements OnInit, OnDestroy {
+  repoLoadOperation$: string;
   saveOperation$: string;
   repoForm: FormGroup = this.formBuilder.group({
     name: this.formBuilder.control('', Validators.required),
@@ -24,6 +26,7 @@ export class RepoDialogComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private store: Store,
+    private repoFacade: RepoFacade,
     public dialogRef: MatDialogRef<RepoDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data
   ) {}
@@ -32,6 +35,13 @@ export class RepoDialogComponent implements OnInit, OnDestroy {
     if (this.data.repoId !== '') {
       this.store.dispatch(repoActions.loadRepo({ id: this.data.repoId }));
     }
+
+    this.subscriptions.add(
+      this.repoFacade.repoLoadOperation$.subscribe((status: string) => {
+        console.log({ repoLoadOperation: status });
+        this.repoLoadOperation$ = status;
+      })
+    );
 
     this.subscriptions.add(
       this.store.select(repoSelectors.repo).subscribe((data: any) => {
@@ -44,15 +54,13 @@ export class RepoDialogComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.add(
-      this.store
-        .select(repoSelectors.saveOperationStatus)
-        .subscribe((data: any) => {
-          // console.log(data);
-          if (data?.status === httpCallStatus.OK) {
-            this.dialogRef.close(data?.id);
-          }
-          this.saveOperation$ = data?.status;
-        })
+      this.repoFacade.saveOperation$.subscribe((status: any) => {
+        console.log({ repoSaveOperation: status });
+        this.saveOperation$ = status?.status;
+        if (status?.status === httpCallStatus.OK) {
+          this.dialogRef.close(status?.id);
+        }
+      })
     );
 
     this.repoForm = this.formBuilder.group({

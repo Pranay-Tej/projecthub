@@ -15,6 +15,12 @@
       </mat-form-field>
     </form>
   </div>
+  <div
+    *ngIf="loadProjectListOfRepoOperation$ === httpCallStatus.LOADING"
+    class="loadingIndicator"
+  >
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
   <div *ngIf="filteredProjectList.length > 0" class="grid projectList">
     <div *ngFor="let project of filteredProjectList">
       <mat-checkbox

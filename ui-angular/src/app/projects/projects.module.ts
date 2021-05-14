@@ -2,7 +2,7 @@ import { AuthInterceptor } from './../auth/auth.interceptor';
 import { ProjectRepoEffects } from './store/project-repo.effects';
 import { ProjectEffects } from './store/project.effects';
 import { StoreModule } from '@ngrx/store';
-// import { ProjectRepoFacade } from './store/project-repo.facade';
+import { ProjectRepoFacade } from './store/project-repo.facade';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -17,8 +17,8 @@ import { RepoListComponent } from './repo-list/repo-list.component';
 import { ProjectRepoService } from './services/project-repo.service';
 import { ProjectService } from './services/project.service';
 import { RepoService } from './services/repo.service';
-// import { ProjectFacade } from './store/project.facade';
-// import { RepoFacade } from './store/repo.facade';
+import { ProjectFacade } from './store/project.facade';
+import { RepoFacade } from './store/repo.facade';
 import { EditRepoProjectsDialogComponent } from './repo-list/edit-repo-projects-dialog/edit-repo-projects-dialog.component';
 import { RepoDialogComponent } from './repo-list/repo-dialog/repo-dialog.component';
 import { DeleteRepoDialogComponent } from './repo-list/delete-repo-dialog/delete-repo-dialog.component';
@@ -55,11 +55,11 @@ import {
   ],
   providers: [
     ProjectService,
-    // ProjectFacade,
+    ProjectFacade,
     RepoService,
-    // RepoFacade,
+    RepoFacade,
     ProjectRepoService,
-    // ProjectRepoFacade,
+    ProjectRepoFacade,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
 })

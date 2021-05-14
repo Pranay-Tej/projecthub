@@ -19,5 +19,9 @@ export const projectRepoReducer = createReducer(
       ...state,
       projectListOfRepo,
     })
-  )
+  ),
+  on(projectRepoActions.resetDialogData, (state) => ({
+    ...state,
+    projectListOfRepo: [],
+  }))
 );

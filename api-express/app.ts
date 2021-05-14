@@ -17,7 +17,7 @@ app.use(
     // // cookie method
     // credentials: true /* enables cookie exchange */,
     // // origin mandatory for cookie method
-    // origin: ["http://localhost:4200", "https://projecthub.vercel.app"],
+    origin: ["http://localhost:4200", "https://projecthub.vercel.app"],
   })
 );
 app.use(express.json());

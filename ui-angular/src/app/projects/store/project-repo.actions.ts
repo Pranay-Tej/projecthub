@@ -20,11 +20,14 @@ const remove = createAction(
   props<{ projectId: string; repoId: string }>()
 );
 
+const resetDialogData = createAction('[ProjectRepo] Reset Dialog Data');
+
 const projectRepoActions = {
   loadProjectListOfRepo,
   projectListOfRepoLoaded,
   add,
   remove,
+  resetDialogData,
 };
 
 export default projectRepoActions;

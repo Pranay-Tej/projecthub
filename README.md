@@ -8,7 +8,7 @@ Place where developers manage and share their projects
   - Angular
     - NgRx (Redux) State Management
 - Backend
-  - Express (NodeJS)
+  - Express (NodeJS) with TypeScript
 - Database
   - MongoDB (Mongoose)
 
