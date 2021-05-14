@@ -2,7 +2,7 @@ import { AuthInterceptor } from './../auth/auth.interceptor';
 import { ProjectRepoEffects } from './store/project-repo.effects';
 import { ProjectEffects } from './store/project.effects';
 import { StoreModule } from '@ngrx/store';
-// import { ProjectRepoFacade } from './store/project-repo.facade';
+import { ProjectRepoFacade } from './store/project-repo.facade';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
@@ -59,7 +59,7 @@ import {
     RepoService,
     RepoFacade,
     ProjectRepoService,
-    // ProjectRepoFacade,
+    ProjectRepoFacade,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
 })

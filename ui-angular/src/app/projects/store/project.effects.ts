@@ -137,7 +137,7 @@ export class ProjectEffects {
           }),
           catchError((error) => {
             console.error(error);
-            this.projectFacade.setDeleteOperation(httpCallStatus.OK);
+            this.projectFacade.setDeleteOperation(httpCallStatus.ERROR);
             return [
               // projectActions.setDeleteOperationStatus({
               //   status: httpCallStatus.ERROR,

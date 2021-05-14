@@ -124,6 +124,12 @@ export class RepoListComponent implements OnInit, OnDestroy {
         repoId,
       },
     });
+
+    dialogRef
+      .afterClosed()
+      .subscribe(() =>
+        this.store.dispatch(projectRepoActions.resetDialogData())
+      );
   }
 
   confirmDeleteRepo(repoId: string, repoName: string) {

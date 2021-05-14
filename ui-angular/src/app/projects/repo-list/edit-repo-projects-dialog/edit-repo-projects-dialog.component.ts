@@ -1,3 +1,4 @@
+import { httpCallStatus } from './../../../shared/constants/constants';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -6,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { ProjectDialogComponent } from '../../project-list/project-dialog/project-dialog.component';
 import projectRepoActions from '../../store/project-repo.actions';
+import { ProjectRepoFacade } from '../../store/project-repo.facade';
 import projectRepoSelectors from '../../store/project-repo.selectors';
 import projectSelectors from '../../store/project.selectors';
 
@@ -14,17 +16,20 @@ import projectSelectors from '../../store/project.selectors';
   styleUrls: ['./edit-repo-projects-dialog.component.css'],
 })
 export class EditRepoProjectsDialogComponent implements OnInit, OnDestroy {
+  loadProjectListOfRepoOperation$: string;
   projectList$ = [];
   filteredProjectList = [];
   filterForm: FormGroup = this.formBuilder.group({
     projectName: this.formBuilder.control(''),
   });
+  httpCallStatus = httpCallStatus;
   projectListOfRepo$: Set<string> = new Set<string>();
   subscriptions: Subscription = new Subscription();
 
   constructor(
     private formBuilder: FormBuilder,
     private store: Store,
+    private projectRepoFacade: ProjectRepoFacade,
     public dialogRef: MatDialogRef<ProjectDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data
   ) {}
@@ -35,6 +40,15 @@ export class EditRepoProjectsDialogComponent implements OnInit, OnDestroy {
         projectRepoActions.loadProjectListOfRepo({ repoId: this.data.repoId })
       );
     }
+
+    this.subscriptions.add(
+      this.projectRepoFacade.projectListOfRepoLoadOperation$.subscribe(
+        (status: string) => {
+          console.log({ projectListOfRepoLoadOperation: status });
+          this.loadProjectListOfRepoOperation$ = status;
+        }
+      )
+    );
 
     this.subscriptions.add(
       this.store.select(projectSelectors.projectList).subscribe((data: any) => {
