@@ -6,3 +6,7 @@
 .loadingIndicator {
   margin-bottom: 1em;
 }
+
+.mat-dialog-title.filterForm {
+  font-size: 1rem;
+}

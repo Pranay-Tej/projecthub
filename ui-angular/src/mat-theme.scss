@@ -1,0 +1,127 @@
+@import "~@angular/material/theming";
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// **Be sure that you only ever include this mixin once!**
+@include mat-core();
+
+// FOR Palette
+// 1. copy from github https://github.com/angular/components/blob/6.2.x/src/lib/core/theming/_palette.scss
+// 2. convert rgb to hsl in vs code (by clicking value on color picker hover)
+// 3. change hue, saturation , lightness
+
+$mat-custom: (
+  50: hsl(245, 57%, 94%),
+  100: hsl(247, 59%, 86%),
+  200: hsl(247, 60%, 77%),
+  300: hsl(247, 59%, 68%),
+  400: hsl(247, 60%, 61%),
+  500: hsl(247, 60%, 54%),
+  600: hsl(248, 49%, 51%),
+  700: hsl(250, 49%, 46%),
+  800: hsl(252, 50%, 42%),
+  900: hsl(256, 55%, 34%),
+  A100: hsl(257, 100%, 75%),
+  A200: hsl(258, 100%, 63%),
+  A400: hsl(258, 100%, 58%),
+  A700: hsl(264, 100%, 58%),
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $light-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
+    A700: $light-primary-text,
+  ),
+);
+
+$mat-custom-dark: (
+  50: hsl(165, 79%, 94%),
+  100: hsl(162, 78%, 84%),
+  200: hsl(162, 77%, 74%),
+  300: hsl(163, 78%, 64%),
+  400: hsl(163, 78%, 57%),
+  500: hsl(162, 79%, 49%),
+  600: hsl(163, 81%, 45%),
+  700: hsl(163, 83%, 39%),
+  800: hsl(163, 86%, 34%),
+  900: hsl(164, 95%, 24%),
+  A100: hsl(157, 97%, 85%),
+  A200: hsl(151, 92%, 68%),
+  A400: hsl(151, 100%, 45%),
+  A700: hsl(145, 100%, 39%),
+  contrast: (
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $dark-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $dark-primary-text,
+  ),
+);
+
+// Define the default theme (same as the example above).
+// $light-primary: mat-palette($mat-indigo);
+// $light-accent: mat-palette($mat-indigo, A200, A100, A400);
+$custom-primary: mat-palette($mat-custom);
+$custom-accent: mat-palette($mat-custom, A200, A100, A400);
+$light-theme: mat-light-theme(
+  (
+    color: (
+      // primary: $light-primary,
+      // accent: $light-accent,
+      primary: $custom-primary,
+      accent: $custom-accent,
+    ),
+  )
+);
+
+// Include the default theme styles (color and default density)
+.mat-light-theme {
+  @include angular-material-theme($light-theme);
+}
+
+// Define an alternate dark theme.
+
+// $dark-primary: mat-palette($mat-green);
+// $dark-accent: mat-palette($mat-green, A200, A100, A400);
+$custom-primary-dark: mat-palette($mat-custom-dark);
+$custom-accent-dark: mat-palette($mat-custom-dark, A200, A100, A400);
+$dark-warn: mat-palette($mat-deep-orange);
+// $dark-background: mat-palette($mat-grey, 100);
+$dark-theme: mat-dark-theme(
+  (
+    color: (
+      // primary: $dark-primary,
+      // accent: $dark-accent,
+      primary: $custom-primary-dark,
+      accent: $custom-accent-dark,
+      warn: $dark-warn,
+      // background: $dark-background,
+    ),
+  )
+);
+
+// Include the dark color styles inside of a block with a CSS class. You can make this
+// CSS class whatever you want. In this example, any component inside of an element with
+// `.unicorn-dark-theme` will be affected by this alternate dark theme instead of the default theme.
+.mat-dark-theme {
+  @include angular-material-color($dark-theme);
+}

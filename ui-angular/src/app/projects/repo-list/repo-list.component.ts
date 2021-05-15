@@ -24,6 +24,7 @@ export class RepoListComponent implements OnInit, OnDestroy {
   repoList$ = [];
   filteredRepoList = [];
   selectedProjectId$: string;
+  selectedProjectName$: string;
   loadOperationStatus$: string;
   filterForm: FormGroup = this.formBuilder.group({
     repoName: this.formBuilder.control(''),
@@ -46,17 +47,27 @@ export class RepoListComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.store
-      .select(projectSelectors.selectedProjectId)
-      .subscribe((data: any) => {
-        if (!data) {
-          this.store.dispatch(
-            projectActions.setSelectedProjectId({ id: 'ALL' })
-          );
-        }
-        this.store.dispatch(repoActions.reloadRepoList());
-        this.selectedProjectId$ = data;
-      });
+    this.subscriptions.add(
+      this.store
+        .select(projectSelectors.selectedProjectId)
+        .subscribe((data: any) => {
+          // if (!data) {
+          //   this.store.dispatch(
+          //     projectActions.setSelectedProjectId({ id: 'ALL' })
+          //   );
+          // }
+          this.store.dispatch(repoActions.reloadRepoList());
+          this.selectedProjectId$ = data;
+        })
+    );
+
+    this.subscriptions.add(
+      this.store
+        .select(projectSelectors.selectedProjectName)
+        .subscribe((data: any) => {
+          this.selectedProjectName$ = data;
+        })
+    );
 
     this.subscriptions.add(
       this.repoFacade.repoListLoadOperation$.subscribe(

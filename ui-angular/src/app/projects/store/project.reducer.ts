@@ -6,12 +6,14 @@ export const projectFeatureKey = 'project';
 export interface ProjectState {
   projectList: [];
   selectedProjectId: string;
+  selectedProjectName: string;
   project: any;
 }
 
 export const initialState: ProjectState = {
   projectList: [],
-  selectedProjectId: null,
+  selectedProjectId: 'ALL',
+  selectedProjectName: 'All Repos',
   project: null,
 };
 
@@ -24,6 +26,10 @@ export const projectReducer = createReducer(
   on(projectActions.setSelectedProjectId, (state, { id }) => ({
     ...state,
     selectedProjectId: id,
+  })),
+  on(projectActions.setSelectedProjectName, (state, { name }) => ({
+    ...state,
+    selectedProjectName: name,
   })),
   on(projectActions.projectLoaded, (state, { project }) => ({
     ...state,

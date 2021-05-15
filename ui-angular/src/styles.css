@@ -37,7 +37,7 @@ a {
   --root-gray-900: hsl(0, 0%, 10%);
   --root-gray-1000: hsl(0, 0%, 2%);
 
-  --primary-color-1000: hsl(240, 40%, 60%);
+  --root-primary-color-1000: hsl(247, 60%, 54%);
 
   /* text */
   --text-xsm: 0.75rem;
@@ -52,6 +52,10 @@ a {
   --text-800: 3rem;
   --text-900: 6rem;
 
+  /* text-warn */
+  --root-text-warn-100: hsl(0, 70%, 80%);
+  --root-text-warn-900: hsl(0, 50%, 50%);
+
   /* duration */
   --duration: 250ms;
 }
@@ -60,6 +64,7 @@ a {
 
 .light {
   --bg: var(--root-gray-0);
+  --bg-popup: var(--root-gray-0);
   --text: var(--root-gray-900);
 
   --border: var(--root-gray-250);
@@ -73,10 +78,16 @@ a {
   --gray-750: var(--root-gray-750);
   --gray-900: var(--root-gray-900);
   --gray-1000: var(--root-gray-1000);
+
+  --primary-color-1000: hsl(247, 60%, 54%);
+  /* text-warn */
+  --text-warn-100: var(--root-text-warn-900);
+  --text-warn-900: var(--root-text-warn-100);
 }
 
 .dark {
-  --bg: var(--root-gray-900);
+  --bg: hsl(240, 5%, 14%);
+  --bg-popup: var(--root-gray-750);
   --text: var(--root-gray-100);
 
   --border: var(--root-gray-500);
@@ -90,6 +101,11 @@ a {
   --gray-750: var(--root-gray-250);
   --gray-900: var(--root-gray-100);
   --gray-1000: var(--root-gray-1000);
+
+  --primary-color-1000: hsl(162, 79%, 49%);
+  /* text-warn */
+  --text-warn-100: var(--root-text-warn-100);
+  --text-warn-900: var(--root-text-warn-900);
 }
 
 /* Library */
@@ -121,6 +137,11 @@ a {
   align-items: end;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+/* grid */
 .grid {
   display: grid;
 }
@@ -129,7 +150,7 @@ a {
 
 /* text */
 .textWarn {
-  color: hsl(0, 50%, 60%);
+  color: var(--text-warn-100);
 }
 
 .fullWidth {
@@ -185,6 +206,19 @@ a {
   color: var(--gray-750);
 }
 
+/* sticky search filter */
+
+.stickySearchFilter {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--bg);
+  z-index: 1;
+  border-bottom: 1px solid var(--border);
+  box-shadow: inset 0 -2px 2px -2px var(--shadow-100);
+}
+
 /* scrollbars */
 
 ::-webkit-scrollbar {
@@ -202,4 +236,13 @@ a {
 
 ::-webkit-scrollbar-thumb:hover {
   background-color: var(--gray-500);
+}
+
+/* material-ui background */
+mat-dialog-container {
+  background-color: var(--bg-popup) !important;
+}
+
+.mat-menu-content {
+  background-color: var(--bg-popup) !important;
 }
