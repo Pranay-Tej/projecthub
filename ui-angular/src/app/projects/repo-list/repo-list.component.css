@@ -1,18 +1,29 @@
 /* styles for app-repo-list */
 :host {
   grid-area: repo;
-  margin: 1em auto;
-  padding: 1em 2em;
+  margin: 0 auto;
+  padding: 0 2em;
+  padding-bottom: 1em;
   width: 100%;
   max-height: 100vh;
-  overflow-x: scroll;
+  overflow-y: scroll;
 }
 
 /* large screens */
 @media (min-width: 768px) {
   :host {
-    padding: 1em 1em;
-    max-width: 80%;
+    padding: 1em 3em;
+    /* max-width: 80%; */
+  }
+}
+
+.searchFilter {
+  padding: 1em 0;
+}
+
+@media screen and (max-width: 400px) {
+  .projectName {
+    margin-top: 1em;
   }
 }
 

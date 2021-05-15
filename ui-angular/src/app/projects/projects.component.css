@@ -11,7 +11,8 @@
   background: var(--bg);
   border-right: 1px solid var(--border);
   max-height: 100vh;
-  overflow-x: scroll;
+  overflow-y: scroll;
+  padding-bottom: 4em;
 }
 
 @media (max-width: 550px) {
@@ -26,7 +27,7 @@
     height: calc(100% - 57px);
     width: 100%;
     transition: transform 200ms ease-out;
-    z-index: 900;
+    z-index: 2;
     /* border: none; */
   }
 

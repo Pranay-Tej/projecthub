@@ -12,6 +12,11 @@ const setSelectedProjectId = createAction(
   props<{ id: any }>()
 );
 
+const setSelectedProjectName = createAction(
+  '[Project] Set SelectedProjectName',
+  props<{ name: any }>()
+);
+
 const loadProject = createAction(
   '[Project] Load Project',
   props<{ id: any }>()
@@ -43,6 +48,7 @@ const projectActions = {
   loadProjectList,
   projectListLoaded,
   setSelectedProjectId,
+  setSelectedProjectName,
   loadProject,
   projectLoaded,
   createProject,

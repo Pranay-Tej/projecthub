@@ -13,6 +13,12 @@ const selectedProjectId = createSelector(
   projectFeatureSelector,
   (state) => state.selectedProjectId
 );
+
+const selectedProjectName = createSelector(
+  projectFeatureSelector,
+  (state) => state.selectedProjectName
+);
+
 const project = createSelector(
   projectFeatureSelector,
   (state) => state.project
@@ -21,6 +27,7 @@ const project = createSelector(
 const projectSelectors = {
   projectList,
   selectedProjectId,
+  selectedProjectName,
   project,
 };
 

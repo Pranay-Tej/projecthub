@@ -1,4 +1,4 @@
-<div>
+<div class="stickySearchFilter searchFilter">
   <form [formGroup]="filterForm">
     <mat-form-field appearance="outline" class="fullWidth">
       <mat-label>Search by repo name</mat-label>
@@ -13,18 +13,20 @@
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
   </form>
-</div>
-
-<div class="flex justify-start">
-  <button
-    mat-flat-button
-    color="primary"
-    (click)="openRepoDialog('')"
-    matTooltip="New Repo"
-  >
-    <mat-icon> add </mat-icon>
-    <span>REPO</span>
-  </button>
+  <div class="flex justify-between flex-wrap">
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="openRepoDialog('')"
+      matTooltip="New Repo"
+    >
+      <mat-icon> add </mat-icon>
+      <span>REPO</span>
+    </button>
+    <div class="projectName">
+      {{ selectedProjectName$ }}
+    </div>
+  </div>
 </div>
 
 <div *ngIf="loadOperationStatus$ === httpCallStatus.LOADING" class="emptyList">
@@ -52,18 +54,10 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #repoActionsMenu>
-        <button
-          mat-menu-item
-          matTooltip="Edit"
-          (click)="openRepoDialog(repo._id)"
-        >
+        <button mat-menu-item (click)="openRepoDialog(repo._id)">
           <span>Edit</span>
         </button>
-        <button
-          mat-menu-item
-          matTooltip="Delete"
-          (click)="confirmDeleteRepo(repo._id, repo.name)"
-        >
+        <button mat-menu-item (click)="confirmDeleteRepo(repo._id, repo.name)">
           <span class="textWarn">Delete</span>
         </button>
       </mat-menu>

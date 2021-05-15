@@ -76,10 +76,18 @@ export class ProjectListComponent implements OnInit, OnDestroy {
 
   fetchAllRepos() {
     this.store.dispatch(projectActions.setSelectedProjectId({ id: 'ALL' }));
+    this.store.dispatch(
+      projectActions.setSelectedProjectName({ name: 'All Repos' })
+    );
+    document.querySelector('.projectList').classList.toggle('active');
   }
 
-  fetchRepoListOfProject(projectId: string) {
+  fetchRepoListOfProject(projectId: string, projectName: string) {
     this.store.dispatch(projectActions.setSelectedProjectId({ id: projectId }));
+    this.store.dispatch(
+      projectActions.setSelectedProjectName({ name: projectName })
+    );
+    document.querySelector('.projectList').classList.toggle('active');
   }
 
   openProjectDialog(projectId: string) {

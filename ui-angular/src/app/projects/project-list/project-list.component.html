@@ -1,4 +1,4 @@
-<div class="projectsMenu">
+<div class="projectsMenu stickySearchFilter">
   <button
     mat-flat-button
     color="primary"
@@ -51,7 +51,7 @@
       project: true,
       selectedProject: selectedProject$ === project._id
     }"
-    (click)="fetchRepoListOfProject(project._id)"
+    (click)="fetchRepoListOfProject(project._id, project.name)"
   >
     <div class="flex justify-between">
       <div class="projectTitle" matTooltip="{{ project.name }}">
@@ -67,16 +67,11 @@
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #projectActionsMenu>
-        <button
-          mat-menu-item
-          matTooltip="Edit"
-          (click)="openProjectDialog(project._id)"
-        >
+        <button mat-menu-item (click)="openProjectDialog(project._id)">
           <span>Edit</span>
         </button>
         <button
           mat-menu-item
-          matTooltip="Delete"
           (click)="confirmDeleteProject(project._id, project.name)"
         >
           <span class="textWarn">Delete</span>

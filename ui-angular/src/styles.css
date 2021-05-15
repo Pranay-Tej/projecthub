@@ -135,6 +135,11 @@ a {
   align-items: end;
 }
 
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+/* grid */
 .grid {
   display: grid;
 }
@@ -197,6 +202,19 @@ a {
 .link {
   font-size: var(--text-xsm);
   color: var(--gray-750);
+}
+
+/* sticky search filter */
+
+.stickySearchFilter {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--bg);
+  z-index: 1;
+  border-bottom: 1px solid var(--border);
+  box-shadow: inset 0 -2px 2px -2px var(--shadow-100);
 }
 
 /* scrollbars */
