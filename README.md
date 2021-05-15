@@ -15,5 +15,12 @@ Place where developers manage and share their projects
 ## Hosting
 
 - Vercel (Frontend)
+- Netlify (Frontend [dev])
 - Heroku (Backend)
 - MongoDB Atlas (DBaaS)
+
+## CI/CD
+
+- GitHub Actions
+- Vercel auto-deploy
+- Netlify auto-deploy
