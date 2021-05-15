@@ -37,7 +37,7 @@ a {
   --root-gray-900: hsl(0, 0%, 10%);
   --root-gray-1000: hsl(0, 0%, 2%);
 
-  --primary-color-1000: hsl(240, 40%, 60%);
+  --root-primary-color-1000: hsl(247, 60%, 54%);
 
   /* text */
   --text-xsm: 0.75rem;
@@ -79,13 +79,14 @@ a {
   --gray-900: var(--root-gray-900);
   --gray-1000: var(--root-gray-1000);
 
+  --primary-color-1000: hsl(247, 60%, 54%);
   /* text-warn */
   --text-warn-100: var(--root-text-warn-900);
   --text-warn-900: var(--root-text-warn-100);
 }
 
 .dark {
-  --bg: var(--root-gray-900);
+  --bg: hsl(240, 5%, 14%);
   --bg-popup: var(--root-gray-750);
   --text: var(--root-gray-100);
 
@@ -101,6 +102,7 @@ a {
   --gray-900: var(--root-gray-100);
   --gray-1000: var(--root-gray-1000);
 
+  --primary-color-1000: hsl(162, 79%, 49%);
   /* text-warn */
   --text-warn-100: var(--root-text-warn-100);
   --text-warn-900: var(--root-text-warn-900);

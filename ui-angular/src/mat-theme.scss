@@ -6,21 +6,26 @@
 // **Be sure that you only ever include this mixin once!**
 @include mat-core();
 
+// FOR Palette
+// 1. copy from github https://github.com/angular/components/blob/6.2.x/src/lib/core/theming/_palette.scss
+// 2. convert rgb to hsl in vs code (by clicking value on color picker hover)
+// 3. change hue, saturation , lightness
+
 $mat-custom: (
-  50: #e1f5fe,
-  100: hsl(240, 100%, 85%),
-  200: #81d4fa,
-  300: #4fc3f7,
-  400: #29b6f6,
-  500: #03a9f4,
-  600: #039be5,
-  700: #0288d1,
-  800: #0277bd,
-  900: #01579b,
-  A100: #80d8ff,
-  A200: #40c4ff,
-  A400: #00b0ff,
-  A700: #0091ea,
+  50: hsl(245, 57%, 94%),
+  100: hsl(247, 59%, 86%),
+  200: hsl(247, 60%, 77%),
+  300: hsl(247, 59%, 68%),
+  400: hsl(247, 60%, 61%),
+  500: hsl(247, 60%, 54%),
+  600: hsl(248, 49%, 51%),
+  700: hsl(250, 49%, 46%),
+  800: hsl(252, 50%, 42%),
+  900: hsl(256, 55%, 34%),
+  A100: hsl(257, 100%, 75%),
+  A200: hsl(258, 100%, 63%),
+  A400: hsl(258, 100%, 58%),
+  A700: hsl(264, 100%, 58%),
   contrast: (
     50: $dark-primary-text,
     100: $dark-primary-text,
@@ -33,91 +38,57 @@ $mat-custom: (
     800: $light-primary-text,
     900: $light-primary-text,
     A100: $dark-primary-text,
-    A200: $dark-primary-text,
-    A400: $dark-primary-text,
+    A200: $light-primary-text,
+    A400: $light-primary-text,
     A700: $light-primary-text,
   ),
 );
 
-// define a real custom palette (using http://mcg.mbitson.com)
-$bv-brand: (
-  50: #ffffff,
-  100: #dde6f3,
-  200: #b4c9e4,
-  300: #7fa3d1,
-  400: #6992c9,
-  500: #5282c1,
-  600: #4072b4,
-  700: #38649d,
-  800: #305687,
-  900: #284770,
-  A100: #ffffff,
-  A200: #dde6f3,
-  A400: #6992c9,
-  A700: #38649d,
+$mat-custom-dark: (
+  50: hsl(165, 79%, 94%),
+  100: hsl(162, 78%, 84%),
+  200: hsl(162, 77%, 74%),
+  300: hsl(163, 78%, 64%),
+  400: hsl(163, 78%, 57%),
+  500: hsl(162, 79%, 49%),
+  600: hsl(163, 81%, 45%),
+  700: hsl(163, 83%, 39%),
+  800: hsl(163, 86%, 34%),
+  900: hsl(164, 95%, 24%),
+  A100: hsl(157, 97%, 85%),
+  A200: hsl(151, 92%, 68%),
+  A400: hsl(151, 100%, 45%),
+  A700: hsl(145, 100%, 39%),
   contrast: (
-    50: $black-87-opacity,
-    100: $black-87-opacity,
-    200: $black-87-opacity,
-    300: $black-87-opacity,
-    400: $black-87-opacity,
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
-    A100: $black-87-opacity,
-    A200: $black-87-opacity,
-    A400: $black-87-opacity,
-    A700: white,
+    50: $dark-primary-text,
+    100: $dark-primary-text,
+    200: $dark-primary-text,
+    300: $dark-primary-text,
+    400: $dark-primary-text,
+    500: $dark-primary-text,
+    600: $light-primary-text,
+    700: $light-primary-text,
+    800: $light-primary-text,
+    900: $light-primary-text,
+    A100: $dark-primary-text,
+    A200: $dark-primary-text,
+    A400: $dark-primary-text,
+    A700: $dark-primary-text,
   ),
 );
-
-$bv-orange: (
-  50: #ffffff,
-  100: #fff7f4,
-  200: #fecdbd,
-  300: #fc9977,
-  400: #fc8259,
-  500: #fb6c3b,
-  600: #fa551d,
-  700: #f44205,
-  800: #d63a04,
-  900: #b83204,
-  A100: #ffffff,
-  A200: #fff7f4,
-  A400: #fc8259,
-  A700: #f44205,
-  contrast: (
-    50: $black-87-opacity,
-    100: $black-87-opacity,
-    200: $black-87-opacity,
-    300: $black-87-opacity,
-    400: $black-87-opacity,
-    500: white,
-    600: white,
-    700: white,
-    800: white,
-    900: white,
-    A100: $black-87-opacity,
-    A200: $black-87-opacity,
-    A400: $black-87-opacity,
-    A700: white,
-  ),
-);
-
-// mandatory stuff for theming
-$bv-palette-primary: mat-palette($bv-brand);
-$bv-palette-accent: mat-palette($bv-orange);
 
 // Define the default theme (same as the example above).
-$light-primary: mat-palette($mat-indigo);
-$light-accent: mat-palette($mat-indigo, A200, A100, A400);
+// $light-primary: mat-palette($mat-indigo);
+// $light-accent: mat-palette($mat-indigo, A200, A100, A400);
+$custom-primary: mat-palette($mat-custom);
+$custom-accent: mat-palette($mat-custom, A200, A100, A400);
 $light-theme: mat-light-theme(
   (
     color: (
-      primary: $light-primary,
-      accent: $light-accent,
+      // primary: $light-primary,
+      // accent: $light-accent,
+      primary: $custom-primary,
+      accent: $custom-accent,
     ),
   )
 );
@@ -129,13 +100,17 @@ $light-theme: mat-light-theme(
 
 // Define an alternate dark theme.
 
-$custom-primary-dark: mat-palette($mat-custom, 100);
-$custom-accent-dark: mat-palette($mat-custom, 100);
+// $dark-primary: mat-palette($mat-green);
+// $dark-accent: mat-palette($mat-green, A200, A100, A400);
+$custom-primary-dark: mat-palette($mat-custom-dark);
+$custom-accent-dark: mat-palette($mat-custom-dark, A200, A100, A400);
 $dark-warn: mat-palette($mat-deep-orange);
 // $dark-background: mat-palette($mat-grey, 100);
 $dark-theme: mat-dark-theme(
   (
     color: (
+      // primary: $dark-primary,
+      // accent: $dark-accent,
       primary: $custom-primary-dark,
       accent: $custom-accent-dark,
       warn: $dark-warn,

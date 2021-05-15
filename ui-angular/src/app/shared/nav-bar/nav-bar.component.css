@@ -34,7 +34,7 @@
   transform: translateX(-64px) translateY(-6px);
   border-radius: 1px;
   box-shadow: 1px 1px 3px 2px var(--shadow-100);
-  background: var(--bg);
+  background: var(--bg-popup);
   transition: all 500ms ease;
   z-index: 3;
 }
