@@ -6,11 +6,13 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      match: /^[A-Za-z0-9_-]*$/,
+      trim: true,
     },
     email: {
       type: String,
-      required: true,
       unique: true,
+      trim: true,
     },
     password: {
       type: String,
