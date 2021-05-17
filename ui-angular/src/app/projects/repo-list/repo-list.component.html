@@ -1,7 +1,7 @@
 <div class="stickySearchFilter searchFilter">
   <form [formGroup]="filterForm">
     <mat-form-field appearance="outline" class="fullWidth">
-      <mat-label>Search by repo name</mat-label>
+      <mat-label>Search in {{ selectedProjectName$ }}</mat-label>
       <input
         matInput
         type="text"

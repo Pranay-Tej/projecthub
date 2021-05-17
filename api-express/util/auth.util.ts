@@ -74,7 +74,7 @@ export const isAuthorized = async (
   userId: string
 ) => {
   const doc = await model.findOne({ _id: id }).lean().exec();
-  if (doc.userId !== userId) {
+  if (doc.userId != userId) {
     return false;
   }
   return true;

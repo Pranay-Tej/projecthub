@@ -6,27 +6,27 @@ import { authActions } from './auth.actions';
 export const authFeatureKey = 'auth';
 
 export interface AuthState {
-  user: any;
+  userId: any;
   loginStatus: string;
 }
 
 const initializeUser = () => {
   try {
     // JSON.parse for object
-    return localStorage.getItem(LOCAL_KEYS.USER);
+    return localStorage.getItem(LOCAL_KEYS.USER_ID);
   } catch {
     return null;
   }
 };
 
 const initialState: AuthState = {
-  user: initializeUser(),
+  userId: initializeUser(),
   loginStatus: null,
 };
 
 export const authReducer = createReducer(
   initialState,
-  on(authActions.setUser, (state, { user }) => ({ ...state, user })),
+  on(authActions.setUserId, (state, { userId }) => ({ ...state, userId })),
   on(authActions.setLoginStatus, (state, { status }) => ({
     ...state,
     loginStatus: status,

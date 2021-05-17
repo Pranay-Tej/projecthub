@@ -30,12 +30,12 @@ export class AuthGuard implements CanActivate {
     return this.authService.getUser().pipe(
       switchMap((data: any) => {
         this.authService.setLocalUser(data._id);
-        this.store.dispatch(authActions.setUser({ user: data._id }));
+        this.store.dispatch(authActions.setUserId({ userId: data._id }));
         return of(true);
       }),
       catchError((e) => {
         this.authService.clearLocalCredentials();
-        this.store.dispatch(authActions.setUser(null));
+        this.store.dispatch(authActions.setUserId(null));
         this.router.navigate(['/accounts/login']);
         return of(false);
       })

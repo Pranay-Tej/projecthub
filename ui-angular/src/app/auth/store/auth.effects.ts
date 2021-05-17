@@ -26,7 +26,7 @@ export class AuthEffects {
       }),
       mergeMap((action) =>
         this.authService
-          .login({ email: action.email, password: action.password })
+          .login({ identity: action.identity, password: action.password })
           .pipe(
             switchMap((data: any) => {
               this.authService.setJWT(data.jwt);
@@ -51,7 +51,7 @@ export class AuthEffects {
           switchMap((data: any) => {
             this.authService.setLocalUser(data._id);
             return [
-              authActions.setUser({ user: data._id }),
+              authActions.setUserId({ userId: data._id }),
               authActions.setLoginStatus({ status: httpCallStatus.OK }),
             ];
           }),
@@ -73,7 +73,7 @@ export class AuthEffects {
         this.authService.logout().pipe(
           switchMap(() => {
             return [
-              authActions.setUser(null),
+              authActions.setUserId(null),
               authActions.setLoginStatus({ status: httpCallStatus.OK }),
             ];
           }),

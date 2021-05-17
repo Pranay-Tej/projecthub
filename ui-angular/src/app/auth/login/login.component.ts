@@ -15,7 +15,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit, OnDestroy {
   loginStatus$: string;
   loginForm: FormGroup = this.formBuilder.group({
-    email: this.formBuilder.control('', Validators.required),
+    identity: this.formBuilder.control('', Validators.required),
     password: this.formBuilder.control('', Validators.required),
   });
   httpCallStatus = httpCallStatus;
@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.add(
-      this.store.select(authSelectors.user).subscribe((data) => {
+      this.store.select(authSelectors.userId).subscribe((data) => {
         this.router.navigate(['/app']);
       })
     );

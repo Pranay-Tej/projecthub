@@ -2,15 +2,15 @@
   <div class="loginContainer">
     <form [formGroup]="loginForm" (ngSubmit)="login()" class="grid">
       <mat-form-field appearance="standard">
-        <mat-label>Email</mat-label>
+        <mat-label>Email or username</mat-label>
         <input
-          name="email"
-          type="email"
+          name="identity"
+          type="text"
           matInput
-          placeholder="Your email"
-          formControlName="email"
+          placeholder="Email or account username"
+          formControlName="identity"
         />
-        <mat-error *ngIf="loginForm.get('email').errors?.required"
+        <mat-error *ngIf="loginForm.get('identity').errors?.required"
           >This field is required</mat-error
         >
       </mat-form-field>
