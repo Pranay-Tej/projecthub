@@ -8,6 +8,9 @@ const authRouter = Router();
 authRouter.post("/register", async (req: Request, res: Response) => {
   try {
     const { username, email, password } = req.body;
+    if (!username || !password) {
+      throw "bad request";
+    }
     const passwordHash = await hash(password, 10);
     const user = await User.create({
       username,
@@ -104,6 +107,41 @@ authRouter.post("/logout", (req: Request, res: Response) => {
   try {
     // res.cookie("jwt", "", { httpOnly: true, maxAge: 0, sameSite: "strict" });
     res.status(200).json("success");
+  } catch (e) {
+    res.status(400).json(e).end();
+  }
+});
+
+// user/check-username/:username
+authRouter.get(
+  "/check-username/:username",
+  async (req: Request, res: Response) => {
+    try {
+      const { username } = req.params;
+      const user = await User.findOne({ username }, { password: 0, email: 0 })
+        .lean()
+        .exec();
+      if (user) {
+        throw "username unavailable";
+      }
+      res.status(200).json("ok");
+    } catch (e) {
+      res.status(400).json(e).end();
+    }
+  }
+);
+
+// user/check-email/:email
+authRouter.get("/check-email/:email", async (req: Request, res: Response) => {
+  try {
+    const { email } = req.params;
+    const user = await User.findOne({ email }, { password: 0, email: 0 })
+      .lean()
+      .exec();
+    if (user) {
+      throw "email unavailable";
+    }
+    res.status(200).json("ok");
   } catch (e) {
     res.status(400).json(e).end();
   }
