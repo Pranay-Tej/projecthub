@@ -22,11 +22,9 @@ export class AuthEffects {
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(authActions.login),
-      tap(() => {
-        this.store.dispatch(
-          authActions.setLoginStatus({ status: httpCallStatus.LOADING })
-        );
-      }),
+      tap(() =>
+        this.authFacade.setLoginOperationStatus(httpCallStatus.LOADING)
+      ),
       mergeMap((action) =>
         this.authService
           .login({ identity: action.identity, password: action.password })
@@ -37,9 +35,8 @@ export class AuthEffects {
             }),
             catchError((error) => {
               console.error(error);
-              return [
-                authActions.setLoginStatus({ status: httpCallStatus.ERROR }),
-              ];
+              this.authFacade.setLoginOperationStatus(httpCallStatus.ERROR);
+              return EMPTY;
             })
           )
       )
@@ -49,9 +46,9 @@ export class AuthEffects {
   register$ = createEffect(() =>
     this.actions$.pipe(
       ofType(authActions.register),
-      tap(() => {
-        this.authFacade.setRegisterOperationStatus(httpCallStatus.LOADING);
-      }),
+      tap(() =>
+        this.authFacade.setRegisterOperationStatus(httpCallStatus.LOADING)
+      ),
       mergeMap((action) =>
         this.authService
           .register({
@@ -82,16 +79,13 @@ export class AuthEffects {
         this.authService.getUser().pipe(
           switchMap((data: any) => {
             this.authService.setLocalUser(data._id);
-            return [
-              authActions.setUserId({ userId: data._id }),
-              authActions.setLoginStatus({ status: httpCallStatus.OK }),
-            ];
+            this.authFacade.setLoginOperationStatus(httpCallStatus.OK);
+            return [authActions.setUserId({ userId: data._id })];
           }),
           catchError((error) => {
             console.error(error);
-            return [
-              authActions.setLoginStatus({ status: httpCallStatus.ERROR }),
-            ];
+            this.authFacade.setLoginOperationStatus(httpCallStatus.ERROR);
+            return EMPTY;
           })
         )
       )
@@ -104,10 +98,8 @@ export class AuthEffects {
       mergeMap(() =>
         this.authService.logout().pipe(
           switchMap(() => {
-            return [
-              authActions.setUserId(null),
-              authActions.setLoginStatus({ status: httpCallStatus.OK }),
-            ];
+            this.authFacade.setLoginOperationStatus(httpCallStatus.OK);
+            return [authActions.setUserId(null)];
           }),
           tap(() => {
             this.authService.clearLocalCredentials();

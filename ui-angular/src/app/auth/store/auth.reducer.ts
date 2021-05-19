@@ -7,7 +7,6 @@ export const authFeatureKey = 'auth';
 
 export interface AuthState {
   userId: any;
-  loginStatus: string;
 }
 
 const initializeUser = () => {
@@ -21,14 +20,9 @@ const initializeUser = () => {
 
 const initialState: AuthState = {
   userId: initializeUser(),
-  loginStatus: null,
 };
 
 export const authReducer = createReducer(
   initialState,
-  on(authActions.setUserId, (state, { userId }) => ({ ...state, userId })),
-  on(authActions.setLoginStatus, (state, { status }) => ({
-    ...state,
-    loginStatus: status,
-  }))
+  on(authActions.setUserId, (state, { userId }) => ({ ...state, userId }))
 );

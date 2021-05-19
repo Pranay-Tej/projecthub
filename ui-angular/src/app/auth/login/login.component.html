@@ -34,13 +34,15 @@
         color="primary"
         type="submit"
         [disabled]="
-          loginForm.invalid || loginStatus$ === httpCallStatus.LOADING
+          loginForm.invalid || loginOperationStatus$ === httpCallStatus.LOADING
         "
       >
-        {{ loginStatus$ === httpCallStatus.LOADING ? "..." : "Login" }}
+        {{ loginOperationStatus$ === httpCallStatus.LOADING ? "..." : "Login" }}
       </button>
     </form>
-    <span *ngIf="loginStatus$ === httpCallStatus.ERROR" class="textWarn"
+    <span
+      *ngIf="loginOperationStatus$ === httpCallStatus.ERROR"
+      class="textWarn"
       >Invalid Credentials</span
     >
     <div class="register flex justify-center">
