@@ -31,6 +31,10 @@ export class AuthService {
   // utils
   getUrl = () => `${environment.baseURL}/user`;
 
+  register(credentials) {
+    return this.httpClient.post(`${this.getUrl()}/register`, credentials);
+  }
+
   login(loginCredentials) {
     return this.httpClient.post(`${this.getUrl()}/login`, loginCredentials);
   }

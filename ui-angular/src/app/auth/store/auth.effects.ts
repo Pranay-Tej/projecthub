@@ -1,3 +1,4 @@
+import { AuthFacade } from './auth.facade';
 import { Router } from '@angular/router';
 import { httpCallStatus } from './../../shared/constants/constants';
 import { catchError, mergeMap, switchMap, tap } from 'rxjs/operators';
@@ -6,12 +7,14 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthService } from '../auth.service';
 import { authActions } from './auth.actions';
 import { Store } from '@ngrx/store';
+import { EMPTY } from 'rxjs';
 
 @Injectable()
 export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
+    private authFacade: AuthFacade,
     private router: Router,
     private store: Store
   ) {}
@@ -37,6 +40,35 @@ export class AuthEffects {
               return [
                 authActions.setLoginStatus({ status: httpCallStatus.ERROR }),
               ];
+            })
+          )
+      )
+    )
+  );
+
+  register$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(authActions.register),
+      tap(() => {
+        this.authFacade.setRegisterOperationStatus(httpCallStatus.LOADING);
+      }),
+      mergeMap((action) =>
+        this.authService
+          .register({
+            username: action.username,
+            password: action.password,
+            email: action.email,
+          })
+          .pipe(
+            switchMap((data: any) => {
+              this.authService.setJWT(data.jwt);
+              this.authFacade.setRegisterOperationStatus(httpCallStatus.OK);
+              return [authActions.loadUserInfo()];
+            }),
+            catchError((error) => {
+              console.error(error);
+              this.authFacade.setRegisterOperationStatus(httpCallStatus.ERROR);
+              return EMPTY;
             })
           )
       )

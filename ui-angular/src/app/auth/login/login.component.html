@@ -1,5 +1,6 @@
 <div class="loginBackground">
   <div class="loginContainer">
+    <div class="flex justify-center">Login to ProjectHub</div>
     <form [formGroup]="loginForm" (ngSubmit)="login()" class="grid">
       <mat-form-field appearance="standard">
         <mat-label>Email or username</mat-label>
@@ -39,9 +40,12 @@
         {{ loginStatus$ === httpCallStatus.LOADING ? "..." : "Login" }}
       </button>
     </form>
-
     <span *ngIf="loginStatus$ === httpCallStatus.ERROR" class="textWarn"
       >Invalid Credentials</span
     >
+    <div class="register flex justify-center">
+      Don't have an account?
+      <a routerLink="/accounts/register" class="registerLink">Sign up</a>
+    </div>
   </div>
 </div>

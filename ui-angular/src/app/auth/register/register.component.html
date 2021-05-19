@@ -1,0 +1,91 @@
+<div class="loginBackground">
+  <div class="loginContainer">
+    <div class="flex justify-center">Sign up to get started</div>
+    <form [formGroup]="registerForm" (ngSubmit)="register()" class="grid">
+      <mat-form-field appearance="standard">
+        <mat-label>Username</mat-label>
+        <input
+          name="username"
+          type="text"
+          matInput
+          placeholder="Username"
+          formControlName="username"
+        />
+        <mat-error *ngIf="registerForm.get('username').errors?.required"
+          >This field is required</mat-error
+        >
+        <mat-error *ngIf="registerForm.get('username').errors?.pattern"
+          >Only alphabet, numbers, -, _ are allowed</mat-error
+        >
+      </mat-form-field>
+
+      <mat-form-field appearance="standard">
+        <mat-label>Password</mat-label>
+        <input
+          name="password"
+          type="password"
+          matInput
+          placeholder="Password"
+          formControlName="password"
+        />
+        <mat-error *ngIf="registerForm.get('password').errors?.required"
+          >This field is required</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Confirm Password</mat-label>
+        <input
+          name="confirmPassword"
+          type="password"
+          matInput
+          placeholder="Confirm Password"
+          formControlName="confirmPassword"
+          [errorStateMatcher]="errorMatcher"
+        />
+        <mat-error *ngIf="registerForm.get('confirmPassword').errors?.required"
+          >This field is required</mat-error
+        >
+        <mat-error *ngIf="registerForm.errors?.passwordMisMatch"
+          >Passwords should match</mat-error
+        >
+      </mat-form-field>
+      <mat-form-field appearance="standard">
+        <mat-label>Email (optional)</mat-label>
+        <input
+          name="email"
+          type="email"
+          matInput
+          placeholder="Email"
+          formControlName="email"
+        />
+        <mat-error *ngIf="registerForm.get('email').errors?.email"
+          >Enter a valid email</mat-error
+        >
+      </mat-form-field>
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        [disabled]="
+          registerForm.invalid ||
+          registerOperationStatus$ === httpCallStatus.LOADING
+        "
+      >
+        {{
+          registerOperationStatus$ === httpCallStatus.LOADING
+            ? "..."
+            : "Sign up"
+        }}
+      </button>
+    </form>
+    <span
+      *ngIf="registerOperationStatus$ === httpCallStatus.ERROR"
+      class="textWarn"
+      >Invalid Details</span
+    >
+    <div class="register flex justify-center">
+      Have an account?
+      <a routerLink="/accounts/login" class="registerLink"> Login</a>
+    </div>
+  </div>
+</div>

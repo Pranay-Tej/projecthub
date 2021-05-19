@@ -38,7 +38,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(
       this.store.select(authSelectors.userId).subscribe((data) => {
-        this.router.navigate(['/app']);
+        if (data) {
+          this.router.navigate(['/app']);
+        }
       })
     );
   }
