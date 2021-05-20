@@ -20,11 +20,20 @@
         <mat-label>Password</mat-label>
         <input
           name="password"
-          type="password"
+          [type]="hide ? 'password' : 'text'"
           matInput
           placeholder="Password"
           formControlName="password"
         />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
         <mat-error *ngIf="loginForm.get('password').errors?.required"
           >This field is required</mat-error
         >
@@ -42,7 +51,7 @@
     </form>
     <span
       *ngIf="loginOperationStatus$ === httpCallStatus.ERROR"
-      class="textWarn"
+      class="textWarn flex justify-center"
       >Invalid Credentials</span
     >
     <div class="register flex justify-center">

@@ -16,16 +16,24 @@ import { httpCallStatus } from 'src/app/shared/constants/constants';
 import { AuthFacade } from '../store/auth.facade';
 import passwordValidator from './password.validator';
 import { authSelectors } from '../store/auth.selectors';
+import {
+  debounceTime,
+  distinctUntilChanged,
+  filter,
+  tap,
+} from 'rxjs/operators';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css'],
+  styleUrls: ['../login/login.component.css'],
 })
 export class RegisterComponent implements OnInit, OnDestroy {
   registerOperationStatus$: string;
   // use this property for all fields which require form level validation
   errorMatcher: ErrorStateMatcher;
+  hide = true;
   registerForm: FormGroup = this.formBuilder.group(
     {
       username: this.formBuilder.control('', [
@@ -45,7 +53,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private router: Router,
     private store: Store,
-    private authFacade: AuthFacade
+    private authFacade: AuthFacade,
+    private authService: AuthService
   ) {
     this.errorMatcher = new CrossFieldErrorMatcher();
   }
@@ -64,6 +73,60 @@ export class RegisterComponent implements OnInit, OnDestroy {
           this.router.navigate(['/app']);
         }
       })
+    );
+
+    this.subscriptions.add(
+      this.registerForm
+        .get('username')
+        .valueChanges.pipe(
+          debounceTime(200),
+          distinctUntilChanged(),
+          filter((val) => val !== ''),
+          // tap((val) => console.log(val)),
+          tap((val) => this.checkUsername(val))
+        )
+        .subscribe()
+    );
+
+    this.subscriptions.add(
+      this.registerForm
+        .get('email')
+        .valueChanges.pipe(
+          debounceTime(200),
+          distinctUntilChanged(),
+          filter((val) => val !== ''),
+          // tap((val) => console.log(val)),
+          tap((val) => this.checkEmail(val))
+        )
+        .subscribe()
+    );
+  }
+
+  checkUsername(username: string) {
+    this.authService.checkUsername(username).subscribe(
+      (data) => {
+        // console.log(data);
+      },
+      (err) => {
+        console.error(err.error);
+        this.registerForm
+          .get('username')
+          .setErrors({ usernameUnavailable: { value: true } });
+      }
+    );
+  }
+
+  checkEmail(email: string) {
+    this.authService.checkEmail(email).subscribe(
+      (data) => {
+        // console.log(data);
+      },
+      (err) => {
+        console.error(err.error);
+        this.registerForm
+          .get('email')
+          .setErrors({ emailUnavailable: { value: true } });
+      }
     );
   }
 

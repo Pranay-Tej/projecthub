@@ -15,6 +15,7 @@ import { AuthFacade } from '../store/auth.facade';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   loginOperationStatus$: string;
+  hide = true;
   loginForm: FormGroup = this.formBuilder.group({
     identity: this.formBuilder.control('', Validators.required),
     password: this.formBuilder.control('', Validators.required),
