@@ -22,15 +22,16 @@ export const protect = async (
 
     // token method
     const bearerToken: string = req.header("Authorization") as string;
-    if (!bearerToken) {
-      throw "unauthenticated!";
-    }
-
-    if (typeof bearerToken === undefined) {
+    if (typeof bearerToken === undefined || !bearerToken) {
       throw "unauthenticated!";
     }
 
     const token = bearerToken.split("Bearer ")[1];
+
+    if (typeof token === undefined || !token) {
+      throw "unauthenticated!";
+    }
+
     const decoded: any = verify(token, config.JWT_SECRET);
 
     const user = await User.findOne(

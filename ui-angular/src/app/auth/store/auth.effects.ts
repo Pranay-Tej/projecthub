@@ -95,18 +95,11 @@ export class AuthEffects {
   logout$ = createEffect(() =>
     this.actions$.pipe(
       ofType(authActions.logout),
-      mergeMap(() =>
-        this.authService.logout().pipe(
-          switchMap(() => {
-            this.authFacade.setLoginOperationStatus(httpCallStatus.OK);
-            return [authActions.setUserId(null)];
-          }),
-          tap(() => {
-            this.authService.clearLocalCredentials();
-            this.router.navigate(['/']);
-          })
-        )
-      )
+      tap(() => {
+        this.authService.clearLocalCredentials();
+        this.router.navigate(['/accounts/login']);
+      }),
+      switchMap(() => [authActions.setUserId(null)])
     )
   );
 }
