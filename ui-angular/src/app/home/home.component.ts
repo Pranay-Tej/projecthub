@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  userId$ = this.store.select(authSelectors.user);
+  userId$ = this.store.select(authSelectors.userId);
 
   constructor(private store: Store) {}
 

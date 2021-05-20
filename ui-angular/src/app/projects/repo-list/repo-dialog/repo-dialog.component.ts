@@ -79,7 +79,7 @@ export class RepoDialogComponent implements OnInit, OnDestroy {
   }
 
   createRepo() {
-    const repo = { ...this.repoForm.getRawValue(), user: 'Pranay-Tej' };
+    const repo = { ...this.repoForm.getRawValue() };
     this.store.dispatch(repoActions.createRepo({ repo }));
   }
 

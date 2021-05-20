@@ -16,20 +16,32 @@ export class AuthService {
   }
 
   getLocalUser(user: string) {
-    localStorage.getItem(LOCAL_KEYS.USER);
+    localStorage.getItem(LOCAL_KEYS.USER_ID);
   }
 
   setLocalUser(user: string) {
-    localStorage.setItem(LOCAL_KEYS.USER, user);
+    localStorage.setItem(LOCAL_KEYS.USER_ID, user);
   }
 
   clearLocalCredentials() {
-    localStorage.removeItem(LOCAL_KEYS.USER);
+    localStorage.removeItem(LOCAL_KEYS.USER_ID);
     localStorage.removeItem(LOCAL_KEYS.JWT);
   }
 
   // utils
   getUrl = () => `${environment.baseURL}/user`;
+
+  checkUsername(username: string) {
+    return this.httpClient.get(`${this.getUrl()}/check-username/${username}`);
+  }
+
+  checkEmail(email: string) {
+    return this.httpClient.get(`${this.getUrl()}/check-email/${email}`);
+  }
+
+  register(credentials) {
+    return this.httpClient.post(`${this.getUrl()}/register`, credentials);
+  }
 
   login(loginCredentials) {
     return this.httpClient.post(`${this.getUrl()}/login`, loginCredentials);

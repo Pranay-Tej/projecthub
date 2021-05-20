@@ -6,6 +6,7 @@ import { httpCallStatus } from 'src/app/shared/constants/constants';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthFacade } from '../store/auth.facade';
 
 @Component({
   selector: 'app-login',
@@ -13,9 +14,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  loginStatus$: string;
+  loginOperationStatus$: string;
+  hide = true;
   loginForm: FormGroup = this.formBuilder.group({
-    email: this.formBuilder.control('', Validators.required),
+    identity: this.formBuilder.control('', Validators.required),
     password: this.formBuilder.control('', Validators.required),
   });
   httpCallStatus = httpCallStatus;
@@ -24,21 +26,24 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private router: Router,
-    private store: Store
+    private store: Store,
+    private authFacade: AuthFacade
   ) {}
 
   ngOnInit(): void {
     // this.store.dispatch(authActions.loadUserInfo());
 
     this.subscriptions.add(
-      this.store
-        .select(authSelectors.loginStatus)
-        .subscribe((data: any) => (this.loginStatus$ = data))
+      this.authFacade.loginOperationStatus$.subscribe(
+        (status: string) => (this.loginOperationStatus$ = status)
+      )
     );
 
     this.subscriptions.add(
-      this.store.select(authSelectors.user).subscribe((data) => {
-        this.router.navigate(['/app']);
+      this.store.select(authSelectors.userId).subscribe((data) => {
+        if (data) {
+          this.router.navigate(['/app']);
+        }
       })
     );
   }

@@ -1,3 +1,4 @@
+import { LOCAL_KEYS } from './../shared/constants/constants';
 import { authActions } from './store/auth.actions';
 import { AuthService } from './auth.service';
 import { Injectable } from '@angular/core';
@@ -27,18 +28,28 @@ export class AuthGuard implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-    return this.authService.getUser().pipe(
-      switchMap((data: any) => {
-        this.authService.setLocalUser(data._id);
-        this.store.dispatch(authActions.setUser({ user: data._id }));
-        return of(true);
-      }),
-      catchError((e) => {
-        this.authService.clearLocalCredentials();
-        this.store.dispatch(authActions.setUser(null));
-        this.router.navigate(['/accounts/login']);
-        return of(false);
-      })
-    );
+    // if there is no local user or jwt
+    if (
+      !localStorage.getItem(LOCAL_KEYS.USER_ID) ||
+      !localStorage.getItem(LOCAL_KEYS.JWT)
+    ) {
+      this.router.navigate(['/accounts/login']);
+      return of(false);
+    } else {
+      return of(true);
+      // return this.authService.getUser().pipe(
+      //   switchMap((data: any) => {
+      //     this.authService.setLocalUser(data._id);
+      //     this.store.dispatch(authActions.setUserId({ userId: data._id }));
+      // return of(true);
+      //   }),
+      //   catchError((e) => {
+      //     this.authService.clearLocalCredentials();
+      //     this.store.dispatch(authActions.setUserId(null));
+      //     this.router.navigate(['/accounts/login']);
+      // return of(false);
+      //   })
+      // );
+    }
   }
 }

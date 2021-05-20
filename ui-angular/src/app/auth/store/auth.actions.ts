@@ -1,15 +1,15 @@
 import { createAction, props } from '@ngrx/store';
 
-const setUser = createAction('[AUTH] Set User', props<{ user: any }>());
+const setUserId = createAction('[AUTH] Set User', props<{ userId: any }>());
 
 const login = createAction(
   '[AUTH] Login',
-  props<{ email: string; password: string }>()
+  props<{ identity: string; password: string }>()
 );
 
-const setLoginStatus = createAction(
-  '[AUTH] Set Login Status',
-  props<{ status: string }>()
+const register = createAction(
+  '[AUTH] Register',
+  props<{ username: string; password: string; email?: string }>()
 );
 
 const loadUserInfo = createAction('[AUTH] Load User Info');
@@ -17,9 +17,9 @@ const loadUserInfo = createAction('[AUTH] Load User Info');
 const logout = createAction('[AUTH] Logout');
 
 export const authActions = {
-  setUser,
+  setUserId,
+  register,
   login,
-  setLoginStatus,
   loadUserInfo,
   logout,
 };

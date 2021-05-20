@@ -1,16 +1,17 @@
 <div class="loginBackground">
   <div class="loginContainer">
+    <div class="flex justify-center">Login to ProjectHub</div>
     <form [formGroup]="loginForm" (ngSubmit)="login()" class="grid">
       <mat-form-field appearance="standard">
-        <mat-label>Email</mat-label>
+        <mat-label>Email or username</mat-label>
         <input
-          name="email"
-          type="email"
+          name="identity"
+          type="text"
           matInput
-          placeholder="Your email"
-          formControlName="email"
+          placeholder="Email or account username"
+          formControlName="identity"
         />
-        <mat-error *ngIf="loginForm.get('email').errors?.required"
+        <mat-error *ngIf="loginForm.get('identity').errors?.required"
           >This field is required</mat-error
         >
       </mat-form-field>
@@ -19,11 +20,20 @@
         <mat-label>Password</mat-label>
         <input
           name="password"
-          type="password"
+          [type]="hide ? 'password' : 'text'"
           matInput
           placeholder="Password"
           formControlName="password"
         />
+        <button
+          mat-icon-button
+          matSuffix
+          (click)="hide = !hide"
+          [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide"
+        >
+          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+        </button>
         <mat-error *ngIf="loginForm.get('password').errors?.required"
           >This field is required</mat-error
         >
@@ -33,15 +43,20 @@
         color="primary"
         type="submit"
         [disabled]="
-          loginForm.invalid || loginStatus$ === httpCallStatus.LOADING
+          loginForm.invalid || loginOperationStatus$ === httpCallStatus.LOADING
         "
       >
-        {{ loginStatus$ === httpCallStatus.LOADING ? "..." : "Login" }}
+        {{ loginOperationStatus$ === httpCallStatus.LOADING ? "..." : "Login" }}
       </button>
     </form>
-
-    <span *ngIf="loginStatus$ === httpCallStatus.ERROR" class="textWarn"
+    <span
+      *ngIf="loginOperationStatus$ === httpCallStatus.ERROR"
+      class="textWarn flex justify-center"
       >Invalid Credentials</span
     >
+    <div class="register flex justify-center">
+      Don't have an account?
+      <a routerLink="/accounts/register" class="registerLink">Sign up</a>
+    </div>
   </div>
 </div>

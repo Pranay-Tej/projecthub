@@ -8,14 +8,21 @@ const projectSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+      trim: true,
     },
     url: {
       type: String,
+      trim: true,
     },
     website: {
       type: String,
+      trim: true,
     },
     user: {
+      type: String,
+      required: true,
+    },
+    userId: {
       type: String,
       required: true,
     },

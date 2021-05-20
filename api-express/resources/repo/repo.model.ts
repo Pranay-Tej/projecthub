@@ -5,12 +5,18 @@ const repoSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+      trim: true,
     },
     url: {
       type: String,
       required: true,
+      trim: true,
     },
     user: {
+      type: String,
+      required: true,
+    },
+    userId: {
       type: String,
       required: true,
     },

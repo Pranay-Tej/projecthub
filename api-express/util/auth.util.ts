@@ -2,6 +2,7 @@ import { verify, sign } from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import User from "../resources/user/user.model";
 import config from "../config/config";
+import { Model } from "mongoose";
 
 export const newToken = (user: any) => {
   return sign({ id: user._id }, config.JWT_SECRET, {
@@ -21,15 +22,16 @@ export const protect = async (
 
     // token method
     const bearerToken: string = req.header("Authorization") as string;
-    if (!bearerToken) {
-      throw "unauthenticated!";
-    }
-
-    if (typeof bearerToken === undefined) {
+    if (typeof bearerToken === undefined || !bearerToken) {
       throw "unauthenticated!";
     }
 
     const token = bearerToken.split("Bearer ")[1];
+
+    if (typeof token === undefined || !token) {
+      throw "unauthenticated!";
+    }
+
     const decoded: any = verify(token, config.JWT_SECRET);
 
     const user = await User.findOne(
@@ -62,6 +64,19 @@ export const protect = async (
     // res.locals.user = id;
     // next();
   } catch (e) {
+    console.error(e);
     res.status(401).send(e).end();
   }
+};
+
+export const isAuthorized = async (
+  model: Model<any>,
+  id: string,
+  userId: string
+) => {
+  const doc = await model.findOne({ _id: id }).lean().exec();
+  if (doc.userId != userId) {
+    return false;
+  }
+  return true;
 };

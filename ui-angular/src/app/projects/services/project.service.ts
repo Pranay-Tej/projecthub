@@ -11,9 +11,9 @@ export class ProjectService {
 
   getUrlWithId = (id) => `${environment.baseURL}/projects/${id}`;
 
-  getAllProjects() {
+  getAllProjects(userId) {
     return this.httpClient.get(
-      `${this.getUrl()}?user=Pranay-Tej&_sort=name&_order=1`
+      `${this.getUrl()}?userId=${userId}&_sort=name&_order=1&_limit=-1`
     );
   }
 

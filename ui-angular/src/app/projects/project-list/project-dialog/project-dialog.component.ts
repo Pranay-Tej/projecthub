@@ -80,7 +80,7 @@ export class ProjectDialogComponent implements OnInit, OnDestroy {
   }
 
   createProject() {
-    const project = { ...this.projectForm.getRawValue(), user: 'Pranay-Tej' };
+    const project = { ...this.projectForm.getRawValue() };
     this.store.dispatch(projectActions.createProject({ project }));
   }
 

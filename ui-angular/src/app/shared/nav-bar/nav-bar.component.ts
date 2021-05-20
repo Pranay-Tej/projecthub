@@ -9,7 +9,7 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./nav-bar.component.css'],
 })
 export class NavBarComponent implements OnInit {
-  userId$ = this.store.select(authSelectors.user);
+  userId$ = this.store.select(authSelectors.userId);
   constructor(private store: Store) {}
 
   ngOnInit(): void {
