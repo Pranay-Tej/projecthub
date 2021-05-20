@@ -12,18 +12,19 @@ export class ProjectRepoService {
   getUrlWithId = (id) => `${environment.baseURL}/project-repos/${id}`;
 
   getRepoListOfProject(projectId: string) {
-    return this.httpClient.get(`${this.getUrl()}/?projectId=${projectId}`);
+    return this.httpClient.get(
+      `${this.getUrl()}/?projectId=${projectId}&_limit=-1`
+    );
   }
 
   getProjectListOfRepo(repoId: string) {
-    return this.httpClient.get(`${this.getUrl()}/?repoId=${repoId}`);
+    return this.httpClient.get(`${this.getUrl()}/?repoId=${repoId}&_limit=-1`);
   }
 
   create(projectId: string, repoId: string) {
     return this.httpClient.post(`${this.getUrl()}`, {
       projectId: projectId,
       repoId: repoId,
-      user: 'Pranay-Tej',
     });
   }
 

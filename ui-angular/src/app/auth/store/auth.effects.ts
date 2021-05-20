@@ -1,3 +1,4 @@
+import { AuthFacade } from './auth.facade';
 import { Router } from '@angular/router';
 import { httpCallStatus } from './../../shared/constants/constants';
 import { catchError, mergeMap, switchMap, tap } from 'rxjs/operators';
@@ -6,12 +7,14 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthService } from '../auth.service';
 import { authActions } from './auth.actions';
 import { Store } from '@ngrx/store';
+import { EMPTY } from 'rxjs';
 
 @Injectable()
 export class AuthEffects {
   constructor(
     private actions$: Actions,
     private authService: AuthService,
+    private authFacade: AuthFacade,
     private router: Router,
     private store: Store
   ) {}
@@ -19,14 +22,12 @@ export class AuthEffects {
   login$ = createEffect(() =>
     this.actions$.pipe(
       ofType(authActions.login),
-      tap(() => {
-        this.store.dispatch(
-          authActions.setLoginStatus({ status: httpCallStatus.LOADING })
-        );
-      }),
+      tap(() =>
+        this.authFacade.setLoginOperationStatus(httpCallStatus.LOADING)
+      ),
       mergeMap((action) =>
         this.authService
-          .login({ email: action.email, password: action.password })
+          .login({ identity: action.identity, password: action.password })
           .pipe(
             switchMap((data: any) => {
               this.authService.setJWT(data.jwt);
@@ -34,9 +35,37 @@ export class AuthEffects {
             }),
             catchError((error) => {
               console.error(error);
-              return [
-                authActions.setLoginStatus({ status: httpCallStatus.ERROR }),
-              ];
+              this.authFacade.setLoginOperationStatus(httpCallStatus.ERROR);
+              return EMPTY;
+            })
+          )
+      )
+    )
+  );
+
+  register$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(authActions.register),
+      tap(() =>
+        this.authFacade.setRegisterOperationStatus(httpCallStatus.LOADING)
+      ),
+      mergeMap((action) =>
+        this.authService
+          .register({
+            username: action.username,
+            password: action.password,
+            email: action.email,
+          })
+          .pipe(
+            switchMap((data: any) => {
+              this.authService.setJWT(data.jwt);
+              this.authFacade.setRegisterOperationStatus(httpCallStatus.OK);
+              return [authActions.loadUserInfo()];
+            }),
+            catchError((error) => {
+              console.error(error);
+              this.authFacade.setRegisterOperationStatus(httpCallStatus.ERROR);
+              return EMPTY;
             })
           )
       )
@@ -50,16 +79,13 @@ export class AuthEffects {
         this.authService.getUser().pipe(
           switchMap((data: any) => {
             this.authService.setLocalUser(data._id);
-            return [
-              authActions.setUser({ user: data._id }),
-              authActions.setLoginStatus({ status: httpCallStatus.OK }),
-            ];
+            this.authFacade.setLoginOperationStatus(httpCallStatus.OK);
+            return [authActions.setUserId({ userId: data._id })];
           }),
           catchError((error) => {
             console.error(error);
-            return [
-              authActions.setLoginStatus({ status: httpCallStatus.ERROR }),
-            ];
+            this.authFacade.setLoginOperationStatus(httpCallStatus.ERROR);
+            return EMPTY;
           })
         )
       )
@@ -69,20 +95,11 @@ export class AuthEffects {
   logout$ = createEffect(() =>
     this.actions$.pipe(
       ofType(authActions.logout),
-      mergeMap(() =>
-        this.authService.logout().pipe(
-          switchMap(() => {
-            return [
-              authActions.setUser(null),
-              authActions.setLoginStatus({ status: httpCallStatus.OK }),
-            ];
-          }),
-          tap(() => {
-            this.authService.clearLocalCredentials();
-            this.router.navigate(['/']);
-          })
-        )
-      )
+      tap(() => {
+        this.authService.clearLocalCredentials();
+        this.router.navigate(['/accounts/login']);
+      }),
+      switchMap(() => [authActions.setUserId(null)])
     )
   );
 }

@@ -1,3 +1,4 @@
+import { authSelectors } from 'src/app/auth/store/auth.selectors';
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
@@ -45,11 +46,12 @@ export class RepoEffects {
   loadRepoList$ = createEffect(() =>
     this.actions$.pipe(
       ofType(repoActions.loadRepoList),
+      withLatestFrom(this.store.select(authSelectors.userId)),
       tap(() =>
         this.repoFacade.setRepoListLoadOperation(httpCallStatus.LOADING)
       ),
-      mergeMap(() =>
-        this.repoService.getAllRepos().pipe(
+      mergeMap(([action, userId]) =>
+        this.repoService.getAllRepos(userId).pipe(
           switchMap((data) => {
             this.repoFacade.setRepoListLoadOperation(httpCallStatus.OK);
             return [repoActions.repoListLoaded({ repoList: data })];

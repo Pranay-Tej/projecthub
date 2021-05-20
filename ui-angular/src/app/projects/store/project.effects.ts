@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
 import { EMPTY } from 'rxjs';
-import { catchError, mergeMap, switchMap, tap } from 'rxjs/operators';
+import {
+  catchError,
+  mergeMap,
+  switchMap,
+  tap,
+  withLatestFrom,
+} from 'rxjs/operators';
+import { authSelectors } from 'src/app/auth/store/auth.selectors';
 import { httpCallStatus } from 'src/app/shared/constants/constants';
 import { ProjectService } from './../services/project.service';
 import projectActions from './project.actions';
@@ -11,6 +19,7 @@ import { ProjectFacade } from './project.facade';
 export class ProjectEffects {
   constructor(
     private actions$: Actions,
+    private store: Store,
     private projectService: ProjectService,
     private projectFacade: ProjectFacade
   ) {}
@@ -18,11 +27,12 @@ export class ProjectEffects {
   loadProjectList$ = createEffect(() =>
     this.actions$.pipe(
       ofType(projectActions.loadProjectList),
+      withLatestFrom(this.store.select(authSelectors.userId)),
       tap(() =>
         this.projectFacade.setProjectListLoadOperation(httpCallStatus.LOADING)
       ),
-      mergeMap(() =>
-        this.projectService.getAllProjects().pipe(
+      mergeMap(([action, userId]) =>
+        this.projectService.getAllProjects(userId).pipe(
           switchMap((data) => {
             this.projectFacade.setProjectListLoadOperation(httpCallStatus.OK);
             return [projectActions.projectListLoaded({ projectList: data })];
