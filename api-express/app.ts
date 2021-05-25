@@ -8,6 +8,7 @@ import projectRepoRouter from "./resources/projectRepo/projectRepo.router";
 import repoRouter from "./resources/repo/repo.router";
 import authRouter from "./resources/user/auth.router";
 import mongoose from "mongoose";
+import { protect } from "./util/auth.util";
 
 const app = express();
 
@@ -30,11 +31,11 @@ app.get("/", (req, res) => {
 
 app.use("/user", authRouter);
 
-app.use("/repos", repoRouter);
+app.use("/repos", protect, repoRouter);
 
-app.use("/projects", projectRouter);
+app.use("/projects", protect, projectRouter);
 
-app.use("/project-repos", projectRepoRouter);
+app.use("/project-repos", protect, projectRepoRouter);
 
 mongoose
   .connect(config.MONGO_URI, {
