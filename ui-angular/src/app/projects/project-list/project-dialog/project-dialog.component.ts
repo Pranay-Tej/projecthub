@@ -54,7 +54,7 @@ export class ProjectDialogComponent implements OnInit, OnDestroy {
         if (!data) {
           return;
         }
-        const { name, url, website, user } = data;
+        const { name, url = '', website = '', user } = data;
         this.projectForm.setValue({ name, url, website, user });
       })
     );

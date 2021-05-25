@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 import { compare, hash } from "bcryptjs";
 import User from "./user.model";
 import { protect, newToken } from "../../util/auth.util";
+import seed from "../../util/seed.util";
 const authRouter = Router();
 
 // /user/register
@@ -17,6 +18,9 @@ authRouter.post("/register", async (req: Request, res: Response) => {
       email,
       password: passwordHash,
     });
+
+    // seed default data (projects, repos, projectRepoS)
+    await seed(user.username, user._id);
 
     // token method
     res.status(201).json({ jwt: newToken(user.toJSON()) });
