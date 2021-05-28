@@ -64,7 +64,9 @@ const connectProjectRepos = async (
   userId: string
 ) => {
   try {
-    const project = await Project.findOne({ name: projectName }).lean().exec();
+    const project = await Project.findOne({ name: projectName, user, userId })
+      .lean()
+      .exec();
 
     if (!project) {
       throw `project ${projectName} not found`;
@@ -74,7 +76,7 @@ const connectProjectRepos = async (
 
     // })
     repoList.forEach(async ({ name }) => {
-      const repo = await Repo.findOne({ name }).lean().exec();
+      const repo = await Repo.findOne({ name, user, userId }).lean().exec();
       if (!repo) {
         throw `repo ${repo} not found`;
       }
