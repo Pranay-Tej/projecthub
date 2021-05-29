@@ -106,12 +106,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.authService.checkUsername(username).subscribe(
       (data) => {
         // console.log(data);
-      },
-      (err) => {
-        console.error(err.error);
         this.registerForm
           .get('username')
           .setErrors({ usernameUnavailable: { value: true } });
+      },
+      (err) => {
+        console.error(err.error);
       }
     );
   }
@@ -120,19 +120,23 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.authService.checkEmail(email).subscribe(
       (data) => {
         // console.log(data);
-      },
-      (err) => {
-        console.error(err.error);
         this.registerForm
           .get('email')
           .setErrors({ emailUnavailable: { value: true } });
+      },
+      (err) => {
+        console.error(err.error);
       }
     );
   }
 
   register() {
-    const { confirmPassword, ...credentials } = this.registerForm.getRawValue();
+    let { confirmPassword, email, ...credentials } =
+      this.registerForm.getRawValue();
     console.log(credentials);
+    if (email) {
+      credentials = { ...credentials, email };
+    }
     this.store.dispatch(authActions.register({ ...credentials }));
   }
 

@@ -16,7 +16,14 @@ const count = (model: Model<any>) => async (req: Request, res: Response) => {
 
 const findOne = (model: Model<any>) => async (req: Request, res: Response) => {
   try {
-    const doc = await model.findOne({ _id: req.params.id }).lean().exec();
+    const doc = await model
+      .findOne({
+        _id: req.params.id,
+        userId: res.locals.USER._id,
+        user: res.locals.USER.username,
+      })
+      .lean()
+      .exec();
     if (!doc) {
       return res.status(404).json(`${model.modelName} not found`).end();
     }
@@ -43,7 +50,11 @@ const findMany = (model: Model<any>) => async (req: Request, res: Response) => {
     // console.log(sortCriteria);
     // console.log(limit);
     const docs = await model
-      .find({ ...filters })
+      .find({
+        ...filters,
+        userId: res.locals.USER._id,
+        user: res.locals.USER.username,
+      })
       .sort({ ...sortCriteria })
       .limit(limit)
       .skip(parseInt(_page as string) * limit)

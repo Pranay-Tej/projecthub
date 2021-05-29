@@ -2,21 +2,30 @@ import { Request, Response, Router } from "express";
 import { compare, hash } from "bcryptjs";
 import User from "./user.model";
 import { protect, newToken } from "../../util/auth.util";
+import seed from "../../util/seed.util";
 const authRouter = Router();
 
 // /user/register
 authRouter.post("/register", async (req: Request, res: Response) => {
   try {
-    const { username, email, password } = req.body;
+    let { email, ...credentials } = req.body;
+    if (email) {
+      credentials = { ...credentials, email };
+    }
+
+    const { username, password } = credentials;
     if (!username || !password) {
       throw "bad request";
     }
     const passwordHash = await hash(password, 10);
+    // let credentials = { username, password };
     const user = await User.create({
-      username,
-      email,
+      ...credentials,
       password: passwordHash,
     });
+
+    // seed default data (projects, repos, projectRepoS)
+    await seed(user.username, user._id);
 
     // token method
     res.status(201).json({ jwt: newToken(user.toJSON()) });
@@ -121,12 +130,12 @@ authRouter.get(
       const user = await User.findOne({ username }, { password: 0, email: 0 })
         .lean()
         .exec();
-      if (user) {
-        throw "username unavailable";
+      if (!user) {
+        throw "username not found";
       }
       res.status(200).json("ok");
     } catch (e) {
-      res.status(400).json(e).end();
+      res.status(404).json(e).end();
     }
   }
 );
@@ -138,12 +147,12 @@ authRouter.get("/check-email/:email", async (req: Request, res: Response) => {
     const user = await User.findOne({ email }, { password: 0, email: 0 })
       .lean()
       .exec();
-    if (user) {
-      throw "email unavailable";
+    if (!user) {
+      throw "email not found";
     }
     res.status(200).json("ok");
   } catch (e) {
-    res.status(400).json(e).end();
+    res.status(404).json(e).end();
   }
 });
 

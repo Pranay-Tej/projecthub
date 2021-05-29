@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./nav-bar.component.css'],
 })
 export class NavBarComponent implements OnInit {
+  username$ = this.store.select(authSelectors.username);
   userId$ = this.store.select(authSelectors.userId);
   constructor(private store: Store) {}
 

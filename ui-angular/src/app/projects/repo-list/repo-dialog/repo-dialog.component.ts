@@ -48,7 +48,7 @@ export class RepoDialogComponent implements OnInit, OnDestroy {
         if (!data) {
           return;
         }
-        const { name, url, user } = data;
+        const { name, url = '', user } = data;
         this.repoForm.setValue({ name, url, user });
       })
     );
