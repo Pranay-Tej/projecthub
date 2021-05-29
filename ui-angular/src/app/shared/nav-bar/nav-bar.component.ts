@@ -2,6 +2,7 @@ import { authSelectors } from './../../auth/store/auth.selectors';
 import { authActions } from './../../auth/store/auth.actions';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -11,7 +12,12 @@ import { Store } from '@ngrx/store';
 export class NavBarComponent implements OnInit {
   username$ = this.store.select(authSelectors.username);
   userId$ = this.store.select(authSelectors.userId);
-  constructor(private store: Store) {}
+  currentURL: string;
+  _router: any;
+
+  constructor(private store: Store, private router: Router) {
+    this._router = router;
+  }
 
   ngOnInit(): void {
     let theme: string = localStorage.getItem('projecthub-theme') || 'light';

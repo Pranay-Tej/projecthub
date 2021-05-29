@@ -32,7 +32,9 @@
           [attr.aria-label]="'Hide password'"
           [attr.aria-pressed]="hide"
         >
-          <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+          <mat-icon fontSet="material-icons-outlined">{{
+            hide ? "visibility_off" : "visibility"
+          }}</mat-icon>
         </button>
         <mat-error *ngIf="loginForm.get('password').errors?.required"
           >This field is required</mat-error

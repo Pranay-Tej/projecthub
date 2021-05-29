@@ -238,6 +238,12 @@ a {
   background-color: var(--gray-500);
 }
 
+/* mat icons */
+.icon-sm-grey {
+  color: var(--gray-750);
+  font-size: 1.3rem;
+}
+
 /* material-ui background */
 mat-dialog-container {
   background-color: var(--bg-popup) !important;

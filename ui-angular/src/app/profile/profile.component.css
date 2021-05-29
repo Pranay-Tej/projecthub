@@ -26,6 +26,7 @@
 
 .repo {
   margin-bottom: 5px;
+  max-height: 1.3rem;
 }
 .repoName {
   font-size: 0.9rem;
