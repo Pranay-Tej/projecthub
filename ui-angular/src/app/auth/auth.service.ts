@@ -15,15 +15,13 @@ export class AuthService {
     localStorage.setItem(LOCAL_KEYS.JWT, JWT);
   }
 
-  getLocalUser(user: string) {
-    localStorage.getItem(LOCAL_KEYS.USER_ID);
-  }
-
-  setLocalUser(user: string) {
-    localStorage.setItem(LOCAL_KEYS.USER_ID, user);
+  setLocalUser(username: string, userId: string) {
+    localStorage.setItem(LOCAL_KEYS.USERNAME, username);
+    localStorage.setItem(LOCAL_KEYS.USER_ID, userId);
   }
 
   clearLocalCredentials() {
+    localStorage.removeItem(LOCAL_KEYS.USERNAME);
     localStorage.removeItem(LOCAL_KEYS.USER_ID);
     localStorage.removeItem(LOCAL_KEYS.JWT);
   }

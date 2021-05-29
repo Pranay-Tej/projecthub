@@ -33,8 +33,17 @@
       <mat-icon>settings</mat-icon>
     </button>
     <mat-menu #settingsMenu>
+      <button
+        routerLink="/profile/{{ username$ | async }}"
+        mat-menu-item
+        matTooltip="My Profile"
+      >
+        <mat-icon>public</mat-icon>
+        <span>My Profile</span>
+      </button>
       <button mat-menu-item matTooltip="Edit" (click)="logout()">
-        <span>Logout</span><mat-icon>logout</mat-icon>
+        <mat-icon>logout</mat-icon>
+        <span>Logout</span>
       </button>
     </mat-menu>
     <div class="themeSelector">
