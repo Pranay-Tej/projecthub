@@ -27,7 +27,7 @@ app.use(cookieParser());
 app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
-  res.send("Hello world!");
+  res.json("Hello world!");
 });
 
 app.use("/user", authRouter);
