@@ -1,0 +1,99 @@
+<div *ngIf="fetchProfileStatus$ === httpCallStatus.LOADING" class="emptyList">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="fetchProfileStatus$ === httpCallStatus.OK" class="profile">
+  <h2 class="username">{{ username }}</h2>
+  <div class="projectGrid">
+    <div *ngFor="let profileProject of profile" class="project">
+      <div class="flex">
+        <h3 class="projectName">{{ profileProject.project.name }}</h3>
+        <a
+          *ngIf="profileProject.project.url"
+          class="link"
+          href="{{ profileProject.project.website }}"
+          target="_blank"
+        >
+          <button
+            mat-icon-button
+            aria-label="View Website"
+            matTooltip="View Website"
+          >
+            <mat-icon fontSet="material-icons-outlined" class="icon-sm-grey"
+              >language</mat-icon
+            >
+          </button>
+        </a>
+        <a
+          *ngIf="profileProject.project.url"
+          class="link"
+          href="{{ profileProject.project.url }}"
+          target="_blank"
+        >
+          <button
+            mat-icon-button
+            aria-label="View Source code"
+            matTooltip="View Source code"
+          >
+            <mat-icon fontSet="material-icons-outlined" class="icon-sm-grey"
+              >code</mat-icon
+            >
+          </button>
+        </a>
+      </div>
+      <div *ngFor="let repo of profileProject.repos" class="flex repo">
+        <div class="repoName">{{ repo.name }}</div>
+        <div>
+          <a
+            *ngIf="repo.url"
+            class="link"
+            href="{{ repo.url }}"
+            target="_blank"
+          >
+            <button
+              mat-icon-button
+              aria-label="View Source code"
+              matTooltip="View Source code"
+            >
+              <mat-icon
+                fontSet="material-icons-outlined"
+                class="repoName icon-sm-grey"
+                >code</mat-icon
+              >
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  *ngIf="fetchProfileStatus$ === httpCallStatus.OK && profile.length === 0"
+  class="emptyList"
+>
+  <div>
+    <p>No projects to showcase.</p>
+    <p>Go back to<a routerLink="/" class="homeLink">Home</a></p>
+  </div>
+</div>
+
+<div
+  *ngIf="fetchProfileStatus$ === httpCallStatus.ERROR && userNotFound"
+  class="emptyList"
+>
+  <div>
+    <p>User not found.</p>
+    <p>Go back to<a routerLink="/" class="homeLink">Home</a></p>
+  </div>
+</div>
+
+<div
+  *ngIf="fetchProfileStatus$ === httpCallStatus.ERROR && !userNotFound"
+  class="emptyList textWarn"
+>
+  <div>
+    <p>There was some error fetching profile.</p>
+    <p>Go back to<a routerLink="/" class="homeLink">Home</a></p>
+  </div>
+</div>

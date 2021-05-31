@@ -17,9 +17,10 @@ import { EffectsModule } from '@ngrx/effects';
 import { AppEffects } from './store/app.effects';
 import { AuthEffects } from './auth/store/auth.effects';
 import { AuthModule } from './auth/auth.module';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
-  declarations: [AppComponent, NavBarComponent, HomeComponent],
+  declarations: [AppComponent, NavBarComponent, HomeComponent, ProfileComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

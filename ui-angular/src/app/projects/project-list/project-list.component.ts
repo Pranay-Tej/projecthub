@@ -115,6 +115,9 @@ export class ProjectListComponent implements OnInit, OnDestroy {
       this.projectFacade.setDeleteOperation(httpCallStatus.OK);
       // selecting ALL projects
       this.store.dispatch(projectActions.setSelectedProjectId({ id: 'ALL' }));
+      this.store.dispatch(
+        projectActions.setSelectedProjectName({ name: 'All Repos' })
+      );
     });
   }
 

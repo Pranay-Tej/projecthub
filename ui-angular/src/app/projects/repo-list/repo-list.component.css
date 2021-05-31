@@ -62,3 +62,7 @@
     border-color: var(--primary-color-1000);
   }
 }
+
+.repoTitle {
+  margin-left: 0.5rem;
+}

@@ -78,9 +78,12 @@ export class AuthEffects {
       mergeMap(() =>
         this.authService.getUser().pipe(
           switchMap((data: any) => {
-            this.authService.setLocalUser(data._id);
+            this.authService.setLocalUser(data.username, data._id);
             this.authFacade.setLoginOperationStatus(httpCallStatus.OK);
-            return [authActions.setUserId({ userId: data._id })];
+            return [
+              authActions.setUserId({ userId: data._id }),
+              authActions.setUsername({ username: data.username }),
+            ];
           }),
           catchError((error) => {
             console.error(error);

@@ -30,6 +30,7 @@ export class AuthGuard implements CanActivate {
     | Promise<boolean | UrlTree> {
     // if there is no local user or jwt
     if (
+      !localStorage.getItem(LOCAL_KEYS.USERNAME) ||
       !localStorage.getItem(LOCAL_KEYS.USER_ID) ||
       !localStorage.getItem(LOCAL_KEYS.JWT)
     ) {
