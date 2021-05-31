@@ -39,10 +39,16 @@ export class RegisterComponent implements OnInit, OnDestroy {
       username: this.formBuilder.control('', [
         Validators.required,
         Validators.pattern(/^[A-Za-z0-9_-]*$/),
+        Validators.minLength(3),
+        Validators.maxLength(30),
       ]),
       password: this.formBuilder.control('', Validators.required),
       confirmPassword: this.formBuilder.control('', Validators.required),
-      email: this.formBuilder.control('', Validators.email),
+      email: this.formBuilder.control('', [
+        Validators.email,
+        Validators.minLength(5),
+        Validators.maxLength(50),
+      ]),
     },
     { validators: [passwordValidator] }
   );
@@ -81,7 +87,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         .valueChanges.pipe(
           debounceTime(200),
           distinctUntilChanged(),
-          filter((val) => val !== ''),
+          filter((val: string) => val !== '' && val.length >= 3),
           // tap((val) => console.log(val)),
           tap((val) => this.checkUsername(val))
         )
@@ -94,7 +100,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         .valueChanges.pipe(
           debounceTime(200),
           distinctUntilChanged(),
-          filter((val) => val !== ''),
+          filter((val: string) => val !== '' && val.length >= 5),
           // tap((val) => console.log(val)),
           tap((val) => this.checkEmail(val))
         )

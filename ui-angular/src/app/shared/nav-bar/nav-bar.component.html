@@ -1,5 +1,5 @@
 <button
-  *ngIf="userId$ | async"
+  *ngIf="(userId$ | async) && _router.url === '/app'"
   class="btn btn-outline btn-circle toggleSideMenu"
   (click)="toggleSideBar()"
 >
@@ -30,7 +30,7 @@
       matTooltip="Settings"
       [matMenuTriggerFor]="settingsMenu"
     >
-      <mat-icon>settings</mat-icon>
+      <mat-icon fontSet="material-icons-outlined">settings</mat-icon>
     </button>
     <mat-menu #settingsMenu>
       <button
@@ -38,11 +38,11 @@
         mat-menu-item
         matTooltip="My Profile"
       >
-        <mat-icon>public</mat-icon>
+        <mat-icon fontSet="material-icons-outlined">public</mat-icon>
         <span>My Profile</span>
       </button>
       <button mat-menu-item matTooltip="Edit" (click)="logout()">
-        <mat-icon>logout</mat-icon>
+        <mat-icon fontSet="material-icons-outlined">logout</mat-icon>
         <span>Logout</span>
       </button>
     </mat-menu>

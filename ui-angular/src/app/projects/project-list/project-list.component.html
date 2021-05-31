@@ -20,7 +20,7 @@
         formControlName="projectName"
         placeholder="Search..."
       />
-      <mat-icon matSuffix>search</mat-icon>
+      <mat-icon matSuffix fontSet="material-icons-outlined">search</mat-icon>
     </mat-form-field>
   </form>
 </div>
@@ -64,7 +64,7 @@
         [matMenuTriggerFor]="projectActionsMenu"
         (click)="$event.stopPropagation()"
       >
-        <mat-icon>more_vert</mat-icon>
+        <mat-icon class="icon-sm-grey">more_vert</mat-icon>
       </button>
       <mat-menu #projectActionsMenu>
         <button mat-menu-item (click)="openProjectDialog(project._id)">
@@ -80,12 +80,32 @@
     </div>
     <div>
       <a
+        *ngIf="project.website"
+        class="link"
+        href="{{ project.website }}"
+        target="_blank"
+      >
+        <button
+          mat-icon-button
+          aria-label="view webstite"
+          matTooltip="View Website"
+        >
+          <mat-icon class="icon-sm-grey">public</mat-icon>
+        </button>
+      </a>
+      <a
         *ngIf="project.url"
         class="link"
         href="{{ project.url }}"
         target="_blank"
       >
-        Open
+        <button
+          mat-icon-button
+          aria-label="view source code"
+          matTooltip="View Source Code"
+        >
+          <mat-icon class="icon-sm-grey">code</mat-icon>
+        </button>
       </a>
     </div>
   </div>

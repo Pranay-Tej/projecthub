@@ -26,19 +26,21 @@
 .all {
   border-top: 1px solid var(--border);
   font-weight: 600;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
 }
 
 @media (hover: hover) {
   .project:hover,
   .all:hover {
     cursor: pointer;
-    background-color: var(--gray-750);
-    color: var(--gray-0);
+    /* background-color: var(--gray-750);
+    color: var(--gray-0); */
   }
 
-  .project:hover .link {
+  /* .project:hover .link {
     color: var(--gray-100);
-  }
+  } */
 }
 
 .selectedProject {
