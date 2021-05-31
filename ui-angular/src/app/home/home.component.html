@@ -17,3 +17,18 @@
     </a>
   </div>
 </div>
+
+<div class="featuresContainer">
+  <h2 class="whyTitle">Why?</h2>
+  <div class="featureList">
+    <div class="feature" *ngFor="let feature of featureList">
+      <h3 class="title">{{ feature.title }}</h3>
+      <div class="description">
+        {{ feature.description }}
+      </div>
+      <div *ngIf="feature.sub" class="sub">
+        {{ feature.sub }}
+      </div>
+    </div>
+  </div>
+</div>

@@ -18,10 +18,74 @@
 
 .heroActions {
   gap: 1rem;
+  place-content: center;
 }
 
 @media (min-width: 768px) {
   .hero {
     margin-top: 4rem;
   }
+}
+
+.featuresContainer {
+  margin: 1em 0;
+  padding: 2em 1em;
+  padding-bottom: 5em;
+}
+
+.why {
+  margin: auto;
+}
+
+.whyTitle {
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.whyDescription {
+  margin-bottom: 3em;
+}
+
+.featureList {
+  display: grid;
+  gap: 1em;
+  margin: auto;
+}
+
+@media screen and (min-width: 768px) {
+  .featureList {
+    max-width: 80vw;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
+
+.feature {
+  padding: 1em;
+  border: 1px dotted var(--border);
+  transition: all 250ms ease-out;
+  border-color: var(--primary-color-1000);
+}
+
+@media (hover: hover) {
+  .feature:hover {
+    /* cursor: pointer; */
+    transform: translateY(-3px);
+    border-style: solid;
+  }
+}
+
+.feature .title {
+  font-size: 1rem;
+  margin-bottom: 0.5em;
+}
+
+.feature .description {
+  font-size: 0.9rem;
+  color: var(--gray-750);
+}
+
+.feature .sub {
+  margin-top: 1em;
+  font-size: 0.85rem;
+  color: var(--gray-750);
 }
