@@ -47,13 +47,7 @@
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["User"],
@@ -88,33 +82,15 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "404": {
             "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["User"],
@@ -149,33 +125,15 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "404": {
             "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["User"],
@@ -203,33 +161,15 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "404": {
             "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["User"],
@@ -268,33 +208,15 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "404": {
             "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["User"],
@@ -333,23 +255,11 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["Repo"],
@@ -372,23 +282,11 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["Repo"],
@@ -423,33 +321,15 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "404": {
             "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["Repo"],
@@ -483,33 +363,15 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "404": {
             "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["Repo"],
@@ -555,33 +417,15 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "404": {
             "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["Repo"],
@@ -621,23 +465,11 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["Repo"],
@@ -665,23 +497,11 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["Project"],
@@ -704,23 +524,11 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["Project"],
@@ -755,33 +563,15 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "404": {
             "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["Project"],
@@ -815,33 +605,15 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "404": {
             "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["Project"],
@@ -887,33 +659,15 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "404": {
             "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["Project"],
@@ -953,23 +707,11 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["Project"],
@@ -997,23 +739,11 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["ProjectRepo"],
@@ -1036,23 +766,11 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["ProjectRepo"],
@@ -1087,33 +805,15 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "404": {
             "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["ProjectRepo"],
@@ -1147,33 +847,15 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "404": {
             "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["ProjectRepo"],
@@ -1219,33 +901,15 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "404": {
             "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["ProjectRepo"],
@@ -1282,33 +946,15 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "404": {
             "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["ProjectRepo"],
@@ -1358,23 +1004,11 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["ProjectRepo"],
@@ -1395,23 +1029,11 @@
           },
           "403": {
             "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["Profile"],
@@ -1432,23 +1054,11 @@
           },
           "404": {
             "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           },
           "default": {
             "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
+            "content": {}
           }
         },
         "tags": ["Profile"],
@@ -1614,18 +1224,6 @@
           "updatedAt": {
             "type": "string",
             "format": "date-time"
-          }
-        }
-      },
-      "Error": {
-        "required": ["code", "message"],
-        "properties": {
-          "code": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
           }
         }
       }

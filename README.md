@@ -16,6 +16,7 @@ Visit [API Documentation](https://projecthub-express.herokuapp.com/api)
 - Backend
   - Express (NodeJS) with TypeScript
   - Swagger/Open API Specification (API Documentation)
+  - JWT (JSON Web Token) Authentication
 - Database
   - MongoDB (Mongoose)
 - Design/Prototype
