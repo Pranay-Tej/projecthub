@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "copyconfig": "cp ./swagger.json ./build/",
-    "build": "npm run copyconfig && tsc -p .",
+    "build": "tsc -p . && npm run copyconfig",
     "start": "export NODE_ENV=production && npm run build && node ./build/app.js",
     "dev": "nodemon app.ts"
   },
