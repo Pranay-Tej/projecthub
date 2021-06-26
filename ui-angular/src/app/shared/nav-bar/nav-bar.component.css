@@ -18,6 +18,8 @@
   right: 16px;
   box-shadow: 1px 2px 4px 1px var(--shadow-100);
   z-index: 1000;
+  background-color: var(--primary-color-1000);
+  color: var(--gray-0);
 }
 
 @media (min-width: 550px) {
