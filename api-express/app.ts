@@ -10,10 +10,19 @@ import authRouter from "./resources/user/auth.router";
 import mongoose from "mongoose";
 import { protect } from "./util/auth.util";
 import profileRouter from "./resources/profile/profile.router";
+import rateLimit from "express-rate-limit";
+import helmet from "helmet";
 
 const app = express();
 
 // Middleware
+const limit = rateLimit({
+  max: 100, // max requests
+  windowMs: 60 * 60 * 1000, // 1 Hour
+  message: "Too many requests", // message to send
+});
+app.use(limit); // Setting limiter on specific route
+app.use(helmet());
 app.use(
   cors({
     // // cookie method
@@ -22,10 +31,17 @@ app.use(
     origin: config.DOMAINS,
   })
 );
-app.use(express.json());
+app.use(express.json({ limit: "50kb" })); // Body limit is 50
 app.use(cookieParser());
 app.use(morgan("dev"));
 
+// API Documentation
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
+
+app.use("/api", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+// Routes
 app.get("/", (req, res) => {
   res.json("Hello world!");
 });
