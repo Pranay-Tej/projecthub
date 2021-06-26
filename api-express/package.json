@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -p .",
-    "start": "tsc && node ./build/app.js",
+    "copyconfig": "cp ./swagger.json ./build/",
+    "build": "npm run copyconfig && tsc -p .",
+    "start": "export NODE_ENV=production && npm run build && node ./build/app.js",
     "dev": "nodemon app.ts"
   },
   "keywords": [],
