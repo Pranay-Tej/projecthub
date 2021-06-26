@@ -13,6 +13,12 @@ import profileRouter from "./resources/profile/profile.router";
 
 const app = express();
 
+// API Documentation
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger.json");
+
+app.use("/api", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 // Middleware
 app.use(
   cors({

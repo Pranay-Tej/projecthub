@@ -2,6 +2,11 @@
 
 Place where developers manage and share their projects
 
+Visit [WebApp](https://projecthub.vercel.app)
+Visit [API Documentation](https://projecthub-express.herokuapp.com/api)
+
+---
+
 ## Tech stack
 
 - Frontend
@@ -10,8 +15,11 @@ Place where developers manage and share their projects
     - Angular Material (UI Components)
 - Backend
   - Express (NodeJS) with TypeScript
+  - Swagger/Open API Specification (API Documentation)
 - Database
   - MongoDB (Mongoose)
+- Design/Prototype
+  - Figma
 
 ## Hosting
 
