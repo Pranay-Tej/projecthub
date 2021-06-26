@@ -19,9 +19,12 @@
   padding: 0.75em;
 }
 
+.projectTitle {
+  margin-bottom: 0.5rem;
+}
+
 .projectName {
   font-size: 1.05rem;
-  margin-bottom: 0.5rem;
 }
 
 .repo {

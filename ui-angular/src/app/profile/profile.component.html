@@ -6,7 +6,7 @@
   <h2 class="username">{{ username }}</h2>
   <div class="projectGrid">
     <div *ngFor="let profileProject of profile" class="project">
-      <div class="flex">
+      <div class="flex projectTitle">
         <h3 class="projectName">{{ profileProject.project.name }}</h3>
         <a
           *ngIf="profileProject.project.url"
