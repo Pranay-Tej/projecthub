@@ -1,39 +1,43 @@
 import { Model } from "mongoose";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { isAuthorized } from "./auth.util";
+import StatusCodes from "../types/status-codes";
+import CustomErrors from "../errors";
 
 const count = (model: Model<any>) => async (req: Request, res: Response) => {
   try {
     const { ...filters } = req.query;
     const count = await model.countDocuments({ ...filters });
     // console.log(count);
-    res.status(200).json({ count });
-  } catch (e) {
-    console.error(e);
-    res.status(400).json(e).end();
+    res.status(StatusCodes.OK).json({ count });
+  } catch (err) {
+    console.error(err);
+    res.status(StatusCodes.BAD_REQUEST).json(err).end();
   }
 };
 
-const findOne = (model: Model<any>) => async (req: Request, res: Response) => {
-  try {
-    const doc = await model
-      .findOne({
-        _id: req.params.id,
-        userId: res.locals.USER._id,
-        user: res.locals.USER.username,
-      })
-      .lean()
-      .exec();
-    if (!doc) {
-      return res.status(404).json(`${model.modelName} not found`).end();
+const findOne =
+  (model: Model<any>) =>
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const doc = await model
+        .findOne({
+          _id: req.params.id,
+          userId: res.locals.USER._id,
+          user: res.locals.USER.username,
+        })
+        .lean()
+        .exec();
+      if (!doc) {
+        return next(new CustomErrors.NotFoundError(model.modelName));
+      }
+
+      res.status(StatusCodes.OK).json(doc);
+    } catch (err) {
+      console.error(err);
+      res.status(StatusCodes.BAD_REQUEST).json(err).end();
     }
-
-    res.status(200).json(doc);
-  } catch (e) {
-    console.error(e);
-    res.status(400).json(e).end();
-  }
-};
+  };
 
 const findMany = (model: Model<any>) => async (req: Request, res: Response) => {
   const {
@@ -61,10 +65,10 @@ const findMany = (model: Model<any>) => async (req: Request, res: Response) => {
       .lean()
       .exec();
 
-    res.status(200).json(docs);
-  } catch (e) {
-    console.error(e);
-    res.status(400).json(e).end();
+    res.status(StatusCodes.OK).json(docs);
+  } catch (err) {
+    console.error(err);
+    res.status(StatusCodes.BAD_REQUEST).json(err).end();
   }
 };
 
@@ -76,15 +80,16 @@ const createOne =
         user: res.locals.USER.username,
         userId: res.locals.USER._id,
       });
-      res.status(201).json(doc);
-    } catch (e) {
-      console.error(e);
-      res.status(400).json(e).end();
+      res.status(StatusCodes.CREATED).json(doc);
+    } catch (err) {
+      console.error(err);
+      res.status(StatusCodes.BAD_REQUEST).json(err).end();
     }
   };
 
 const updateOne =
-  (model: Model<any>) => async (req: Request, res: Response) => {
+  (model: Model<any>) =>
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
       const isAuthorizedOperation: boolean = await isAuthorized(
         model,
@@ -92,8 +97,7 @@ const updateOne =
         res.locals.USER._id
       );
       if (isAuthorizedOperation === false) {
-        console.error("forbidden");
-        return res.status(403).send("forbidden!").end();
+        return next(new CustomErrors.ForbiddenError());
       }
 
       const updatedDoc = await model
@@ -105,18 +109,19 @@ const updateOne =
         .exec();
 
       if (!updatedDoc) {
-        return res.send(400).end();
+        return next(new CustomErrors.BadRequestError());
       }
 
-      res.status(200).json(updatedDoc);
-    } catch (e) {
-      console.error(e);
-      res.status(400).json(e).end();
+      res.status(StatusCodes.OK).json(updatedDoc);
+    } catch (err) {
+      console.error(err);
+      res.status(StatusCodes.BAD_REQUEST).json(err).end();
     }
   };
 
 const deleteOne =
-  (model: Model<any>) => async (req: Request, res: Response) => {
+  (model: Model<any>) =>
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
       const isAuthorizedOperation: boolean = await isAuthorized(
         model,
@@ -125,7 +130,7 @@ const deleteOne =
       );
       if (isAuthorizedOperation === false) {
         console.error("forbidden");
-        return res.status(403).send("forbidden!").end();
+        return next(new CustomErrors.ForbiddenError());
       }
 
       // const removed = await model.findByIdAndDelete(req.params.id);
@@ -134,13 +139,13 @@ const deleteOne =
       });
       // console.log(deletedCount);
       if (deletedCount === 0) {
-        return res.status(404).json(`${model.modelName} not found`).end();
+        return next(new CustomErrors.NotFoundError(model.modelName));
       }
 
-      res.status(204).end();
-    } catch (e) {
-      console.error(e);
-      res.status(400).json(e).end();
+      res.status(StatusCodes.NO_CONTENT).end();
+    } catch (err) {
+      console.error(err);
+      res.status(StatusCodes.BAD_REQUEST).json(err).end();
     }
   };
 

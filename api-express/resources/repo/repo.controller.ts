@@ -1,12 +1,15 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { Model } from "mongoose";
+import CustomErrors from "../../errors";
+import StatusCodes from "../../types/status-codes";
 import { isAuthorized } from "../../util/auth.util";
 import crudController from "../../util/crud.util";
 import ProjectRepo from "../projectRepo/projectRepo.model";
 import Repo from "./repo.model";
 
 const deleteOne =
-  (model: Model<any>) => async (req: Request, res: Response) => {
+  (model: Model<any>) =>
+  async (req: Request, res: Response, next: NextFunction) => {
     try {
       const isAuthorizedOperation: boolean = await isAuthorized(
         model,
@@ -15,7 +18,7 @@ const deleteOne =
       );
       if (isAuthorizedOperation === false) {
         console.error("forbidden");
-        return res.status(403).send("forbidden!").end();
+        return next(new CustomErrors.ForbiddenError());
       }
 
       // delete linked ProjectRepo(s) before deleting the repo
@@ -29,13 +32,13 @@ const deleteOne =
         _id: req.params.id,
       });
       if (deletedCount === 0) {
-        return res.status(404).json(`${model.modelName} not found`).end();
+        return next(new CustomErrors.NotFoundError(model.modelName));
       }
 
-      res.status(204).end();
-    } catch (e) {
-      console.error(e);
-      res.status(400).json(e).end();
+      res.status(StatusCodes.NO_CONTENT).end();
+    } catch (err) {
+      console.error(err);
+      res.status(StatusCodes.BAD_REQUEST).json(err).end();
     }
   };
 
