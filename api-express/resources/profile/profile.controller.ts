@@ -1,6 +1,8 @@
-import mongoose from "mongoose";
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
+import CustomErrors from "../../errors";
+import StatusCodes from "../../types/status-codes";
 import ProjectRepo from "../projectRepo/projectRepo.model";
+import User from "../user/user.model";
 
 const pipeline = [
   {
@@ -36,9 +38,17 @@ const pipeline = [
   },
 ];
 
-const myProfile = async (req: Request, res: Response) => {
+const myProfile = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // console.log(res.locals.USER._id);
+    const user = await User.findOne({
+      _id: res.locals.USER._id,
+    })
+      .lean()
+      .exec();
+
+    if (!user) {
+      return next(new CustomErrors.NotFoundError("User"));
+    }
 
     const profile = await ProjectRepo.aggregate([
       {
@@ -49,21 +59,24 @@ const myProfile = async (req: Request, res: Response) => {
       ...pipeline,
     ]).exec();
 
-    if (!profile) {
-      return res.status(404).json(`user not found`).end();
-    }
-
-    res.status(200).json(profile);
-    // res.status(200).json(res.locals.USER._id);
-  } catch (e) {
-    console.error(e);
-    res.status(400).json(e).end();
+    res.status(StatusCodes.OK).json(profile);
+  } catch (err) {
+    console.error(err);
+    res.status(StatusCodes.BAD_REQUEST).json(err).end();
   }
 };
 
-const userProfile = async (req: Request, res: Response) => {
+const userProfile = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // console.log(req.params.username);
+    const user = await User.findOne({
+      username: req.params.username,
+    })
+      .lean()
+      .exec();
+
+    if (!user) {
+      return next(new CustomErrors.NotFoundError("User"));
+    }
 
     const profile = await ProjectRepo.aggregate([
       {
@@ -74,17 +87,10 @@ const userProfile = async (req: Request, res: Response) => {
       ...pipeline,
     ]).exec();
 
-    // console.log(profile);
-
-    if (!profile) {
-      return res.status(404).json(`user not found`).end();
-    }
-
-    res.status(200).json(profile);
-    // res.status(200).json(req.params.username);
-  } catch (e) {
-    console.error(e);
-    res.status(400).json(e).end();
+    res.status(StatusCodes.OK).json(profile);
+  } catch (err) {
+    console.error(err);
+    res.status(StatusCodes.BAD_REQUEST).json(err).end();
   }
 };
 

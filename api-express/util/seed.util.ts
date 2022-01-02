@@ -1,8 +1,8 @@
 import { Model } from "mongoose";
+import CustomErrors from "../errors";
 import Project from "../resources/project/project.model";
 import ProjectRepo from "../resources/projectRepo/projectRepo.model";
 import Repo from "../resources/repo/repo.model";
-import User from "../resources/user/user.model";
 
 const projects = [
   {
@@ -52,8 +52,8 @@ const insertMany = async (
 
   try {
     await model.insertMany(dataToInsert);
-  } catch (e) {
-    console.error(e);
+  } catch (err) {
+    console.error(err);
   }
 };
 
@@ -69,7 +69,7 @@ const connectProjectRepos = async (
       .exec();
 
     if (!project) {
-      throw `project ${projectName} not found`;
+      throw new CustomErrors.NotFoundError("Project");
     }
 
     // projectRepoList = repoList.map((repo) => {
@@ -78,7 +78,7 @@ const connectProjectRepos = async (
     repoList.forEach(async ({ name }) => {
       const repo = await Repo.findOne({ name, user, userId }).lean().exec();
       if (!repo) {
-        throw `repo ${repo} not found`;
+        throw new CustomErrors.NotFoundError("Repo");
       }
       // console.log(`connecting project ${project._id} to repo ${repo._id}`);
       const projectRepo = await ProjectRepo.create({
@@ -88,8 +88,8 @@ const connectProjectRepos = async (
         userId,
       });
     });
-  } catch (e) {
-    console.error(e);
+  } catch (err) {
+    console.error(err);
   }
 };
 
@@ -115,8 +115,8 @@ const seed = async (user: string, userId: string) => {
     await connectProjectRepos(projects[1].name, reactRepos, user, userId);
     await connectProjectRepos(projects[1].name, commonRepos, user, userId);
     console.log("created project repos connections");
-  } catch (e) {
-    console.error(e);
+  } catch (err) {
+    console.error(err);
   }
 };
 

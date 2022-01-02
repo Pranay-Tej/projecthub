@@ -12,6 +12,8 @@ import { protect } from "./util/auth.util";
 import profileRouter from "./resources/profile/profile.router";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
+import errorHandlerMiddleware from "./middleware/error-handler.middleware";
+import notFoundMiddleware from "./middleware/route-not-found.middleware";
 
 const app = express();
 
@@ -56,6 +58,10 @@ app.use("/project-repos", protect, projectRepoRouter);
 
 app.use("/profile", profileRouter);
 
+app.use(notFoundMiddleware);
+
+app.use(errorHandlerMiddleware);
+
 mongoose
   .connect(config.MONGO_URI, {
     useNewUrlParser: true,
@@ -68,7 +74,7 @@ mongoose
       console.log(`server started at http://localhost:${config.PORT}`);
     });
   })
-  .catch((e) => {
+  .catch((err) => {
     console.error("mongodb connection failure");
-    console.error(e);
+    console.error(err);
   });
