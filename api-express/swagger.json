@@ -7,11 +7,11 @@
   },
   "servers": [
     {
-      "url": "https://projecthub-express.herokuapp.com",
+      "url": "https://projecthub.onrender.com",
       "description": "Production server"
     },
     {
-      "url": "https://projecthub-express-dev.herokuapp.com",
+      "url": "https://projecthub-dev.onrender.com",
       "description": "Development server"
     },
     {

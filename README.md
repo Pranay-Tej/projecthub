@@ -3,7 +3,7 @@
 Place where developers manage and share their projects
 
 Visit [WebApp](https://projecthub.vercel.app)
-Visit [API Documentation](https://projecthub-express.herokuapp.com/api)
+Visit [API Documentation](https://projecthub.onrender.com/api)
 
 ---
 
@@ -41,6 +41,7 @@ Visit [API Documentation](https://projecthub-express.herokuapp.com/api)
 
 - Rename `.env.example` to `.env`
 - MongoDB
+
   - Run MongoDB in your local system (OR) set URI in `.env` file
 
 - Express API

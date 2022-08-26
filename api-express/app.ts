@@ -25,14 +25,15 @@ const limit = rateLimit({
 });
 app.use(limit); // Setting limiter on specific route
 app.use(helmet());
-app.use(
-  cors({
-    // // cookie method
-    // credentials: true /* enables cookie exchange */,
-    // // origin mandatory for cookie method
-    origin: config.DOMAINS,
-  })
-);
+app.use(cors());
+// app.use(
+//   cors({
+//     // // cookie method
+//     // credentials: true /* enables cookie exchange */,
+//     // // origin mandatory for cookie method
+//     origin: config.DOMAINS,
+//   })
+// );
 app.use(express.json({ limit: "50kb" })); // Body limit is 50
 app.use(cookieParser());
 app.use(morgan("dev"));
