@@ -6,7 +6,7 @@
   "scripts": {
     "copyconfig": "cp ./swagger.json ./build/",
     "build": "tsc -p . && npm run copyconfig",
-    "start": "export NODE_ENV=production && npm run build && node ./build/app.js",
+    "start": "export NODE_ENV=production && node ./build/app.js",
     "dev": "nodemon app.ts"
   },
   "keywords": [],
