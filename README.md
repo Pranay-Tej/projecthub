@@ -26,12 +26,12 @@ Visit [API Documentation](https://projecthub.onrender.com/api)
 
 - Vercel (Frontend)
 - Netlify (Frontend [dev])
-- Heroku (Backend)
+- Render (Backend)
 - MongoDB Atlas (DBaaS)
 
 ## CI/CD
 
-- GitHub Actions
+- Render auto-deploy
 - Vercel auto-deploy
 - Netlify auto-deploy
 
